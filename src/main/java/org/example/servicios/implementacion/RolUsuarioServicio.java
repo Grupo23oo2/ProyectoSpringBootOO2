@@ -1,6 +1,7 @@
 package org.example.servicios.implementacion;
 
 import org.example.dtos.RolUsuarioDTO;
+import org.example.excepciones.MiExcepcionPersonalizada;
 import org.example.modelo.RolUsuario;
 import org.example.modelo.Usuario;
 import org.modelmapper.ModelMapper;
@@ -26,15 +27,21 @@ public class RolUsuarioServicio implements IRolUsuarioServicio {
 
     @Override
     public RolUsuarioDTO agregarRolUsuario(RolUsuarioDTO dto) {
-        RolUsuario entity = toEntity(dto);
-        RolUsuario saved = rolUsuarioRepositorio.save(entity);
-        return toDTO(saved);
+        try {
+            RolUsuario entity = toEntity(dto);
+            RolUsuario saved = rolUsuarioRepositorio.save(entity);
+            return toDTO(saved);
+        } catch (Exception e){
+            throw new MiExcepcionPersonalizada("No se pudo agregar el Rol");
+        }
     }
+
+
 
     @Override
     public RolUsuarioDTO traerRolUsuario(Long id) {
         RolUsuario entity = rolUsuarioRepositorio.findById(id)
-                .orElseThrow(() -> new RuntimeException("RolUsuario no encontrado con id " + id));
+                .orElseThrow(() -> new MiExcepcionPersonalizada("RolUsuario no encontrado con id " + id));
         return toDTO(entity);
     }
 
