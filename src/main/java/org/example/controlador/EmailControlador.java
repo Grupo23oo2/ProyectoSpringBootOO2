@@ -1,5 +1,8 @@
 package org.example.controlador;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.example.servicios.IEmailServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +42,21 @@ public class EmailControlador {
         emailServicio.enviarCorreoHtml(destinatario, asunto, contenidoHtml);
 
         return "Email enviado (revisá tu bandeja de entrada)";
+    }
+    
+    @GetMapping("/enviarplantilla")
+    public String enviarEmailConPlantilla() {
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("nombre", "Matías");
+        variables.put("mensaje", "¡Bienvenido a nuestra aplicación!");
+
+        emailServicio.enviarCorreoConPlantilla(
+            "matiasgiudiceunla@gmail.com",
+            "Correo con plantilla Thymeleaf",
+            variables
+        );
+
+        return "Correo con plantilla enviado!";
     }
 
 

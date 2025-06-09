@@ -1,6 +1,8 @@
 package org.example.servicios.implementacion;
 
 import org.example.dtos.ClienteDTO;
+import org.example.dtos.ContactoDTO;
+
 import jakarta.persistence.EntityNotFoundException;
 import org.example.modelo.Cliente;
 import org.example.modelo.Contacto;
@@ -11,13 +13,14 @@ import org.springframework.stereotype.Service;
 import org.example.repositorios.IClienteRepositorio;
 import org.example.repositorios.IContactoRepositorio;
 import org.example.repositorios.IUsuarioRepositorio;
+import org.example.servicios.IClienteServicio;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class ClienteServicio {
+public class ClienteServicio implements IClienteServicio {
 
     @Autowired
     private IClienteRepositorio clienteRepositorio;
@@ -105,5 +108,27 @@ public class ClienteServicio {
         }
 
         return cliente;
+    }
+    
+    @Override
+    public List<ClienteDTO> clientesPorRol(String rol) {
+        return clienteRepositorio.findByRol(rol)
+                .stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ClienteDTO> clientesPorCuit(String cuit) {
+        return clienteRepositorio.findByCuit(cuit)
+                .stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+    
+    @Override
+    public ContactoDTO buscarContactoPorCuit(String cuit) {
+        Contacto contacto = clienteRepositorio.findContactoByCuit(cuit);
+        return modelMapper.map(contacto, ContactoDTO.class);
     }
 }

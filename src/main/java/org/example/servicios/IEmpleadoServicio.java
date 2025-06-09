@@ -11,4 +11,7 @@ public interface IEmpleadoServicio {
     public List<EmpleadoDTO> traerEmpleados();
     public EmpleadoDTO modificarEmpleado(Long id, EmpleadoDTO dto);
     void eliminarEmpleado(Long id);
+    
+    public List<EmpleadoDTO> empleadosPorRol(String rol);
+    public List<EmpleadoDTO> empleadosPorFechaInicio(LocalDate fecha);
 }

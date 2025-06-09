@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Buscar Cliente</title>
+</head>
+<body>
+    <h1>Buscar Cliente</h1>
+
+    <h2>Por CUIT</h2>
+    <form action="/clientes/buscar" method="get">
+        <label for="cuit">CUIT:</label>
+        <input type="text" id="cuit" name="cuit" required>
+        <button type="submit">Buscar</button>
+    </form>
+
+    <h2>Por Role</h2>
+    <form action="/clientes/buscar-por-role" method="get">
+        <label for="role">Role:</label>
+        <input type="text" id="role" name="role" required>
+        <button type="submit">Buscar</button>
+    </form>
+	
+	<h2>Traer Contacto por Cuit</h2>
+	    <form action="/clientes/contacto-por-cuit" method="get">
+			<label for="cuit">CUIT:</label>
+			<input type="text" id="cuit" name="cuit" required>
+			<button type="submit">Buscar</button>
+	    </form>
+</body>
+</html>

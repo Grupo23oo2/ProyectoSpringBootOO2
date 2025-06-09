@@ -94,5 +94,19 @@ public class EmpleadoServicio implements IEmpleadoServicio {
         return empleado;
     }
     
-
+    @Override
+    public List<EmpleadoDTO> empleadosPorRol(String rol) {
+        return empleadoRepositorio.findByRol(rol)
+                .stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+    
+    @Override
+    public List<EmpleadoDTO> empleadosPorFechaInicio(LocalDate fecha) {
+        return empleadoRepositorio.findByFechaInicio(fecha)
+                .stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
 }

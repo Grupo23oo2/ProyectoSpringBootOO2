@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Resultado de Búsqueda</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Clientes encontrados</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>DNI</th>
+                <th>CUIT</th>
+                <th>ID Usuario</th>
+                <th>ID Contacto</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cliente : ${clientes}">
+                <td th:text="${cliente.nombre}">Nombre</td>
+                <td th:text="${cliente.apellido}">Apellido</td>
+                <td th:text="${cliente.dni}">DNI</td>
+                <td th:text="${cliente.cuit}">CUIT</td>
+                <td th:text="${cliente.idUsuario}">ID Usuario</td>
+                <td th:text="${cliente.idContacto}">ID Contacto</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <a href="/clientes/formulario">Volver al formulario</a>
+</body>
+</html>

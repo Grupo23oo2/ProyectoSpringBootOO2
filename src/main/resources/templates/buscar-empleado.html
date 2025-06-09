@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Buscar Empleado</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Buscar Empleado</h1>
+
+    <h2>Por Role</h2>
+    <form action="/empleados/buscar-por-role" method="get">
+        <label for="role">Role:</label>
+        <input type="text" id="role" name="role" required>
+        <button type="submit">Buscar</button>
+    </form>
+
+    <h2>Por Fecha de Inicio</h2>
+    <form action="/empleados/buscar-por-fecha" method="get">
+        <label for="fecha">Fecha de inicio (YYYY-MM-DD):</label>
+        <input type="text" id="fecha" name="fecha" required>
+        <button type="submit">Buscar</button>
+    </form>
+
+    <br>
+    <a href="/">Volver</a>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package org.example.servicios.implementacion;
 
+import org.example.dtos.RolUsuarioDTO;
 import org.example.dtos.UsuarioDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.example.modelo.Cliente;
@@ -111,4 +112,14 @@ public class UsuarioServicio implements IUsuarioServicio {
         }
         return usuario;
     }
+    
+   @Override
+    public List<RolUsuarioDTO> obtenerRolesUsuariosPorUsuario(Long idUsuario) {
+        return usuarioRepositorio.findRolesUsuarioByUsuario(idUsuario)
+                .stream()
+                .map(rol -> modelMapper.map(rol, RolUsuarioDTO.class))
+                .collect(Collectors.toList());
+    }
+
+
 }

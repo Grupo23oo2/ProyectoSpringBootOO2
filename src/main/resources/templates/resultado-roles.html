@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Resultado de Roles</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Roles activos del usuario</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Rol</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="rol : ${roles}">
+                <td th:text="${rol.role}">Rol</td>
+                <td th:text="${rol.estado}">Estado</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/usuarios/formulario-roles">Volver</a>
+</body>
+</html>

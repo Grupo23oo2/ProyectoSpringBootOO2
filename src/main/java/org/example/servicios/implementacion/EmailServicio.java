@@ -8,6 +8,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import java.util.Map;
 
@@ -15,6 +17,9 @@ import java.util.Map;
 public class EmailServicio implements IEmailServicio {
     @Autowired
     private JavaMailSender mailSender;
+    
+    @Autowired
+    private TemplateEngine templateEngine;
 
 
 
@@ -29,6 +34,17 @@ public class EmailServicio implements IEmailServicio {
         mensaje.setSubject(asunto);
         mensaje.setText(contenido);
         mailSender.send(mensaje);
+    }
+    
+ // Este método ahora recibe también las variables para la plantilla Thymeleaf
+    public void enviarCorreoConPlantilla(String para, String asunto, Map<String, Object> variables) {
+        Context context = new Context();
+        context.setVariables(variables);
+
+        // Procesamos la plantilla
+        String htmlBody = templateEngine.process("bienvenida", context);
+
+        enviarCorreoHtml(para, asunto, htmlBody);
     }
 
     @Override

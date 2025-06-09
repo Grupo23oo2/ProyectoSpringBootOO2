@@ -13,6 +13,7 @@ public abstract class Persona {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idPersona")
     protected Long idPersona;
     protected String nombre;
     protected String apellido;

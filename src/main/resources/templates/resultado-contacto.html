@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Resultado de Búsqueda</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+	<h1>Contacto del Cliente</h1>
+	<p>Teléfono: <span th:text="${contacto.telefono}"></span></p>
+	<p>Email: <span th:text="${contacto.email}"></span></p>
+
+
+    <br>
+    <a href="/clientes/formulario">Volver al formulario</a>
+</body>
+</html>

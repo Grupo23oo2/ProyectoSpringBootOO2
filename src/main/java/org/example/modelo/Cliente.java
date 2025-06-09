@@ -12,6 +12,8 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "cliente")
+@PrimaryKeyJoinColumn(name = "idPersona")
 public class Cliente extends Persona {
 
     private String cuit;
