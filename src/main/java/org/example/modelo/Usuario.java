@@ -40,4 +40,17 @@ public class Usuario {
         this.rolesUsuario = rolesUsuario;
     }
 
+	public Usuario(Persona persona, String nombreUsuario, String contraseniaUsuario, boolean estado,
+			Set<RolUsuario> rolesUsuario) {
+		super();
+		this.persona = persona;
+		this.nombreUsuario = nombreUsuario;
+		this.contraseniaUsuario = contraseniaUsuario;
+		this.estado = estado;
+		this.rolesUsuario = rolesUsuario;
+	}
+    
+    
+    
+
 }

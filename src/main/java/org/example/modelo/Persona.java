@@ -30,4 +30,15 @@ public abstract class Persona {
         this.usuario = usuario;
     }
 
+	public Persona(String nombre, String apellido, String dni, Usuario usuario) {
+		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dni = dni;
+		this.usuario = usuario;
+	}
+    
+    
+    
+
 }

@@ -40,21 +40,30 @@ public class RolUsuarioServicio implements IRolUsuarioServicio {
 
     @Override
     public RolUsuarioDTO traerRolUsuario(Long id) {
+    	try {
         RolUsuario entity = rolUsuarioRepositorio.findById(id)
                 .orElseThrow(() -> new MiExcepcionPersonalizada("RolUsuario no encontrado con id " + id));
         return toDTO(entity);
+    	} catch (Exception e){
+            throw new MiExcepcionPersonalizada("No se encuentra el Rol");
+        }
     }
 
     @Override
     public List<RolUsuarioDTO> traerRolesUsuarios() {
+    	try {
         return rolUsuarioRepositorio.findAll()
                 .stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
+    	} catch (Exception e){
+            throw new MiExcepcionPersonalizada("No se pudo traer la lista de Roles");
+        }
     }
 
     @Override
     public RolUsuarioDTO modificarRolUsuario(Long id, RolUsuarioDTO dto) {
+    	try {
         RolUsuario entity = rolUsuarioRepositorio.findById(id)
                 .orElseThrow(() -> new RuntimeException("RolUsuario no encontrado con id " + id));
 
@@ -68,14 +77,21 @@ public class RolUsuarioServicio implements IRolUsuarioServicio {
 
         RolUsuario updated = rolUsuarioRepositorio.save(entity);
         return toDTO(updated);
+    	} catch (Exception e){
+            throw new MiExcepcionPersonalizada("El Rol no pudo ser modificado");
+        }
     }
 
     @Override
     public void eliminarRolUsuario(Long id) {
+    	try {
         if (!rolUsuarioRepositorio.existsById(id)) {
             throw new RuntimeException("RolUsuario no encontrado con id " + id);
         }
         rolUsuarioRepositorio.deleteById(id);
+    	} catch (Exception e){
+            throw new MiExcepcionPersonalizada("El Rol no pudo ser eliminado");
+        }
     }
 
 

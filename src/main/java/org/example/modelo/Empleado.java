@@ -32,4 +32,13 @@ public class Empleado extends Persona {
         this.servicios = servicios;
     }
 
+	public Empleado(String nombre, String apellido, String dni, Usuario usuario, LocalDate fechaInicio,
+			Set<Servicio> servicios) {
+		super(nombre, apellido, dni, usuario);
+		this.fechaInicio = fechaInicio;
+		this.servicios = servicios;
+	}
+    
+    
+
 }
