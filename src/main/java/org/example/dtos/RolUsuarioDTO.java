@@ -11,7 +11,7 @@ public class RolUsuarioDTO {
     private Long idRolUsuario;
 
     @Getter @Setter
-    private Long idUsuario;
+    private Long idUsuarioRol;
 
     @Getter @Setter
     private String role;
@@ -23,7 +23,7 @@ public class RolUsuarioDTO {
 
     public RolUsuarioDTO(Long idRolUsuario, Long idUsuario, String role, LocalDateTime fechaCreacion) {
         this.idRolUsuario = idRolUsuario;
-        this.idUsuario = idUsuario;
+        this.idUsuarioRol = idUsuario;
         this.role = role;
         this.fechaCreacion = fechaCreacion;
     }

@@ -1,6 +1,7 @@
 package org.example.servicios.implementacion;
 
 import org.example.dtos.EmpleadoDTO;
+import org.example.excepciones.MiExcepcionPersonalizada;
 import org.example.modelo.Empleado;
 import org.example.modelo.Usuario;
 import org.modelmapper.ModelMapper;
@@ -28,30 +29,43 @@ public class EmpleadoServicio implements IEmpleadoServicio {
 
     @Override
     public EmpleadoDTO agregarEmpleado(EmpleadoDTO dto) {
+    	try {
         Empleado empleado = toEntity(dto);
         Empleado guardado = empleadoRepositorio.save(empleado);
         return toDTO(guardado);
+    	} catch (Exception e){
+            throw new MiExcepcionPersonalizada("No se pudo agregar el empleado" + e.getMessage());
+        }
     }
 
     @Override
     public EmpleadoDTO traerEmpleadoPorId(Long id) {
+    	try {
         Empleado empleado = empleadoRepositorio.findById(id)
-                .orElseThrow(() -> new RuntimeException("Empleado no encontrado con ID: " + id));
+                .orElseThrow(() -> new MiExcepcionPersonalizada("Empleado no encontrado con ID: " + id));
         return toDTO(empleado);
+    	} catch (Exception e){
+            throw new MiExcepcionPersonalizada("No se pudo traer el empleado" + e.getMessage());
+        }
     }
 
     @Override
     public List<EmpleadoDTO> traerEmpleados() {
+    	try {
         return empleadoRepositorio.findAll()
                 .stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
+    	} catch (Exception e){
+            throw new MiExcepcionPersonalizada("No se pudo traer los empleados" + e.getMessage());
+        }
     }
 
     @Override
     public EmpleadoDTO modificarEmpleado(Long id, EmpleadoDTO dto) {
+    	try {
         Empleado existente = empleadoRepositorio.findById(id)
-                .orElseThrow(() -> new RuntimeException("Empleado no encontrado con ID: " + id));
+                .orElseThrow(() -> new MiExcepcionPersonalizada("Empleado no encontrado con ID: " + id));
 
         existente.setNombre(dto.getNombre());
         existente.setApellido(dto.getApellido());
@@ -67,11 +81,18 @@ public class EmpleadoServicio implements IEmpleadoServicio {
 
         Empleado actualizado = empleadoRepositorio.save(existente);
         return toDTO(actualizado);
+    	} catch (Exception e){
+            throw new MiExcepcionPersonalizada("No se pudo modificar los empleados" + e.getMessage());
+        }
     }
 
     @Override
     public void eliminarEmpleado(Long id) {
+    	try {
         empleadoRepositorio.deleteById(id);
+    	} catch (Exception e){
+            throw new MiExcepcionPersonalizada("No se pudo eliminar el empleado" + e.getMessage());
+        }
     }
 
     private EmpleadoDTO toDTO(Empleado empleado) {
@@ -96,17 +117,25 @@ public class EmpleadoServicio implements IEmpleadoServicio {
     
     @Override
     public List<EmpleadoDTO> empleadosPorRol(String rol) {
+    	try {
         return empleadoRepositorio.findByRol(rol)
                 .stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
+    	} catch (Exception e){
+            throw new MiExcepcionPersonalizada("No se pudo traer empleados por rol" + e.getMessage());
+        }
     }
     
     @Override
     public List<EmpleadoDTO> empleadosPorFechaInicio(LocalDate fecha) {
+    	try {
         return empleadoRepositorio.findByFechaInicio(fecha)
                 .stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
+    	} catch (Exception e){
+            throw new MiExcepcionPersonalizada("No se pudo traer empleados por fecha de inicio" + e.getMessage());
+        }
     }
 }

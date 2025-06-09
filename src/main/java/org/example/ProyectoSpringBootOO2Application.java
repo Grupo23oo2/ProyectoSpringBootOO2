@@ -3,7 +3,16 @@ package org.example;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 
+import org.example.dtos.ClienteDTO;
+import org.example.dtos.ContactoDTO;
+import org.example.dtos.EmpleadoDTO;
+import org.example.dtos.LugarDTO;
+import org.example.dtos.RolUsuarioDTO;
+import org.example.dtos.ServicioDTO;
+import org.example.dtos.UsuarioDTO;
 import org.example.modelo.Cliente;
 import org.example.modelo.Contacto;
 import org.example.modelo.Empleado;
@@ -18,6 +27,13 @@ import org.example.repositorios.ILugarRepositorio;
 import org.example.repositorios.IRolUsuarioRepositorio;
 import org.example.repositorios.IServicioRepositorio;
 import org.example.repositorios.IUsuarioRepositorio;
+import org.example.servicios.IClienteServicio;
+import org.example.servicios.IContactoServicio;
+import org.example.servicios.IEmpleadoServicio;
+import org.example.servicios.ILugarServicio;
+import org.example.servicios.IRolUsuarioServicio;
+import org.example.servicios.IServicioServicio;
+import org.example.servicios.IUsuarioServicio;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -44,7 +60,22 @@ public class ProyectoSpringBootOO2Application {
          
         IServicioRepositorio servicioRepositorio = context.getBean(IServicioRepositorio.class);
         
+        IEmpleadoServicio empleadoServicio = context.getBean(IEmpleadoServicio.class);
         
+        IClienteServicio clienteServicio = context.getBean(IClienteServicio.class);
+        
+        IUsuarioServicio usuarioServicio = context.getBean(IUsuarioServicio.class);
+        
+        IRolUsuarioServicio rolUsuarioServicio = context.getBean(IRolUsuarioServicio.class);
+        
+        IContactoServicio contactoServicio = context.getBean(IContactoServicio.class);
+        
+        ILugarServicio lugarServicio = context.getBean(ILugarServicio.class);
+        
+        IServicioServicio servicioServicio = context.getBean(IServicioServicio.class);
+        
+        
+        System.out.println("----- AGREGAR------");
         
         Empleado empleado = new Empleado("carla", "gonzalez", "1111111111", null, LocalDate.now(), new HashSet<>());
         empleado = empleadoRepositorio.save(empleado);
@@ -53,7 +84,7 @@ public class ProyectoSpringBootOO2Application {
         cliente = clienteRepositorio.save(cliente);
        
         Cliente cliente2 = new Cliente("ssss", "aaaa", "3333333333",null, "6666666666", null, new HashSet<>());
-        Usuario usuario = new Usuario (cliente2, "peperino", "123456", true, new HashSet<>());
+        Usuario usuario = new Usuario (cliente2, "peperino20", "123456", true, new HashSet<>());
    //     usuario.setIdUsuario(idCliente);   
         usuarioRepositorio.save(usuario);
         
@@ -100,11 +131,102 @@ public class ProyectoSpringBootOO2Application {
         servicioRepositorio.save(servicio);
         
           
+        System.out.println("----- TRAER POR ID------");
+        
+        System.out.println(empleadoServicio.traerEmpleadoPorId(1L));
+        System.out.println(clienteServicio.traerClientePorId(2L));
+        System.out.println(usuarioServicio.traerUsuarioPorId(3L));
+        System.out.println(rolUsuarioServicio.traerRolUsuario(1L));
+        System.out.println(contactoServicio.traerContacto(2L));
+        System.out.println(lugarServicio.traerLugar(1L));
+        System.out.println(servicioServicio.traerServicio(1L));
+        
+       
+        System.out.println("----- TRAER TODO------");
+        
+        List<ClienteDTO> clientes = clienteServicio.traerClientes();
+     // Imprimís los clientes
+        clientes.forEach(clienteT -> System.out.println(clienteT));
+        
+        List<EmpleadoDTO> empleados = empleadoServicio.traerEmpleados();
+        // Imprimís los clientes
+        empleados.forEach(empleadoT -> System.out.println(empleadoT));
+        
+        List<UsuarioDTO> usuarios = usuarioServicio.traerUsuarios();
+        // Imprimís los clientes
+        usuarios.forEach(usuarioT -> System.out.println(usuarioT));
+     
+        List<RolUsuarioDTO> rolUsuarios = rolUsuarioServicio.traerRolesUsuarios();
+        // Imprimís los clientes
+        rolUsuarios.forEach(rolUsuarioT -> System.out.println(rolUsuarioT));
+        
+        List<ContactoDTO> contactos = contactoServicio.traerContactos();
+        // Imprimís los clientes
+        contactos.forEach(contactoT -> System.out.println(contactoT));
+        
+        List<LugarDTO> lugares = lugarServicio.traerLugares();
+        // Imprimís los clientes
+        lugares.forEach(lugarT -> System.out.println(lugarT));
+        
+        List<ServicioDTO> servicios = servicioServicio.traerServicios();
+        // Imprimís los clientes
+        servicios.forEach(servicioT -> System.out.println(servicioT));
+        
+        System.out.println("----- MODIFICAR------");
+        
+        ClienteDTO clientedto = new ClienteDTO();
+        clientedto.setNombre("Juan");
+        clientedto.setApellido("Pérez");
+        clientedto.setDni("12345678");
+        clientedto.setCuit("20-12345678-9");
+        Optional<ClienteDTO> clienteModificado = clienteServicio.modificarCliente(2L, clientedto);
+        
+        EmpleadoDTO empleadodto = new EmpleadoDTO();
+        empleadodto.setNombre("Ariel");
+        empleadodto.setApellido("Ortega");
+        empleadodto.setDni("9999999999");
+        empleadodto.setFechaInicio(LocalDate.now());
+        EmpleadoDTO empleadoModificado = empleadoServicio.modificarEmpleado(1L, empleadodto);
+               
+        UsuarioDTO usuariodto = new UsuarioDTO();
+        usuariodto.setNombreUsuario("pepebiondi");
+        usuariodto.setContraseniaUsuario("875421");
+        usuariodto.setEstado(false);
+        UsuarioDTO usuarioModificado = usuarioServicio.modificarUsuario(3L, usuariodto);
+        
+        RolUsuarioDTO rolusuariodto = new RolUsuarioDTO();
+        rolusuariodto.setRole("CLIENTE");
+        rolusuariodto.setFechaCreacion(LocalDateTime.now());
+        RolUsuarioDTO rolUsuarioModificado = rolUsuarioServicio.modificarRolUsuario(6L, rolusuariodto);
+        
+        ContactoDTO contactodto = new ContactoDTO();
+        contactodto.setDireccion("Av. siempre viva 742");
+        contactodto.setEmail("nuevomaildecontacto@gmail.com");
+        contactodto.setTelefono("5555555");
+        ContactoDTO contactoModificado = contactoServicio.modificarContacto(11L, contactodto);
+        
+        LugarDTO lugardto = new LugarDTO();
+        lugardto.setDireccion("Connecticut");
+        LugarDTO lugarModificado = lugarServicio.modificarLugar(3L, lugardto);
+        
+        ServicioDTO serviciodto = new ServicioDTO();
+        serviciodto.setFechaHoraFin(LocalDateTime.of(2025, 10, 10, 10, 0));
+        serviciodto.setFechaHoraInicio(LocalDateTime.of(2025, 10, 10, 9, 0));
+        serviciodto.setIdCliente(8L);
+        serviciodto.setIdEmpleado(16L);
+        serviciodto.setIdLugarServicio(8L);
+        ServicioDTO servicioModificado = servicioServicio.modificarServicio(2L, serviciodto);
         
         
+        System.out.println("----- ELIMINAR------");
         
-        
-        
+        contactoServicio.eliminarContacto(6L);
+        clienteServicio.eliminarCliente(6L);
+        empleadoServicio.eliminarEmpleado(70L);
+        rolUsuarioServicio.eliminarRolUsuario(3L);
+        usuarioServicio.eliminarUsuario(12L);
+        lugarServicio.eliminarLugar(14L);
+        servicioServicio.eliminarServicio(3L);
         
         
     }

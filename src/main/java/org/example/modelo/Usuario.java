@@ -29,7 +29,7 @@ public class Usuario {
 
     private boolean estado;
 
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="usuario")
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<RolUsuario> rolesUsuario = new HashSet<>();
 
     public Usuario(long idUsuario, String nombreUsuario, String contraseniaUsuario, boolean estado, Set<RolUsuario> rolesUsuario) {

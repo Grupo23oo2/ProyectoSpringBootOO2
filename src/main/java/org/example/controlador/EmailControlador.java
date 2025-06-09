@@ -15,11 +15,13 @@ public class EmailControlador {
 
     @Autowired
     private IEmailServicio emailServicio;
+    
+    String mail = System.getenv("EMAIL_USERNAME");
 
     @GetMapping("/enviar")
     public String enviarEmailDePrueba() {
         emailServicio.enviarCorreo(
-                "matiasgiudiceunla@gmail.com",
+        		mail, //Correo destinatario
                 "Correo de prueba desde Spring Boot",
                 "Hola! Este es un correo de prueba enviado con Spring Boot."
         );
@@ -28,7 +30,7 @@ public class EmailControlador {
 
     @GetMapping("/enviarhtml")
     public String enviarEmailHtml() {
-        String destinatario = "matiasgiudiceunla@gmail.com";
+        String destinatario = mail;
         String asunto = "Prueba email HTML desde Spring Boot";
         String contenidoHtml = """
             <html>
@@ -51,7 +53,7 @@ public class EmailControlador {
         variables.put("mensaje", "¡Bienvenido a nuestra aplicación!");
 
         emailServicio.enviarCorreoConPlantilla(
-            "matiasgiudiceunla@gmail.com",
+        		mail,
             "Correo con plantilla Thymeleaf",
             variables
         );

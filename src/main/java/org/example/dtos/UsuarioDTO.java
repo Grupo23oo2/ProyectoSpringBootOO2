@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 public class UsuarioDTO {
 
@@ -22,20 +23,13 @@ public class UsuarioDTO {
     @Getter @Setter
     private Long idPersona;
 
-    @Getter @Setter
-    private List<String> roles;
+   /* @Getter @Setter
+    private Set<String> roles;*/
 
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(Long idUsuario, String nombreUsuario, String contraseniaUsuario, boolean estado, Long idPersona, List<String> roles) {
-        this.idUsuario = idUsuario;
-        this.nombreUsuario = nombreUsuario;
-        this.contraseniaUsuario = contraseniaUsuario;
-        this.estado = estado;
-        this.idPersona = idPersona;
-        this.roles = roles;
-    }
+    
 
     public UsuarioDTO(Long idUsuario, String nombreUsuario, String contraseniaUsuario, boolean estado, Long idPersona) {
         this.idUsuario = idUsuario;
@@ -44,4 +38,16 @@ public class UsuarioDTO {
         this.estado = estado;
         this.idPersona = idPersona;
     }
+
+
+/*
+	public UsuarioDTO(Long idUsuario, String nombreUsuario, String contraseniaUsuario, boolean estado, Long idPersona,
+			Set<String> roles) {
+		this.idUsuario = idUsuario;
+		this.nombreUsuario = nombreUsuario;
+		this.contraseniaUsuario = contraseniaUsuario;
+		this.estado = estado;
+		this.idPersona = idPersona;
+		this.roles = roles;
+	}*/
 }

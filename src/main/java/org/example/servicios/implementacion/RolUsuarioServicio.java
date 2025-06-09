@@ -6,6 +6,7 @@ import org.example.modelo.RolUsuario;
 import org.example.modelo.Usuario;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.example.repositorios.IRolUsuarioRepositorio;
 import org.example.repositorios.IUsuarioRepositorio;
 import org.example.servicios.IRolUsuarioServicio;
@@ -13,6 +14,7 @@ import org.example.servicios.IRolUsuarioServicio;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class RolUsuarioServicio implements IRolUsuarioServicio {
 
     @Autowired
@@ -32,7 +34,7 @@ public class RolUsuarioServicio implements IRolUsuarioServicio {
             RolUsuario saved = rolUsuarioRepositorio.save(entity);
             return toDTO(saved);
         } catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo agregar el Rol");
+            throw new MiExcepcionPersonalizada("No se pudo agregar el Rol" + e.getMessage());
         }
     }
 
@@ -40,12 +42,13 @@ public class RolUsuarioServicio implements IRolUsuarioServicio {
 
     @Override
     public RolUsuarioDTO traerRolUsuario(Long id) {
-    	try {
-        RolUsuario entity = rolUsuarioRepositorio.findById(id)
-                .orElseThrow(() -> new MiExcepcionPersonalizada("RolUsuario no encontrado con id " + id));
-        return toDTO(entity);
-    	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se encuentra el Rol");
+        try {
+            RolUsuario entity = rolUsuarioRepositorio.findById(id)
+                    .orElseThrow(() -> new MiExcepcionPersonalizada("RolUsuario no encontrado con id " + id));
+            return toDTO(entity);
+        } catch (Exception e) {
+            e.printStackTrace(); // 👈 Imprime el error real en consola
+            throw new MiExcepcionPersonalizada("Error al buscar el Rol: " + e.getMessage());
         }
     }
 
@@ -57,7 +60,7 @@ public class RolUsuarioServicio implements IRolUsuarioServicio {
                 .map(this::toDTO)
                 .collect(Collectors.toList());
     	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo traer la lista de Roles");
+            throw new MiExcepcionPersonalizada("No se pudo traer la lista de Roles" + e.getMessage());
         }
     }
 
@@ -65,20 +68,20 @@ public class RolUsuarioServicio implements IRolUsuarioServicio {
     public RolUsuarioDTO modificarRolUsuario(Long id, RolUsuarioDTO dto) {
     	try {
         RolUsuario entity = rolUsuarioRepositorio.findById(id)
-                .orElseThrow(() -> new RuntimeException("RolUsuario no encontrado con id " + id));
+                .orElseThrow(() -> new MiExcepcionPersonalizada("RolUsuario no encontrado con id " + id));
 
         entity.setRole(dto.getRole());
 
-        if (dto.getIdUsuario() != null) {
-            Usuario usuario = usuarioRepositorio.findById(dto.getIdUsuario())
-                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado con id " + dto.getIdUsuario()));
+        if (dto.getIdUsuarioRol() != null) {
+            Usuario usuario = usuarioRepositorio.findById(dto.getIdUsuarioRol())
+                    .orElseThrow(() -> new MiExcepcionPersonalizada("Usuario no encontrado con id " + dto.getIdUsuarioRol()));
             entity.setUsuario(usuario);
         }
 
         RolUsuario updated = rolUsuarioRepositorio.save(entity);
         return toDTO(updated);
     	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("El Rol no pudo ser modificado");
+            throw new MiExcepcionPersonalizada("El Rol no pudo ser modificado" + e.getMessage());
         }
     }
 
@@ -86,11 +89,11 @@ public class RolUsuarioServicio implements IRolUsuarioServicio {
     public void eliminarRolUsuario(Long id) {
     	try {
         if (!rolUsuarioRepositorio.existsById(id)) {
-            throw new RuntimeException("RolUsuario no encontrado con id " + id);
+            throw new MiExcepcionPersonalizada("RolUsuario no encontrado con id " + id);
         }
         rolUsuarioRepositorio.deleteById(id);
     	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("El Rol no pudo ser eliminado");
+            throw new MiExcepcionPersonalizada("El Rol no pudo ser eliminado" + e.getMessage());
         }
     }
 
@@ -100,7 +103,7 @@ public class RolUsuarioServicio implements IRolUsuarioServicio {
     private RolUsuarioDTO toDTO(RolUsuario entity) {
         RolUsuarioDTO dto = modelMapper.map(entity, RolUsuarioDTO.class);
         if (entity.getUsuario() != null) {
-            dto.setIdUsuario(entity.getUsuario().getIdUsuario());
+            dto.setIdUsuarioRol(entity.getUsuario().getIdUsuario());
         }
         return dto;
     }
@@ -108,9 +111,9 @@ public class RolUsuarioServicio implements IRolUsuarioServicio {
     private RolUsuario toEntity(RolUsuarioDTO dto) {
         RolUsuario entity = modelMapper.map(dto, RolUsuario.class);
 
-        if (dto.getIdUsuario() != null) {
-            Usuario usuario = usuarioRepositorio.findById(dto.getIdUsuario())
-                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado con id " + dto.getIdUsuario()));
+        if (dto.getIdUsuarioRol() != null) {
+            Usuario usuario = usuarioRepositorio.findById(dto.getIdUsuarioRol())
+                    .orElseThrow(() -> new MiExcepcionPersonalizada("Usuario no encontrado con id " + dto.getIdUsuarioRol()));
             entity.setUsuario(usuario);
         }
         return entity;
