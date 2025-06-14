@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Empleados Encontrados</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Resultado de Búsqueda de Empleados</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>DNI</th>
+                <th>Fecha Inicio</th>
+                <th>CUIT</th>
+                <th>ID Usuario</th>
+                <th>ID Contacto</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="empleado : ${empleados}">
+                <td th:text="${empleado.nombre}">Nombre</td>
+                <td th:text="${empleado.apellido}">Apellido</td>
+                <td th:text="${empleado.dni}">DNI</td>
+                <td th:text="${empleado.fechaInicio}">Fecha</td>
+                <td th:text="${empleado.cuit}">CUIT</td>
+                <td th:text="${empleado.idUsuario}">ID Usuario</td>
+                <td th:text="${empleado.idContacto}">ID Contacto</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <a href="/empleados/formulario">Volver al formulario</a>
+</body>
+</html>

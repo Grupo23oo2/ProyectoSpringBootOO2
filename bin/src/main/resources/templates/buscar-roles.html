@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Buscar Roles por Usuario</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Buscar roles activos de un usuario</h1>
+    <form action="/usuarios/roles-por-usuario" method="get">
+        <label for="idUsuario">ID del Usuario:</label>
+        <input type="number" id="idUsuario" name="idUsuario" required>
+        <button type="submit">Buscar</button>
+    </form>
+</body>
+</html>
