@@ -15,6 +15,7 @@ import org.example.turnos.repositorios.IClienteRepositorio;
 import org.example.turnos.repositorios.IEmpleadoRepositorio;
 import org.example.turnos.repositorios.IRolUsuarioRepositorio;
 import org.example.turnos.repositorios.IUsuarioRepositorio;
+import org.example.turnos.servicios.IEmailServicio;
 import org.example.turnos.servicios.IUsuarioServicio;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class UsuarioServicio implements IUsuarioServicio {
 
     @Autowired
     private ModelMapper modelMapper;
+    
+    @Autowired
+    private IEmailServicio emailServicio;
 
     @Override
     public UsuarioDTO agregarUsuario(UsuarioDTO dto) {
@@ -45,6 +49,15 @@ public class UsuarioServicio implements IUsuarioServicio {
 
             Usuario usuario = toEntity(dto, persona);
             Usuario usuarioGuardado = usuarioRepositorio.save(usuario);
+            String contenidoHtml = """
+                    <html>
+                    <body>
+                        <h1 style='color: blue;'>Hola desde Spring Boot!</h1>
+                        <p>Este es un correo <b>con formato HTML</b>.</p>
+                    </body>
+                    </html>
+                    """;
+            emailServicio.enviarCorreoHtml(dto.getEmail(), "alta de usuario", contenidoHtml);//envio automatico del mail
             return toDTO(usuarioGuardado);
         } catch (Exception e) {
             throw new MiExcepcionPersonalizada("No se pudo agregar el usuario: " + e.getMessage());
