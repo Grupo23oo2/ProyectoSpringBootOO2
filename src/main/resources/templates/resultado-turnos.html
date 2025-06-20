@@ -1,0 +1,37 @@
+	<!DOCTYPE html>
+	<html lang="es" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>Resultado Turnos</title>
+	</head>
+	<body>
+	<h1>Resultado Turnos</h1>
+	
+	<table border="1" th:if="${turnos != null and !turnos.isEmpty()}">
+	    <thead>
+	        <tr>
+	            <th>ID</th>
+	            <th>Fecha y Hora</th>
+	            <th>Cliente</th>
+	            <th>Empleado</th>
+	            <th>Lugar</th>
+	            <th>Presencial</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <tr th:each="turno : ${turnos}">
+	            <td th:text="${turno.idTurno}"></td>
+	            <td th:text="${turno.fechaHoraInicio}"></td>
+        	    <td th:text="${turno.fechaHoraFin}"></td>
+	            <td th:text="${turno.idCliente}"></td>
+	            <td th:text="${turno.idEmpleado}"></td>
+	            <td th:text="${turno.idLugarTurno}"></td>
+	            <td th:text="${turno.presencial} ? 'Sí' : 'No'"></td>
+	        </tr>
+	    </tbody>
+	</table>
+	<p th:if="${turnos == null or turnos.isEmpty()}">No se encontraron turnos.</p>
+	<br>
+	<a href="/turnos/formulario">Volver al formulario</a>
+	</body>
+	</html>

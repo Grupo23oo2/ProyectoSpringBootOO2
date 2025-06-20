@@ -2,115 +2,122 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Gestión de Roles de Usuario</title>
+    <title>Resultado Rol de Usuario</title>
 </head>
 <body>
-    <h1>Gestión de Roles de Usuario</h1>
 
-    <hr/>
+<h1>Gestión de Roles de Usuario</h1>
 
-    <!-- Buscar rol por ID -->
-    <section>
-        <h2>Buscar Rol por ID</h2>
-        <form th:action="@{/roles-usuarios/buscar-por-id}" method="get">
-            <label for="idBuscar">ID Rol Usuario:</label>
-            <input type="number" id="idBuscar" name="id" required />
-            <button type="submit">Buscar</button>
-        </form>
-    </section>
+<hr/>
 
-    <hr/>
+<!-- Buscar rol por ID -->
+<section>
+    <h2>Buscar Rol por ID</h2>
+    <form th:action="@{/roles-usuarios/buscar-por-id}" method="get">
+        <label for="idBuscar">ID Rol Usuario:</label>
+        <input type="number" id="idBuscar" name="id" required />
+        <button type="submit">Buscar</button>
+    </form>
+</section>
 
-    <!-- Agregar nuevo rol -->
-    <section>
-        <h2>Agregar Nuevo Rol de Usuario</h2>
-        <form th:action="@{/roles-usuarios/agregar}" method="post">
-            <label for="usuarioId">ID Usuario:</label>
-            <input type="number" id="usuarioId" name="usuario.idUsuario" required />
-            <br/>
+<hr/>
 
-            <label for="role">Nombre del Rol:</label>
-            <input type="text" id="role" name="role" required maxlength="100" />
-            <br/>
+<!-- Agregar nuevo rol -->
+<section>
+    <h2>Agregar Nuevo Rol de Usuario</h2>
+    <form th:action="@{/roles-usuarios/agregar}" method="post">
+        <label for="usuarioId">ID Usuario:</label>
+        <input type="number" id="usuarioId" name="usuarioId" required />
+        <br/>
 
-            <button type="submit">Agregar Rol</button>
-        </form>
-    </section>
+        <label for="role">Nombre del Rol:</label>
+        <input type="text" id="role" name="role" required maxlength="100" />
+        <br/>
 
-    <hr/>
+        <label for="fechaCreacion">Fecha de Creación:</label>
+        <input type="datetime-local" id="fechaCreacion" name="fechaCreacion" required />
+        <br/>
 
-    <!-- Modificar rol existente -->
-    <section>
-        <h2>Modificar Rol de Usuario</h2>
-        <form th:action="@{/roles-usuarios/modificar}" method="post">
-            <label for="idModificar">ID del Rol a modificar:</label>
-            <input type="number" id="idModificar" name="id" required />
-            <br/>
+        <button type="submit">Agregar Rol</button>
+    </form>
+</section>
 
-            <label for="usuarioIdMod">ID Usuario:</label>
-            <input type="number" id="usuarioIdMod" name="usuario.idUsuario" required />
-            <br/>
+<hr/>
 
-            <label for="roleMod">Nombre del Rol:</label>
-            <input type="text" id="roleMod" name="role" required maxlength="100" />
-            <br/>
+<!-- Modificar rol existente -->
+<section>
+    <h2>Modificar Rol de Usuario</h2>
+    <form th:action="@{/roles-usuarios/modificar}" method="post">
+        <label for="idModificar">ID del Rol a modificar:</label>
+        <input type="number" id="idModificar" name="id" required />
+        <br/>
 
-            <button type="submit">Modificar Rol</button>
-        </form>
-    </section>
+        <label for="usuarioIdMod">ID Usuario:</label>
+        <input type="number" id="usuarioIdMod" name="usuarioId" required />
+        <br/>
 
-    <hr/>
+        <label for="roleMod">Nombre del Rol:</label>
+        <input type="text" id="roleMod" name="role" required maxlength="100" />
+        <br/>
 
-    <!-- Eliminar rol -->
-    <section>
-        <h2>Eliminar Rol de Usuario</h2>
-        <form th:action="@{/roles-usuarios/eliminar}" method="post">
-            <label for="idEliminar">ID del Rol a eliminar:</label>
-            <input type="number" id="idEliminar" name="id" required />
-            <button type="submit">Eliminar</button>
-        </form>
-    </section>
+        <label for="fechaCreacionMod">Fecha de Creación:</label>
+        <input type="datetime-local" id="fechaCreacionMod" name="fechaCreacion" required />
+        <br/>
 
-    <hr/>
+        <button type="submit">Modificar Rol</button>
+    </form>
+</section>
 
-    <!-- Aquí podés mostrar resultados con Thymeleaf -->
+<hr/>
 
-    <!-- Resultado de un rol buscado o agregado o modificado -->
-    <section th:if="${rol != null}">
-        <h2>Detalles del Rol Usuario</h2>
-        <p><strong>ID Rol Usuario:</strong> <span th:text="${rol.idRolUsuario}"></span></p>
-        <p><strong>ID Usuario:</strong> <span th:text="${rol.usuario != null ? rol.usuario.idUsuario : 'N/A'}"></span></p>
-        <p><strong>Nombre del Rol:</strong> <span th:text="${rol.role}"></span></p>
-        <p><strong>Fecha Creación:</strong> <span th:text="${rol.fechaCreacion}"></span></p>
-    </section>
+<!-- Eliminar rol -->
+<section>
+    <h2>Eliminar Rol de Usuario</h2>
+    <form th:action="@{/roles-usuarios/eliminar}" method="post">
+        <label for="idEliminar">ID del Rol a eliminar:</label>
+        <input type="number" id="idEliminar" name="id" required />
+        <button type="submit">Eliminar</button>
+    </form>
+</section>
 
-    <!-- Mensaje de confirmación -->
-    <section th:if="${mensaje != null}">
-        <p><strong th:text="${mensaje}"></strong></p>
-    </section>
+<hr/>
 
-    <!-- Lista de roles para /roles-usuarios/todos -->
-    <section th:if="${roles != null}">
-        <h2>Lista de Roles de Usuario</h2>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>ID Rol Usuario</th>
-                    <th>ID Usuario</th>
-                    <th>Nombre Rol</th>
-                    <th>Fecha Creación</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="rol : ${roles}">
-                    <td th:text="${rol.idRolUsuario}"></td>
-                    <td th:text="${rol.usuario != null ? rol.usuario.idUsuario : 'N/A'}"></td>
-                    <td th:text="${rol.role}"></td>
-                    <td th:text="${rol.fechaCreacion}"></td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+<!-- Resultado de operaciones -->
+<section th:if="${rol != null}">
+    <h2>Detalles del Rol Usuario</h2>
+    <p><strong>ID Rol Usuario:</strong> <span th:text="${rol.idRolUsuario}"></span></p>
+    <p><strong>ID Usuario:</strong> <span th:text="${rol.usuarioId}"></span></p>
+    <p><strong>Nombre del Rol:</strong> <span th:text="${rol.role}"></span></p>
+    <p><strong>Fecha Creación:</strong> <span th:text="${#temporals.format(rol.fechaCreacion, 'yyyy-MM-dd HH:mm')}"></span></p>
+</section>
+
+<!-- Mensaje de confirmación -->
+<section th:if="${mensaje != null}">
+    <p><strong th:text="${mensaje}"></strong></p>
+</section>
+
+<!-- Lista de roles para /roles-usuarios/todos -->
+<section th:if="${roles != null}">
+    <h2>Lista de Roles de Usuario</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID Rol Usuario</th>
+                <th>ID Usuario</th>
+                <th>Nombre Rol</th>
+                <th>Fecha Creación</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="rol : ${roles}">
+                <td th:text="${rol.idRolUsuario}"></td>
+                <td th:text="${rol.usuarioId}"></td>
+                <td th:text="${rol.role}"></td>
+                <td th:text="${#temporals.format(rol.fechaCreacion, 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
 
 </body>
 </html>

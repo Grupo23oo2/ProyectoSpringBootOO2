@@ -1,37 +1,38 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Resultado Servicios</title>
+    <meta charset="UTF-8" />
+    <title>Listado de Servicios</title>
 </head>
 <body>
-    <h1>Resultados de la Búsqueda</h1>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Fecha Inicio</th>
-                <th>Fecha Fin</th>
-                <th>Presencial</th>
-                <th>Cliente</th>
-                <th>Empleado</th>
-                <th>Lugar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="servicio : ${servicios}">
-                <td th:text="${servicio.idServicio}"></td>
-                <td th:text="${servicio.fechaHoraInicio}"></td>
-                <td th:text="${servicio.fechaHoraFin}"></td>
-                <td th:text="${servicio.presencial} ? 'Sí' : 'No'"></td>
-                <td th:text="${servicio.idCliente}"></td>
-                <td th:text="${servicio.idEmpleado}"></td>
-                <td th:text="${servicio.idLugarServicio}"></td>
-            </tr>
-        </tbody>
-    </table>
+<h1>Lista de Servicios</h1>
 
-    <br>
-    <a href="/servicios/formulario">Volver al Formulario</a>
+<!-- Mostrar tabla si hay servicios -->
+<table border="1" th:if="${servicios != null and !servicios.isEmpty()}">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Descripción</th>
+            <th>Duración (min)</th>
+            <th>Activo</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="servicio : ${servicios}">
+            <td th:text="${servicio.idServicio}">ID</td>
+            <td th:text="${servicio.descripcion}">Descripción</td>
+            <td th:text="${servicio.duracion}">Duración</td>
+            <td th:text="${servicio.activo} ? 'Sí' : 'No'">Activo</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Si no hay servicios -->
+<p th:if="${servicios == null or servicios.isEmpty()}">No hay servicios disponibles.</p>
+
+<br/>
+<a href="/servicios/formulario">Volver al formulario</a>
+
 </body>
 </html>

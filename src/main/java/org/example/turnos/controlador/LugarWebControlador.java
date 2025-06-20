@@ -19,6 +19,13 @@ public class LugarWebControlador {
 
     @Autowired
     private ILugarServicio lugarServicio;
+    
+    
+    @GetMapping("/formulario")
+    public String mostrarFormularioBusqueda(Model model) {
+    	model.addAttribute("lugarDTO", new LugarDTO());
+        return "buscar-lugar";
+    }
 
     // Traer todos los lugares
     @GetMapping("/todos")

@@ -72,9 +72,9 @@ public class RolUsuarioServicio implements IRolUsuarioServicio {
 
         entity.setRole(dto.getRole());
 
-        if (dto.getIdUsuarioRol() != null) {
-            Usuario usuario = usuarioRepositorio.findById(dto.getIdUsuarioRol())
-                    .orElseThrow(() -> new MiExcepcionPersonalizada("Usuario no encontrado con id " + dto.getIdUsuarioRol()));
+        if (dto.getUsuarioId() != null) {
+            Usuario usuario = usuarioRepositorio.findById(dto.getUsuarioId())
+                    .orElseThrow(() -> new MiExcepcionPersonalizada("Usuario no encontrado con id " + dto.getUsuarioId()));
             entity.setUsuario(usuario);
         }
 
@@ -103,7 +103,7 @@ public class RolUsuarioServicio implements IRolUsuarioServicio {
     private RolUsuarioDTO toDTO(RolUsuario entity) {
         RolUsuarioDTO dto = modelMapper.map(entity, RolUsuarioDTO.class);
         if (entity.getUsuario() != null) {
-            dto.setIdUsuarioRol(entity.getUsuario().getIdUsuario());
+            dto.setUsuarioId(entity.getUsuario().getIdUsuario());
         }
         return dto;
     }
@@ -111,9 +111,9 @@ public class RolUsuarioServicio implements IRolUsuarioServicio {
     private RolUsuario toEntity(RolUsuarioDTO dto) {
         RolUsuario entity = modelMapper.map(dto, RolUsuario.class);
 
-        if (dto.getIdUsuarioRol() != null) {
-            Usuario usuario = usuarioRepositorio.findById(dto.getIdUsuarioRol())
-                    .orElseThrow(() -> new MiExcepcionPersonalizada("Usuario no encontrado con id " + dto.getIdUsuarioRol()));
+        if (dto.getUsuarioId() != null) {
+            Usuario usuario = usuarioRepositorio.findById(dto.getUsuarioId())
+                    .orElseThrow(() -> new MiExcepcionPersonalizada("Usuario no encontrado con id " + dto.getUsuarioId()));
             entity.setUsuario(usuario);
         }
         return entity;

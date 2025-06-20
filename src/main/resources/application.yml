@@ -1,11 +1,11 @@
-server: 
-  port: 8086  # o 8081 si el 8080 sigue en uso
+#server: 
+  #port: 8086  # o 8081 si el 8080 sigue en uso
 
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/servicios?useSSL=false&serverTimezone=UTC
     username: root
-    password: 12345
+    password: 
   jpa:
     hibernate:
       ddl-auto: update

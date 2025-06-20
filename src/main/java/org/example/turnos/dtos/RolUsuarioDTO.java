@@ -5,15 +5,15 @@ import java.time.LocalDateTime;
 public class RolUsuarioDTO {
 
     private Long idRolUsuario;
-    private Long idUsuarioRol;
+    private Long usuarioId;
     private String role;
     private LocalDateTime fechaCreacion;
 
     public RolUsuarioDTO() {}
 
-    public RolUsuarioDTO(Long idRolUsuario, Long idUsuario, String role, LocalDateTime fechaCreacion) {
+    public RolUsuarioDTO(Long usuarioId, Long idUsuario, String role, LocalDateTime fechaCreacion) {
         this.idRolUsuario = idRolUsuario;
-        this.idUsuarioRol = idUsuario;
+        this.usuarioId = usuarioId;
         this.role = role;
         this.fechaCreacion = fechaCreacion;
     }
@@ -26,12 +26,13 @@ public class RolUsuarioDTO {
 		this.idRolUsuario = idRolUsuario;
 	}
 
-	public Long getIdUsuarioRol() {
-		return idUsuarioRol;
+	
+	public Long getUsuarioId() {
+		return usuarioId;
 	}
 
-	public void setIdUsuarioRol(Long idUsuarioRol) {
-		this.idUsuarioRol = idUsuarioRol;
+	public void setUsuarioId(Long usuarioId) {
+		this.usuarioId = usuarioId;
 	}
 
 	public String getRole() {

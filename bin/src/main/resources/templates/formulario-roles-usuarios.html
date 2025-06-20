@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Gestión de Roles de Usuario</title>
+</head>
+<body>
+
+<h1>Formulario Roles de Usuario</h1>
+
+<form th:action="@{/roles-usuarios/agregar}" th:object="${rolUsuarioDTO}" method="post">
+
+    <label for="idUsuarioRol">ID Usuario:</label>
+    <input type="number" id="idUsuarioRol" th:field="*{idUsuarioRol}" required />
+    <br/>
+
+    <label for="role">Rol:</label>
+    <input type="text" id="role" th:field="*{role}" required />
+    <br/>
+
+    <button type="submit">Agregar Rol Usuario</button>
+</form>
+
+
+<a href="/roles-usuarios/todos">Ver todos los roles de usuario</a>
+
+</body>
+</html>

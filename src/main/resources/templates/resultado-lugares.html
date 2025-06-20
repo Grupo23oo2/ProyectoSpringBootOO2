@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Lugares</title>
+</head>
+<body>
+
+<h1>Todos los Lugares</h1>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID Lugar</th>
+            <th>Dirección</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="lugar : ${lugares}">
+            <td th:text="${lugar.idLugar}"></td>
+            <td th:text="${lugar.direccion}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<br/>
+<a href="/lugares/formulario-lugares">Volver al formulario</a>
+
+</body>
+</html>

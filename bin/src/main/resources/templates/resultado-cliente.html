@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Detalle Cliente</title>
+</head>
+<body>
+    <h1>Cliente</h1>
+
+    <p th:if="${mensaje}" th:text="${mensaje}"></p>
+
+    <div th:if="${cliente != null}">
+        <p><strong>ID:</strong> <span th:text="${cliente.idPersona}"></span></p>
+        <p><strong>Nombre:</strong> <span th:text="${cliente.nombre}"></span></p>
+        <p><strong>Apellido:</strong> <span th:text="${cliente.apellido}"></span></p>
+        <p><strong>DNI:</strong> <span th:text="${cliente.dni}"></span></p>
+        <p><strong>CUIT:</strong> <span th:text="${cliente.cuit}"></span></p>
+
+       <p><strong>ID de Usuario:</strong> 
+   <span th:if="${cliente.idUsuario != null}" th:text="${cliente.idUsuario}"></span>
+   <span th:unless="${cliente.idUsuario != null}">Sin usuario</span>
+</p>
+
+      
+
+
+            <button type="submit">Modificar</button>
+        </form>
+
+        <!-- Formulario para eliminar -->
+        <h2>Eliminar Cliente</h2>
+        <form action="/clientes/eliminar" method="post" 
+              onsubmit="return confirm('¿Está seguro de eliminar este cliente?');">
+            <input type="hidden" name="id" th:value="${cliente.idPersona}" />
+            <button type="submit">Eliminar</button>
+        </form>
+    </div>
+    
+  <h1>Contacto del Cliente</h1>
+
+        <div th:if="${contacto != null}">
+            <p><strong>Teléfono:</strong> <span th:text="${contacto.telefono}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${contacto.email}"></span></p>
+            <p><strong>Dirección:</strong> <span th:text="${contacto.direccion}"></span></p>
+        </div>
+
+        <p th:if="${contacto == null}">No se encontró contacto para el CUIT proporcionado.</p>
+
+        <!-- Formulario para modificar -->
+        <h2>Modificar Cliente</h2>
+        <form action="/clientes/modificar" method="post">
+            <input type="hidden" name="id" th:value="${cliente.idPersona}" />
+
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" th:value="${cliente.nombre}" /><br>
+
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" name="apellido" th:value="${cliente.apellido}" /><br>
+
+            <label for="dni">DNI:</label>
+            <input type="text" id="dni" name="dni" th:value="${cliente.dni}" /><br>
+
+            <label for="cuit">CUIT:</label>
+            <input type="text" id="cuit" name="cuit" th:value="${cliente.cuit}" /><br>
+
+            <label for="usuario">ID de Usuario (opcional):</label>
+<input type="text" id="usuario" name="idUsuario" th:value="${cliente.idUsuario}" /><br>
+
+    <br />
+    <a href="/clientes/formulario">Volver</a>
+</body>
+</html>
+

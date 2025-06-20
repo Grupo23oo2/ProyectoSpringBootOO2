@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Lista de Usuarios</title>
+</head>
+<body>
+    <h1>Usuarios</h1>
+
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>ID Usuario</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="usuario : ${usuarios}">
+                <td th:text="${usuario.id}">1</td>
+                <td th:text="${usuario.nombre}">Nombre</td>
+                <td th:text="${usuario.email}">email@ejemplo.com</td>
+                <td>
+                    <a th:href="@{/usuarios/buscar-por-id(id=${usuario.id})}">Ver</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br />
+    <a href="/usuarios/formulario-roles">Buscar roles por usuario</a>
+    <br />
+    <a href="/usuarios/formulario-agregar">Agregar nuevo usuario</a>
+</body>
+</html>

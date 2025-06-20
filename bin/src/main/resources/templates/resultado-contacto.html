@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Resultado de Búsqueda</title>
     <meta charset="UTF-8">
+    <title>Contacto del Cliente</title>
 </head>
 <body>
+    <h1>Contacto del Cliente</h1>
 
-	<h1>Contacto del Cliente</h1>
-	<p>Teléfono: <span th:text="${contacto.telefono}"></span></p>
-	<p>Email: <span th:text="${contacto.email}"></span></p>
+    <div th:if="${contacto != null}">
+        <p><strong>Teléfono:</strong> <span th:text="${contacto.telefono}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${contacto.email}"></span></p>
+        <p><strong>Dirección:</strong> <span th:text="${contacto.direccion}"></span></p>
+    </div>
 
+    <p th:if="${contacto == null}">No se encontró contacto para el CUIT proporcionado.</p>
 
-    <br>
-    <a href="/clientes/formulario">Volver al formulario</a>
+    <br />
+    <a href="/clientes/formulario">Volver</a>
 </body>
 </html>

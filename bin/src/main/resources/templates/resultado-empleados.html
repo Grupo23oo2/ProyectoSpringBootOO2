@@ -1,38 +1,84 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Empleados Encontrados</title>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <title>Resultado Empleados</title>
 </head>
 <body>
-    <h1>Resultado de Búsqueda de Empleados</h1>
+    <h1>Resultado</h1>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>DNI</th>
-                <th>Fecha Inicio</th>
-                <th>CUIT</th>
-                <th>ID Usuario</th>
-                <th>ID Contacto</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="empleado : ${empleados}">
-                <td th:text="${empleado.nombre}">Nombre</td>
-                <td th:text="${empleado.apellido}">Apellido</td>
-                <td th:text="${empleado.dni}">DNI</td>
-                <td th:text="${empleado.fechaInicio}">Fecha</td>
-                <td th:text="${empleado.cuit}">CUIT</td>
-                <td th:text="${empleado.idUsuario}">ID Usuario</td>
-                <td th:text="${empleado.idContacto}">ID Contacto</td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- Mensaje -->
+    <p th:if="${mensaje}" th:text="${mensaje}"></p>
 
-    <br>
-    <a href="/empleados/formulario">Volver al formulario</a>
+    <!-- Empleado individual -->
+    <div th:if="${empleado != null}">
+        <h2>Empleado Encontrado</h2>
+        <p><strong>ID:</strong> <span th:text="${empleado.idPersona}"></span></p>
+        <p><strong>Nombre:</strong> <span th:text="${empleado.nombre}"></span></p>
+        <p><strong>Apellido:</strong> <span th:text="${empleado.apellido}"></span></p>
+        <p><strong>DNI:</strong> <span th:text="${empleado.dni}"></span></p>
+        
+        <p><strong>ID Usuario:</strong> 
+            <span th:if="${empleado.idUsuario != null}" th:text="${empleado.idUsuario}"></span>
+            <span th:unless="${empleado.idUsuario != null}">Sin usuario</span>
+        </p>
+        <p><strong>Fecha de inicio:</strong> <span th:text="${empleado.fechaInicio}"></span></p>
+
+        <h3>Modificar Empleado</h3>
+        <form action="/empleados/modificar" method="post">
+            <input type="hidden" name="id" th:value="${empleado.idPersona}" />
+
+            <label>Nombre: <input type="text" name="nombre" th:value="${empleado.nombre}" required /></label><br>
+            <label>Apellido: <input type="text" name="apellido" th:value="${empleado.apellido}" required /></label><br>
+            <label>DNI: <input type="text" name="dni" th:value="${empleado.dni}" required /></label><br>
+            
+            <label>ID Usuario: <input type="text" name="idUsuario" th:value="${empleado.idUsuario}" /></label><br>
+            <label>Fecha de Inicio: <input type="date" name="fechaInicio" th:value="${empleado.fechaInicio}" required /></label><br>
+
+            <button type="submit">Modificar</button>
+        </form>
+
+        <h3>Eliminar Empleado</h3>
+        <form action="/empleados/eliminar" method="post" onsubmit="return confirm('¿Está seguro de eliminar este empleado?');">
+            <input type="hidden" name="id" th:value="${empleado.idPersona}" />
+            <button type="submit">Eliminar</button>
+        </form>
+    </div>
+
+    <!-- Lista de empleados -->
+    <div th:if="${empleados != null}">
+        <h2>Empleados Encontrados</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>DNI</th>
+                  
+                    <th>Usuario</th>
+                    <th>Fecha Inicio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="emp : ${empleados}">
+                    <td th:text="${emp.idPersona}"></td>
+                    <td th:text="${emp.nombre}"></td>
+                    <td th:text="${emp.apellido}"></td>
+                    <td th:text="${emp.dni}"></td>
+        
+                    <td>
+                        <span th:if="${emp.idUsuario != null}" th:text="${emp.idUsuario}"></span>
+                        <span th:unless="${emp.idUsuario != null}">Sin usuario</span>
+                    </td>
+                    <td th:text="${emp.fechaInicio}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br />
+    <a href="/empleados/formulario">Volver</a>
 </body>
 </html>
+

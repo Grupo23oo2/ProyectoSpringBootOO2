@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultado de Operación</title>
+</head>
+<body>
+
+<h1>Resultado de la operación sobre Lugar</h1>
+
+<!-- Mostrar un solo lugar -->
+<section th:if="${lugar != null}">
+    <p><strong>ID Lugar:</strong> <span th:text="${lugar.idLugar}"></span></p>
+    <p><strong>Dirección:</strong> <span th:text="${lugar.direccion}"></span></p>
+</section>
+
+<!-- Mensaje de eliminación u otros -->
+<section th:if="${mensaje != null}">
+    <p><strong th:text="${mensaje}"></strong></p>
+</section>
+
+<br/>
+<a href="/lugares/formulario-lugares">Volver al formulario</a>
+
+</body>
+</html>

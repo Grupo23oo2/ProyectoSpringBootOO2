@@ -22,6 +22,44 @@ public class TurnoControlador {
     public String mostrarFormulario() {
         return "buscar-turnos"; // Vista con el formulario de búsqueda
     }
+    
+    
+ // --- ABM Turnos ---
+
+    @GetMapping("/todos")
+    public String traerTodosLosTurnos(Model model) {
+        List<TurnoDTO> turnos = turnoServicio.traerTurnos();
+        model.addAttribute("turnos", turnos);
+        return "resultado-turnos";
+    }
+
+    @GetMapping("/buscar-por-id")
+    public String buscarPorId(@RequestParam("id") Long id, Model model) {
+        TurnoDTO turno = turnoServicio.traerTurno(id);
+        model.addAttribute("turno", turno);
+        return "resultado-turno";
+    }
+
+    @PostMapping("/agregar")
+    public String agregarTurno(@ModelAttribute TurnoDTO dto, Model model) {
+        TurnoDTO agregado = turnoServicio.agregarTurno(dto);
+        model.addAttribute("turno", agregado);
+        return "resultado-turno";
+    }
+
+    @PostMapping("/modificar")
+    public String modificarTurno(@RequestParam Long id, @ModelAttribute TurnoDTO dto, Model model) {
+        TurnoDTO actualizado = turnoServicio.modificarTurno(id, dto);
+        model.addAttribute("turno", actualizado);
+        return "resultado-turno";
+    }
+
+    @PostMapping("/eliminar")
+    public String eliminarTurno(@RequestParam Long id, Model model) {
+        turnoServicio.eliminarTurno(id);
+        model.addAttribute("mensaje", "Turno eliminado con éxito (ID: " + id + ")");
+        return "resultado-turno";
+    }
 
     // --- CONSULTAS POR FILTROS ---
     
@@ -120,40 +158,5 @@ public class TurnoControlador {
         return "resultado-turnos";
     }
 
-    // --- ABM Turnos ---
-
-    @GetMapping("/todos")
-    public String traerTodosLosTurnos(Model model) {
-        List<TurnoDTO> turnos = turnoServicio.traerTurnos();
-        model.addAttribute("turnos", turnos);
-        return "resultado-turnos";
-    }
-
-    @GetMapping("/buscar-por-id")
-    public String buscarPorId(@RequestParam("id") Long id, Model model) {
-        TurnoDTO turno = turnoServicio.traerTurno(id);
-        model.addAttribute("turno", turno);
-        return "resultado-turno";
-    }
-
-    @PostMapping("/agregar")
-    public String agregarTurno(@ModelAttribute TurnoDTO dto, Model model) {
-        TurnoDTO agregado = turnoServicio.agregarTurno(dto);
-        model.addAttribute("turno", agregado);
-        return "resultado-turno";
-    }
-
-    @PostMapping("/modificar")
-    public String modificarTurno(@RequestParam Long id, @ModelAttribute TurnoDTO dto, Model model) {
-        TurnoDTO actualizado = turnoServicio.modificarTurno(id, dto);
-        model.addAttribute("turno", actualizado);
-        return "resultado-turno";
-    }
-
-    @PostMapping("/eliminar")
-    public String eliminarTurno(@RequestParam Long id, Model model) {
-        turnoServicio.eliminarTurno(id);
-        model.addAttribute("mensaje", "Turno eliminado con éxito (ID: " + id + ")");
-        return "resultado-turno";
-    }
+    
 }
