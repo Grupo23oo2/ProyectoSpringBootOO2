@@ -45,8 +45,8 @@ public class ProyectoSpringBootOO2Application {
     	
     	ApplicationContext context = SpringApplication.run(ProyectoSpringBootOO2Application.class, args);
     	
-        
-       IRolUsuarioRepositorio rolUsuarioRepositorio = context.getBean(IRolUsuarioRepositorio.class);
+        /*
+    	IRolUsuarioRepositorio rolUsuarioRepositorio = context.getBean(IRolUsuarioRepositorio.class);
         
         IClienteRepositorio clienteRepositorio = context.getBean(IClienteRepositorio.class);
         
@@ -228,6 +228,6 @@ public class ProyectoSpringBootOO2Application {
         lugarServicio.eliminarLugar(14L);
         servicioServicio.eliminarServicio(3L);
         
-        
+        */
     }
 }
