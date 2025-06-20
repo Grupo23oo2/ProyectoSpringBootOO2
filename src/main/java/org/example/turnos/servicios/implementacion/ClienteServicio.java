@@ -2,6 +2,7 @@ package org.example.turnos.servicios.implementacion;
 
 import org.example.turnos.dtos.ClienteDTO;
 import org.example.turnos.dtos.ContactoDTO;
+import org.example.turnos.excepciones.CuitClienteDuplicadoException;
 import org.example.turnos.excepciones.MiExcepcionPersonalizada;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -36,6 +37,11 @@ public class ClienteServicio implements IClienteServicio {
     private ModelMapper modelMapper;
 
     public ClienteDTO agregarCliente(ClienteDTO dto) {
+    	
+        if (clienteRepositorio.existsByCuit(dto.getCuit())) {// excepcion personalizada de cuit duplicado
+            throw new CuitClienteDuplicadoException("Ya existe un cliente con el CUIT: " + dto.getCuit());
+        }
+    	
     	try {
         Cliente cliente = toEntity(dto);
         Cliente guardado = clienteRepositorio.save(cliente);

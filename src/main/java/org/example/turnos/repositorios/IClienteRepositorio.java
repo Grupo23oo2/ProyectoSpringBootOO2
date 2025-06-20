@@ -20,6 +20,8 @@ public interface IClienteRepositorio extends JpaRepository<Cliente, Long> {
 	List<Cliente> findByRol(@Param("role") String role);
 
 	List<Cliente> findByCuit(String cuit);
+	
+	boolean existsByCuit(String cuit); //para la excepcion de cuit duplicado
 
 	@Query("""
 			    SELECT c.contacto FROM Cliente c

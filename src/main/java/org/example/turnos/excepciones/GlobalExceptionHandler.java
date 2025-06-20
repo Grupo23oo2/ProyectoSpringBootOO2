@@ -14,6 +14,15 @@ public class GlobalExceptionHandler {
         return "error/errorPersonalizado";  // carpeta /templates/error/errorPersonalizado.html
     }
 
+    @ExceptionHandler(CuitClienteDuplicadoException.class)
+    public String manejarRecursoNoEncontrado(CuitClienteDuplicadoException ex, Model model) {
+        model.addAttribute("mensajeError", ex.getMessage());
+        return "error/errorCuitClienteDuplicado";
+    }
+    
+    
+    
+    
     // Manejo general de otras excepciones no controladas
     @ExceptionHandler(Exception.class)
     public String manejarExcepcionGeneral(Exception ex, Model model) {
