@@ -18,23 +18,23 @@ public class Empleado extends Persona {
     private LocalDate fechaInicio;
 
     @OneToMany(mappedBy = "empleado", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Servicio> servicios = new HashSet<>();
+    private Set<Turno> turnos = new HashSet<>();
     
     public Empleado() {
     	
     }
 
-    public Empleado(Long idPersona, String nombre, String apellido, String dni, Usuario usuario, LocalDate fechaInicio, Set<Servicio> servicios) {
+    public Empleado(Long idPersona, String nombre, String apellido, String dni, Usuario usuario, LocalDate fechaInicio, Set<Turno> turnos) {
         super(idPersona, nombre, apellido, dni, usuario);
         this.fechaInicio = fechaInicio;
-        this.servicios = servicios;
+        this.turnos = turnos;
     }
 
 	public Empleado(String nombre, String apellido, String dni, Usuario usuario, LocalDate fechaInicio,
-			Set<Servicio> servicios) {
+			Set<Turno> turnos) {
 		super(nombre, apellido, dni, usuario);
 		this.fechaInicio = fechaInicio;
-		this.servicios = servicios;
+		this.turnos = turnos;
 	}
 
 	public LocalDate getFechaInicio() {
@@ -45,12 +45,12 @@ public class Empleado extends Persona {
 		this.fechaInicio = fechaInicio;
 	}
 
-	public Set<Servicio> getServicios() {
-		return servicios;
+	public Set<Turno> getTurnos() {
+		return turnos;
 	}
 
-	public void setServicios(Set<Servicio> servicios) {
-		this.servicios = servicios;
+	public void setTurnos(Set<Turno> turnos) {
+		this.turnos = turnos;
 	}
     
 }

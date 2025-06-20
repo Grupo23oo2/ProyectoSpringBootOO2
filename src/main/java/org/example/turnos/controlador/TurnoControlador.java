@@ -1,7 +1,7 @@
 package org.example.turnos.controlador;
 
-import org.example.turnos.dtos.ServicioDTO;
-import org.example.turnos.servicios.IServicioServicio;
+import org.example.turnos.dtos.TurnoDTO;
+import org.example.turnos.servicios.ITurnoServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,24 +11,24 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
-@RequestMapping("/servicios")
-public class ServicioControlador {
+@RequestMapping("/turnos")
+public class TurnoControlador {
 
     @Autowired
-    private IServicioServicio servicioServicio;
+    private ITurnoServicio turnoServicio;
 
     @GetMapping("/formulario")
     public String mostrarFormulario() {
-        return "buscar-servicios"; // Vista con el formulario de búsqueda
+        return "buscar-turnos"; // Vista con el formulario de búsqueda
     }
 
     @GetMapping("/buscar-entre-fechas")
     public String buscarEntreFechas(@RequestParam("desde") LocalDateTime desde,
                                     @RequestParam("hasta") LocalDateTime hasta,
                                     Model model) {
-        List<ServicioDTO> servicios = servicioServicio.traerServiciosEntreFechas(desde, hasta);
-        model.addAttribute("servicios", servicios);
-        return "resultado-servicios";
+        List<TurnoDTO> turnos = turnoServicio.traerTurnosEntreFechas(desde, hasta);
+        model.addAttribute("turnos", turnos);
+        return "resultado-turnos";
     }
 
     @GetMapping("/buscar-por-cliente")
@@ -36,9 +36,9 @@ public class ServicioControlador {
                                               @RequestParam("desde") LocalDateTime desde,
                                               @RequestParam("hasta") LocalDateTime hasta,
                                               Model model) {
-        List<ServicioDTO> servicios = servicioServicio.traerServiciosDeClienteEntreFechas(id, desde, hasta);
-        model.addAttribute("servicios", servicios);
-        return "resultado-servicios";
+        List<TurnoDTO> turnos = turnoServicio.traerTurnosDeClienteEntreFechas(id, desde, hasta);
+        model.addAttribute("turnos", turnos);
+        return "resultado-turnos";
     }
 
     @GetMapping("/buscar-por-empleado")
@@ -46,9 +46,9 @@ public class ServicioControlador {
                                                @RequestParam("desde") LocalDateTime desde,
                                                @RequestParam("hasta") LocalDateTime hasta,
                                                Model model) {
-        List<ServicioDTO> servicios = servicioServicio.traerServiciosDeEmpleadoEntreFechas(id, desde, hasta);
-        model.addAttribute("servicios", servicios);
-        return "resultado-servicios";
+        List<TurnoDTO> turnos = turnoServicio.traerTurnosDeEmpleadoEntreFechas(id, desde, hasta);
+        model.addAttribute("turnos", turnos);
+        return "resultado-turnos";
     }
 
     @GetMapping("/buscar-por-lugar")
@@ -56,9 +56,9 @@ public class ServicioControlador {
                                             @RequestParam("desde") LocalDateTime desde,
                                             @RequestParam("hasta") LocalDateTime hasta,
                                             Model model) {
-        List<ServicioDTO> servicios = servicioServicio.traerServiciosPorLugarEntreFechas(id, desde, hasta);
-        model.addAttribute("servicios", servicios);
-        return "resultado-servicios";
+        List<TurnoDTO> turnos = turnoServicio.traerTurnosPorLugarEntreFechas(id, desde, hasta);
+        model.addAttribute("turnos", turnos);
+        return "resultado-turnos";
     }
 
     // --- CONSULTAS AVANZADAS ---
@@ -68,9 +68,9 @@ public class ServicioControlador {
                                       @RequestParam("desde") LocalDateTime desde,
                                       @RequestParam("hasta") LocalDateTime hasta,
                                       Model model) {
-        List<ServicioDTO> servicios = servicioServicio.traerServiciosPorPresencialYFechas(presencial, desde, hasta);
-        model.addAttribute("servicios", servicios);
-        return "resultado-servicios";
+        List<TurnoDTO> turnos = turnoServicio.traerTurnosPorPresencialYFechas(presencial, desde, hasta);
+        model.addAttribute("turnos", turnos);
+        return "resultado-turnos";
     }
 
     @GetMapping("/buscar-por-nombre-cliente")
@@ -78,9 +78,9 @@ public class ServicioControlador {
                                          @RequestParam("desde") LocalDateTime desde,
                                          @RequestParam("hasta") LocalDateTime hasta,
                                          Model model) {
-        List<ServicioDTO> servicios = servicioServicio.traerServiciosPorNombreClienteYFechas(nombre, desde, hasta);
-        model.addAttribute("servicios", servicios);
-        return "resultado-servicios";
+        List<TurnoDTO> turnos = turnoServicio.traerTurnosPorNombreClienteYFechas(nombre, desde, hasta);
+        model.addAttribute("turnos", turnos);
+        return "resultado-turnos";
     }
 
     @GetMapping("/buscar-por-rol-empleado")
@@ -88,9 +88,9 @@ public class ServicioControlador {
                                        @RequestParam("desde") LocalDateTime desde,
                                        @RequestParam("hasta") LocalDateTime hasta,
                                        Model model) {
-        List<ServicioDTO> servicios = servicioServicio.traerServiciosPorRolEmpleadoYFechas(rol, desde, hasta);
-        model.addAttribute("servicios", servicios);
-        return "resultado-servicios";
+        List<TurnoDTO> turnos = turnoServicio.traerTurnosPorRolEmpleadoYFechas(rol, desde, hasta);
+        model.addAttribute("turnos", turnos);
+        return "resultado-turnos";
     }
 
     @GetMapping("/buscar-por-direccion-lugar")
@@ -98,23 +98,23 @@ public class ServicioControlador {
                                           @RequestParam("desde") LocalDateTime desde,
                                           @RequestParam("hasta") LocalDateTime hasta,
                                           Model model) {
-        List<ServicioDTO> servicios = servicioServicio.traerServiciosPorDireccionLugarYFechas(direccion, desde, hasta);
-        model.addAttribute("servicios", servicios);
-        return "resultado-servicios";
+        List<TurnoDTO> turnos = turnoServicio.traerTurnosPorDireccionLugarYFechas(direccion, desde, hasta);
+        model.addAttribute("turnos", turnos);
+        return "resultado-turnos";
     }
     
-    @GetMapping("/servicios-presenciales")
-    public String mostrarServiciosPresenciales(Model model) {
-        List<ServicioDTO> servicios = servicioServicio.obtenerServiciosPresenciales(true);
-        model.addAttribute("servicios", servicios);
-        return "resultado-servicios";
+    @GetMapping("/turnos-presenciales")
+    public String mostrarTurnosPresenciales(Model model) {
+        List<TurnoDTO> turnos = turnoServicio.obtenerTurnosPresenciales(true);
+        model.addAttribute("turnos", turnos);
+        return "resultado-turnos";
     }
     
     @GetMapping("/buscar-por-apellido-empleado")
-    public String buscarServiciosPorApellidoEmpleado(@RequestParam("apellido") String apellido, Model model) {
-        List<ServicioDTO> servicios = servicioServicio.traerServiciosPorApellidoEmpleado(apellido);
-        model.addAttribute("servicios", servicios);
-        return "resultado-servicios";
+    public String buscarTurnosPorApellidoEmpleado(@RequestParam("apellido") String apellido, Model model) {
+        List<TurnoDTO> turnos = turnoServicio.traerTurnosPorApellidoEmpleado(apellido);
+        model.addAttribute("turnos", turnos);
+        return "resultado-turnos";
     }
 
 }

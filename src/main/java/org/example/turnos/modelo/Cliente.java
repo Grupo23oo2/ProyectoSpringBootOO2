@@ -16,25 +16,25 @@ public class Cliente extends Persona {
     private Contacto contacto;
 
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Servicio> servicios = new HashSet<>();
+    private Set<Turno> turnos = new HashSet<>();
     
     public Cliente() {
     	
     }
 
-    public Cliente(Long idPersona, String nombre, String apellido, String dni, Usuario usuario, String cuit, Contacto contacto, Set<Servicio> servicios) {
+    public Cliente(Long idPersona, String nombre, String apellido, String dni, Usuario usuario, String cuit, Contacto contacto, Set<Turno> turnos) {
         super(idPersona, nombre, apellido, dni, usuario);
         this.cuit = cuit;
         this.contacto = contacto;
-        this.servicios = servicios;
+        this.turnos = turnos;
     }
 
 	public Cliente(String nombre, String apellido, String dni, Usuario usuario, String cuit, Contacto contacto,
-			Set<Servicio> servicios) {
+			Set<Turno> turnos) {
 		super(nombre, apellido, dni, usuario);
 		this.cuit = cuit;
 		this.contacto = contacto;
-		this.servicios = servicios;
+		this.turnos = turnos;
 	}
 
 	public String getCuit() {
@@ -53,12 +53,12 @@ public class Cliente extends Persona {
 		this.contacto = contacto;
 	}
 
-	public Set<Servicio> getServicios() {
-		return servicios;
+	public Set<Turno> getTurnos() {
+		return turnos;
 	}
 
-	public void setServicios(Set<Servicio> servicios) {
-		this.servicios = servicios;
+	public void setTurnos(Set<Turno> turnos) {
+		this.turnos = turnos;
 	}
 	
 	

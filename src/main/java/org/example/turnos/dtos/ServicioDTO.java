@@ -1,88 +1,43 @@
 package org.example.turnos.dtos;
 
-import java.time.LocalDateTime;
-
 public class ServicioDTO {
-
-    private Long idServicio;
-    private boolean presencial;
-    private Long idLugarServicio;
-    private Long idEmpleado;
-    private Long idCliente;
-    private LocalDateTime fechaHoraInicio;
-    private LocalDateTime fechaHoraFin;
-
-    public ServicioDTO() {
-    }
-
-    public ServicioDTO(Long idServicio, boolean presencial, Long idLugarServicio, Long idEmpleado, Long idCliente,
-                       LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin) {
-        this.idServicio = idServicio;
-        this.presencial = presencial;
-        this.idLugarServicio = idLugarServicio;
-        this.idEmpleado = idEmpleado;
-        this.idCliente = idCliente;
-        this.fechaHoraInicio = fechaHoraInicio;
-        this.fechaHoraFin = fechaHoraFin;
-    }
-
+	private Long idServicio;
+	private String descripcion;
+	private Long duracion;
+	private boolean activo;
+	
+	public ServicioDTO(){}
+	
+	public ServicioDTO(Long idServicio, String descripcion, Long duracion, boolean activo) {
+		super();
+		this.idServicio = idServicio;
+		this.descripcion = descripcion;
+		this.duracion = duracion;
+		this.activo = activo;
+	}
+	
 	public Long getIdServicio() {
 		return idServicio;
 	}
-
 	public void setIdServicio(Long idServicio) {
 		this.idServicio = idServicio;
 	}
-
-	public boolean isPresencial() {
-		return presencial;
+	public String getDescripcion() {
+		return descripcion;
 	}
-
-	public void setPresencial(boolean presencial) {
-		this.presencial = presencial;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
-
-	public Long getIdLugarServicio() {
-		return idLugarServicio;
+	public Long getDuracion() {
+		return duracion;
 	}
-
-	public void setIdLugarServicio(Long idLugarServicio) {
-		this.idLugarServicio = idLugarServicio;
+	public void setDuracion(Long duracion) {
+		this.duracion = duracion;
 	}
-
-	public Long getIdEmpleado() {
-		return idEmpleado;
+	public boolean isActivo() {
+		return activo;
 	}
-
-	public void setIdEmpleado(Long idEmpleado) {
-		this.idEmpleado = idEmpleado;
+	public void setActivo(boolean activo) {
+		this.activo = activo;
 	}
-
-	public Long getIdCliente() {
-		return idCliente;
-	}
-
-	public void setIdCliente(Long idCliente) {
-		this.idCliente = idCliente;
-	}
-
-	public LocalDateTime getFechaHoraInicio() {
-		return fechaHoraInicio;
-	}
-
-	public void setFechaHoraInicio(LocalDateTime fechaHoraInicio) {
-		this.fechaHoraInicio = fechaHoraInicio;
-	}
-
-	public LocalDateTime getFechaHoraFin() {
-		return fechaHoraFin;
-	}
-
-	public void setFechaHoraFin(LocalDateTime fechaHoraFin) {
-		this.fechaHoraFin = fechaHoraFin;
-	}
-
-    
-    
 }
-

@@ -13,8 +13,8 @@ public class Lugar {
     private Long idLugar;
     private String direccion;
 
-    @OneToMany(mappedBy = "lugarServicio", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Servicio> servicios = new HashSet<>();
+    @OneToMany(mappedBy = "lugarTurno", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Turno> turnos = new HashSet<>();
     
     public Lugar() {
     	
@@ -40,12 +40,12 @@ public class Lugar {
 		this.direccion = direccion;
 	}
 
-	public Set<Servicio> getServicios() {
-		return servicios;
+	public Set<Turno> getTurnos() {
+		return turnos;
 	}
 
-	public void setServicios(Set<Servicio> servicios) {
-		this.servicios = servicios;
+	public void setTurnos(Set<Turno> turnos) {
+		this.turnos = turnos;
 	}
     
 }
