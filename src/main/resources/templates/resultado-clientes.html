@@ -1,36 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Resultado de Búsqueda</title>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <title>Resultado Clientes</title>
 </head>
 <body>
-    <h1>Clientes encontrados</h1>
+    <h1>Clientes Encontrados</h1>
 
     <table border="1">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>DNI</th>
                 <th>CUIT</th>
-                <th>ID Usuario</th>
-                <th>ID Contacto</th>
+                <th>Usuario</th>
+                <th>Ver</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="cliente : ${clientes}">
-                <td th:text="${cliente.nombre}">Nombre</td>
-                <td th:text="${cliente.apellido}">Apellido</td>
-                <td th:text="${cliente.dni}">DNI</td>
-                <td th:text="${cliente.cuit}">CUIT</td>
-                <td th:text="${cliente.idUsuario}">ID Usuario</td>
-                <td th:text="${cliente.idContacto}">ID Contacto</td>
+                <td th:text="${cliente.idPersona}"></td>
+                <td th:text="${cliente.nombre}"></td>
+                <td th:text="${cliente.apellido}"></td>
+                <td th:text="${cliente.dni}"></td>
+                <td th:text="${cliente.cuit}"></td>
+                <td>
+                    <span th:if="${cliente.idUsuario != null}" th:text="${cliente.idUsuario}"></span>
+                    <span th:unless="${cliente.idUsuario != null}">Sin usuario</span>
+                </td>
+                <td>
+                    <a th:href="@{/clientes/buscar-por-id(id=${cliente.idPersona})}">Ver detalle</a>
+                </td>
             </tr>
         </tbody>
     </table>
 
-    <br>
-    <a href="/clientes/formulario">Volver al formulario</a>
+    <br />
+    <a href="/clientes/formulario">Volver</a>
 </body>
 </html>
+
+

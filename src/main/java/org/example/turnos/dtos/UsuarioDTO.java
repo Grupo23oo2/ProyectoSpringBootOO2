@@ -10,6 +10,7 @@ public class UsuarioDTO {
     private String contraseniaUsuario;
     private boolean estado;
     private Long idPersona;
+    private String email;
 
    /* @Getter @Setter
     private Set<String> roles;*/
@@ -17,13 +18,21 @@ public class UsuarioDTO {
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(Long idUsuario, String nombreUsuario, String contraseniaUsuario, boolean estado, Long idPersona) {
-        this.idUsuario = idUsuario;
-        this.nombreUsuario = nombreUsuario;
-        this.contraseniaUsuario = contraseniaUsuario;
-        this.estado = estado;
-        this.idPersona = idPersona;
-    }
+    
+
+
+	public UsuarioDTO(Long idUsuario, String nombreUsuario, String contraseniaUsuario, boolean estado, Long idPersona,
+			String email) {
+		super();
+		this.idUsuario = idUsuario;
+		this.nombreUsuario = nombreUsuario;
+		this.contraseniaUsuario = contraseniaUsuario;
+		this.estado = estado;
+		this.idPersona = idPersona;
+		this.email = email;
+	}
+
+
 
 
 /*
@@ -75,6 +84,17 @@ public class UsuarioDTO {
 
 	public void setIdPersona(Long idPersona) {
 		this.idPersona = idPersona;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
 	} 
+	
+	
     
 }

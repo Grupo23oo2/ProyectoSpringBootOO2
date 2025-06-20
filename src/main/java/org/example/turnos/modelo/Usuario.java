@@ -1,6 +1,8 @@
 package org.example.turnos.modelo;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +16,9 @@ public class Usuario {
     @MapsId // Le dice a JPA que el ID de este Usuario viene de la entidad relacionada (Persona)
     @JoinColumn(name = "idUsuario") // FK que es también PK
     private Persona persona;
+    
+    @Column(name="email") @Email
+    private String email;
 
     @Column(name="nombreUsuario", unique=true, nullable=false, length=45)
     private String nombreUsuario;
@@ -30,27 +35,32 @@ public class Usuario {
 		
 	}
     
-    public Usuario(long idUsuario, String nombreUsuario, String contraseniaUsuario, boolean estado, Set<RolUsuario> rolesUsuario) {
-        this.idUsuario = idUsuario;
-        this.nombreUsuario = nombreUsuario;
-        this.contraseniaUsuario = contraseniaUsuario;
-        this.estado = estado;
-        this.rolesUsuario = rolesUsuario;
-    }
-
-	public Usuario(Persona persona, String nombreUsuario, String contraseniaUsuario, boolean estado,
-			Set<RolUsuario> rolesUsuario) {
+   
+    
+    public Usuario(long idUsuario, Persona persona, String email, String nombreUsuario, String contraseniaUsuario,
+			boolean estado, Set<RolUsuario> rolesUsuario) {
 		super();
+		this.idUsuario = idUsuario;
 		this.persona = persona;
+		this.email = email;
 		this.nombreUsuario = nombreUsuario;
 		this.contraseniaUsuario = contraseniaUsuario;
 		this.estado = estado;
 		this.rolesUsuario = rolesUsuario;
 	}
-    
-    
-    
-    public long getIdUsuario() {
+
+
+
+	public Usuario(Persona persona, String email, String nombreUsuario, String contraseniaUsuario, boolean estado) {
+		super();
+		this.persona = persona;
+		this.email = email;
+		this.nombreUsuario = nombreUsuario;
+		this.contraseniaUsuario = contraseniaUsuario;
+		this.estado = estado;
+	}
+
+	public long getIdUsuario() {
 		return idUsuario;
 	}
 
@@ -97,5 +107,15 @@ public class Usuario {
 	public void setRolesUsuario(Set<RolUsuario> rolesUsuario) {
 		this.rolesUsuario = rolesUsuario;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	
 
 }

@@ -1,27 +1,34 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Resultado de Roles</title>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <title>Roles del Usuario</title>
 </head>
 <body>
-    <h1>Roles activos del usuario</h1>
+    <h1>Roles Activos del Usuario</h1>
 
-    <table border="1">
+    <table border="1" cellpadding="5" cellspacing="0">
         <thead>
             <tr>
-                <th>Rol</th>
+                <th>ID Rol Usuario</th>
+                <th>Nombre Rol</th>
+                <th>Descripción</th>
                 <th>Estado</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="rol : ${roles}">
-                <td th:text="${rol.role}">Rol</td>
-                <td th:text="${rol.estado}">Estado</td>
+                <td th:text="${rol.id}">1</td>
+                <td th:text="${rol.nombreRol}">RolNombre</td>
+                <td th:text="${rol.descripcion}">Descripción del rol</td>
+                <td th:text="${rol.estado}">Activo</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="/usuarios/formulario-roles">Volver</a>
+    <br />
+    <a href="/usuarios/formulario-roles">Volver a buscar roles</a>
+    <br />
+    <a href="/usuarios/todos">Ver todos los usuarios</a>
 </body>
 </html>

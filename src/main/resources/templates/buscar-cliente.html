@@ -1,30 +1,80 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Buscar Cliente</title>
+    <meta charset="UTF-8" />
+    <title>Gestión de Clientes</title>
 </head>
 <body>
-    <h1>Buscar Cliente</h1>
+    <h1>Gestión de Clientes</h1>
 
-    <h2>Por CUIT</h2>
-    <form action="/clientes/buscar" method="get">
-        <label for="cuit">CUIT:</label>
-        <input type="text" id="cuit" name="cuit" required>
+    <!-- Buscar por CUIT -->
+    <h2>Buscar Clientes por CUIT</h2>
+    <form th:action="@{/clientes/buscar}" method="get">
+        CUIT: <input type="text" name="cuit" required>
         <button type="submit">Buscar</button>
     </form>
 
-    <h2>Por Role</h2>
-    <form action="/clientes/buscar-por-role" method="get">
-        <label for="role">Role:</label>
-        <input type="text" id="role" name="role" required>
+    <!-- Buscar por Rol -->
+    <h2>Buscar Clientes por Rol</h2>
+    <form th:action="@{/clientes/buscar-por-role}" method="get">
+        Rol: <input type="text" name="role" required>
         <button type="submit">Buscar</button>
     </form>
+
+    <!-- Buscar Contacto por CUIT -->
+    <h2>Buscar Contacto por CUIT</h2>
+    <form th:action="@{/clientes/contacto-por-cuit}" method="get">
+        CUIT: <input type="text" name="cuit" required>
+        <button type="submit">Buscar Contacto</button>
+    </form>
+
+    <!-- Ver Todos -->
+    <h2>Ver Todos los Clientes</h2>
+    <form th:action="@{/clientes/todos}" method="get">
+        <button type="submit">Mostrar Todos</button>
+    </form>
+
+			<!-- Agregar Contacto -->
+	<h2>Agregar Nuevo Contacto</h2>
+	<form th:action="@{/contactos/agregar}" method="post">
+	    ID de Contacto (igual a ID de Persona): <input type="number" name="idContacto" required><br>
+	    Teléfono: <input type="text" name="telefono" required><br>
+	    Email: <input type="email" name="email" required><br>
+	    Dirección: <input type="text" name="direccion" required><br>
+	    <button type="submit">Agregar Contacto</button>
+	</form>
+
 	
-	<h2>Traer Contacto por Cuit</h2>
-	    <form action="/clientes/contacto-por-cuit" method="get">
-			<label for="cuit">CUIT:</label>
-			<input type="text" id="cuit" name="cuit" required>
-			<button type="submit">Buscar</button>
-	    </form>
+
+
+    <!-- Agregar Cliente -->
+    <h2>Agregar Nuevo Cliente</h2>
+    <form th:action="@{/clientes/agregar}" method="post">
+        Nombre: <input type="text" name="nombre" required><br>
+        Apellido: <input type="text" name="apellido" required><br>
+        DNI: <input type="text" name="dni" required><br>
+        CUIT: <input type="text" name="cuit" required><br>
+        <!-- Usuario (opcional): <input type="text" name="usuario"><br> -->
+        <button type="submit">Agregar</button>
+    </form>
+
+    <!-- Modificar Cliente -->
+    <h2>Modificar Cliente</h2>
+    <form th:action="@{/clientes/modificar}" method="post">
+        ID: <input type="number" name="id" required><br>
+        Nombre: <input type="text" name="nombre"><br>
+        Apellido: <input type="text" name="apellido"><br>
+        DNI: <input type="text" name="dni"><br>
+        CUIT: <input type="text" name="cuit"><br>
+        Usuario (opcional): <input type="text" name="usuario"><br>
+        <button type="submit">Modificar</button>
+    </form>
+
+    <!-- Eliminar Cliente -->
+    <h2>Eliminar Cliente</h2>
+    <form th:action="@{/clientes/eliminar}" method="post">
+        ID: <input type="number" name="id" required>
+        <button type="submit">Eliminar</button>
+    </form>
 </body>
 </html>
