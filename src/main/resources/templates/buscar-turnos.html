@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Formulario de Turnos</title>
+</head>
+<body>
+    <h1>Buscar Turnos</h1>
+
+    <!-- Buscar por ID -->
+    <form th:action="@{/turnos/buscar-por-id}" method="get">
+        <label>ID Turno:</label>
+        <input type="number" name="id" required />
+        <button type="submit">Buscar por ID</button>
+    </form>
+    <hr/>
+    
+    
+    <h2>Agregar Turno</h2>
+<form th:action="@{/turnos/agregar}" method="post">
+    <label>Presencial:</label>
+    <select name="presencial">
+        <option value="true">Sí</option>
+        <option value="false">No</option>
+    </select><br/>
+
+    <label>ID Lugar:</label>
+    <input type="number" name="idLugarTurno" required /><br/>
+
+    <label>ID Empleado:</label>
+    <input type="number" name="idEmpleado" required /><br/>
+
+    <label>ID Cliente:</label>
+    <input type="number" name="idCliente" required /><br/>
+
+    <label>ID Servicio:</label>
+    <input type="number" name="idServicio" /><br/>
+
+    <label>Fecha y Hora Inicio:</label>
+    <input type="datetime-local" name="fechaHoraInicio" required /><br/>
+
+    <label>Fecha y Hora Fin:</label>
+    <input type="datetime-local" name="fechaHoraFin" required /><br/>
+
+    <button type="submit">Agregar Turno</button>
+</form>
+<hr/>
+
+<!-- Modificar Turno -->
+<h2>Modificar Turno</h2>
+<form th:action="@{/turnos/modificar}" method="post">
+    <label>ID Turno (a modificar):</label>
+    <input type="number" name="id" required /><br/>
+
+    <label>Presencial:</label>
+    <select name="presencial">
+        <option value="true">Sí</option>
+        <option value="false">No</option>
+    </select><br/>
+
+    <label>ID Lugar:</label>
+    <input type="number" name="idLugarTurno" required /><br/>
+
+    <label>ID Empleado:</label>
+    <input type="number" name="idEmpleado" required /><br/>
+
+    <label>ID Cliente:</label>
+    <input type="number" name="idCliente" required /><br/>
+
+    <label>ID Servicio:</label>
+    <input type="number" name="idServicio" /><br/>
+
+    <label>Fecha y Hora Inicio:</label>
+    <input type="datetime-local" name="fechaHoraInicio" required /><br/>
+
+    <label>Fecha y Hora Fin:</label>
+    <input type="datetime-local" name="fechaHoraFin" required /><br/>
+
+    <button type="submit">Modificar Turno</button>
+</form>
+<hr/>
+
+<!-- Eliminar Turno -->
+<h2>Eliminar Turno</h2>
+<form th:action="@{/turnos/eliminar}" method="post">
+    <label>ID Turno a eliminar:</label>
+    <input type="number" name="id" required />
+    <button type="submit">Eliminar Turno</button>
+</form>
+<hr/>
+
+
+    <!-- Buscar entre fechas -->
+    <form th:action="@{/turnos/buscar-entre-fechas}" method="get">
+        <label>Desde:</label>
+        <input type="datetime-local" name="desde" required />
+        <label>Hasta:</label>
+        <input type="datetime-local" name="hasta" required />
+        <button type="submit">Buscar entre fechas</button>
+    </form>
+    <hr/>
+
+    <!-- Buscar por cliente entre fechas -->
+    <form th:action="@{/turnos/buscar-por-cliente}" method="get">
+        <label>ID Cliente:</label>
+        <input type="number" name="id" required />
+        <label>Desde:</label>
+        <input type="datetime-local" name="desde" required />
+        <label>Hasta:</label>
+        <input type="datetime-local" name="hasta" required />
+        <button type="submit">Buscar por cliente</button>
+    </form>
+    <hr/>
+
+    <!-- Buscar por empleado entre fechas -->
+    <form th:action="@{/turnos/buscar-por-empleado}" method="get">
+        <label>ID Empleado:</label>
+        <input type="number" name="id" required />
+        <label>Desde:</label>
+        <input type="datetime-local" name="desde" required />
+        <label>Hasta:</label>
+        <input type="datetime-local" name="hasta" required />
+        <button type="submit">Buscar por empleado</button>
+    </form>
+    <hr/>
+
+    <!-- Buscar por lugar entre fechas -->
+    <form th:action="@{/turnos/buscar-por-lugar}" method="get">
+        <label>ID Lugar:</label>
+        <input type="number" name="id" required />
+        <label>Desde:</label>
+        <input type="datetime-local" name="desde" required />
+        <label>Hasta:</label>
+        <input type="datetime-local" name="hasta" required />
+        <button type="submit">Buscar por lugar</button>
+    </form>
+    <hr/>
+
+    <!-- Buscar por presencial -->
+    <form th:action="@{/turnos/buscar-por-presencial}" method="get">
+        <label>¿Es presencial?</label>
+        <select name="presencial">
+            <option value="true">Sí</option>
+            <option value="false">No</option>
+        </select>
+        <label>Desde:</label>
+        <input type="datetime-local" name="desde" required />
+        <label>Hasta:</label>
+        <input type="datetime-local" name="hasta" required />
+        <button type="submit">Buscar por presencialidad</button>
+    </form>
+    <hr/>
+
+    <!-- Buscar por nombre de cliente -->
+    <form th:action="@{/turnos/buscar-por-nombre-cliente}" method="get">
+        <label>Nombre Cliente:</label>
+        <input type="text" name="nombre" required />
+        <label>Desde:</label>
+        <input type="datetime-local" name="desde" required />
+        <label>Hasta:</label>
+        <input type="datetime-local" name="hasta" required />
+        <button type="submit">Buscar por nombre cliente</button>
+    </form>
+    <hr/>
+
+    <!-- Buscar por rol del empleado -->
+    <form th:action="@{/turnos/buscar-por-rol-empleado}" method="get">
+        <label>Rol Empleado:</label>
+        <input type="text" name="rol" required />
+        <label>Desde:</label>
+        <input type="datetime-local" name="desde" required />
+        <label>Hasta:</label>
+        <input type="datetime-local" name="hasta" required />
+        <button type="submit">Buscar por rol</button>
+    </form>
+    <hr/>
+
+    <!-- Buscar por dirección del lugar -->
+    <form th:action="@{/turnos/buscar-por-direccion-lugar}" method="get">
+        <label>Dirección:</label>
+        <input type="text" name="direccion" required />
+        <label>Desde:</label>
+        <input type="datetime-local" name="desde" required />
+        <label>Hasta:</label>
+        <input type="datetime-local" name="hasta" required />
+        <button type="submit">Buscar por dirección del lugar</button>
+    </form>
+    <hr/>
+
+    <!-- Buscar por apellido de empleado -->
+    <form th:action="@{/turnos/buscar-por-apellido-empleado}" method="get">
+        <label>Apellido Empleado:</label>
+        <input type="text" name="apellido" required />
+        <button type="submit">Buscar por apellido</button>
+    </form>
+    <hr/>
+
+    <!-- Ver todos -->
+    <a th:href="@{/turnos/todos}">Ver todos los turnos</a><br/>
+
+</body>
+</html>
+
+

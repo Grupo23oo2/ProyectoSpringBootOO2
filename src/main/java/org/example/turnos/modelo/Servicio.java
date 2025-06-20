@@ -1,13 +1,17 @@
 package org.example.turnos.modelo;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "servicio")
 public class Servicio {
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idServicio;
 	private String descripcion;
 	private Long duracion;
@@ -20,6 +24,8 @@ public class Servicio {
 		this.duracion = duracion;
 		this.activo = activo;
 	}
+	
+	public Servicio() {}
 	
 	public Long getIdServicio() {
 		return idServicio;

@@ -3,8 +3,14 @@ package org.example.turnos.servicios.implementacion;
 import org.example.turnos.dtos.TurnoDTO;
 import org.example.turnos.excepciones.MiExcepcionPersonalizada;
 import org.example.turnos.modelo.Cliente;
+import org.example.turnos.modelo.Empleado;
+import org.example.turnos.modelo.Lugar;
+import org.example.turnos.modelo.Servicio;
 import org.example.turnos.modelo.Turno;
 import org.example.turnos.repositorios.IClienteRepositorio;
+import org.example.turnos.repositorios.IEmpleadoRepositorio;
+import org.example.turnos.repositorios.ILugarRepositorio;
+import org.example.turnos.repositorios.IServicioRepositorio;
 import org.example.turnos.repositorios.ITurnoRepositorio;
 import org.example.turnos.servicios.ITurnoServicio;
 import org.modelmapper.ModelMapper;
@@ -23,25 +29,50 @@ public class TurnoServicio implements ITurnoServicio {
 
 	@Autowired
 	private IClienteRepositorio clienteRepositorio;
+	
+	@Autowired
+	private IEmpleadoRepositorio empleadoRepositorio;
+	
+	@Autowired
+	private ILugarRepositorio lugarRepositorio;
+	
+	@Autowired
+	private IServicioRepositorio servicioRepositorio;
 
 	@Autowired
 	private ModelMapper modelMapper;
 
 	@Override
 	public TurnoDTO agregarTurno(TurnoDTO dto) {
-		try {
-		Turno turno = modelMapper.map(dto, Turno.class);
+	    try {
+	        Turno turno = modelMapper.map(dto, Turno.class);
 
-		Cliente cliente = clienteRepositorio.findById(dto.getIdCliente())
-				.orElseThrow(() -> new MiExcepcionPersonalizada("Cliente no encontrado con id: " + dto.getIdCliente()));
+	        Cliente cliente = clienteRepositorio.findById(dto.getIdCliente())
+	                .orElseThrow(() -> new MiExcepcionPersonalizada("Cliente no encontrado con id: " + dto.getIdCliente()));
+	        turno.setCliente(cliente);
 
-		turno.setCliente(cliente);
-		Turno guardado = turnoRepositorio.save(turno);
+	        Empleado empleado = empleadoRepositorio.findById(dto.getIdEmpleado())
+	                .orElseThrow(() -> new MiExcepcionPersonalizada("Empleado no encontrado con id: " + dto.getIdEmpleado()));
+	        turno.setEmpleado(empleado);
 
-		return modelMapper.map(guardado, TurnoDTO.class);
-		} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo agregar el turno" + e.getMessage());
-        }
+	        Lugar lugar = lugarRepositorio.findById(dto.getIdLugarTurno())
+	                .orElseThrow(() -> new MiExcepcionPersonalizada("Lugar no encontrado con id: " + dto.getIdLugarTurno()));
+	        turno.setLugarTurno(lugar);
+
+	        if (dto.getIdServicio() != null) {
+	            Servicio servicio = servicioRepositorio.findById(dto.getIdServicio())
+	                .orElseThrow(() -> new MiExcepcionPersonalizada("Servicio no encontrado con id: " + dto.getIdServicio()));
+	            turno.setServicio(servicio);
+	        } else {
+	            turno.setServicio(null);
+	        }
+
+	        Turno guardado = turnoRepositorio.save(turno);
+	        return modelMapper.map(guardado, TurnoDTO.class);
+
+	    } catch (Exception e) {
+	        throw new MiExcepcionPersonalizada("No se pudo agregar el turno: " + e.getMessage());
+	    }
 	}
 
 	@Override

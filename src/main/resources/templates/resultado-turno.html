@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle Turno</title>
+</head>
+<body>
+<h1>Detalle de Turno</h1>
+
+<div th:if="${turno != null}">
+    <p><strong>ID:</strong> <span th:text="${turno.idTurno}"></span></p>
+    <p><strong>Fecha y Hora Inicio:</strong> <span th:text="${turno.fechaHoraInicio}"></span></p>
+    <p><strong>Fecha y Hora Fin:</strong> <span th:text="${turno.fechaHoraFin}"></span></p>
+    <p><strong>Cliente:</strong> <span th:text="${turno.idCliente}"></span></p>
+    <p><strong>Empleado:</strong> <span th:text="${turno.idEmpleado}"></span></p>
+    <p><strong>Lugar:</strong> <span th:text="${turno.idLugarTurno}"></span></p>
+    <p><strong>Presencial:</strong> <span th:text="${turno.presencial} ? 'Sí' : 'No'"></span></p>
+    <p><strong>Servicio ID:</strong> <span th:text="${turno.idServicio}"></span></p>
+</div>
+
+<div th:if="${mensaje != null}">
+    <p th:text="${mensaje}"></p>
+</div>
+
+<a href="/turnos/formulario">Volver al formulario</a>
+</body>
+</html>

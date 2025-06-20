@@ -28,7 +28,6 @@ public class Turno {
     private LocalDateTime fechaHoraFin;
     
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
-    @PrimaryKeyJoinColumn // le dice que comparten el mismo id
     private Servicio servicio;
     
     public Turno() {
