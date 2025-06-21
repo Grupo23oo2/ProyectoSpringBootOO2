@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error - Cuit duplicado</title>
+</head>
+<body>
+    <h1>Recurso no encontrado</h1>
+    <p th:text="${mensajeError}">Error: el cuit ingresado ya existe en el sistema</p>
+    <a th:href="@{/}">Volver al inicio</a>
+</body>
+</html>

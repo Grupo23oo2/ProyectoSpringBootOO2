@@ -24,7 +24,7 @@ public class RolUsuarioWebControlador {
     public String mostrarPaginaInicial(Model model) {
         // Podés preparar datos o DTOs si los necesitás en la vista
         model.addAttribute("rolUsuarioDTO", new RolUsuarioDTO());
-        return "formulario-roles-usuarios";  // Nombre de la plantilla Thymeleaf para el formulario inicial
+        return "buscar-rol-usuario";  // Nombre de la plantilla Thymeleaf para el formulario inicial
     }
     
     

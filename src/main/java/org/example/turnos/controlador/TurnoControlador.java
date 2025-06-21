@@ -20,7 +20,7 @@ public class TurnoControlador {
 
     @GetMapping("/formulario")
     public String mostrarFormulario() {
-        return "buscar-turnos"; // Vista con el formulario de búsqueda
+        return "buscar-turno"; // Vista con el formulario de búsqueda
     }
     
     

@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <title>Gestión de Clientes</title>
+	<link rel="stylesheet" th:href="@{/css/clientes.css}">
 </head>
 <body>
-    <h1>Gestión de Clientes</h1>
+	<header>
+		<h1>Gestión de Clientes</h1>
+	</header>
 
     <!-- Buscar por CUIT -->
     <h2>Buscar Clientes por CUIT</h2>
@@ -76,5 +79,9 @@
         ID: <input type="number" name="id" required>
         <button type="submit">Eliminar</button>
     </form>
+	
+	<div style="max-width: 600px; margin-top: 40px;">
+		<button onclick="window.history.back()" class="btn-volver">← Volver</button>
+	</div>
 </body>
 </html>

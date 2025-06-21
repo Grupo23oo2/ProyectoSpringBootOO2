@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Detalle Servicio</title>
+</head>
+<body>
+
+<h1>Detalle del Servicio</h1>
+
+<div th:if="${servicio != null}">
+    <p><strong>ID:</strong> <span th:text="${servicio.idServicio}"></span></p>
+    <p><strong>Descripción:</strong> <span th:text="${servicio.descripcion}">Descripción</span></p>
+    <p><strong>Duración (minutos):</strong> <span th:text="${servicio.duracion}">Duración</span></p>
+    <p><strong>Activo:</strong> <span th:text="${servicio.activo} ? 'Sí' : 'No'">Activo</span></p>
+</div>
+
+<!-- Mensaje (por ejemplo, al eliminar) -->
+<div th:if="${mensaje != null}">
+    <p><strong th:text="${mensaje}"></strong></p>
+</div>
+
+<hr/>
+
+<!-- Acciones -->
+<p><a th:href="@{/servicios/todos}">Ver todos los servicios</a></p>
+<p><a th:href="@{/servicios/formulario}">Agregar o modificar un servicio</a></p>
+
+</body>
+</html>

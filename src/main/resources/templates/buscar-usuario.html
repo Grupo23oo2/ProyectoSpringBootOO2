@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <title>Gestión de Usuarios</title>
+	<link rel="stylesheet" th:href="@{/css/usuarios.css}">
 </head>
 <body>
-
-    <h1>Gestión de Usuarios</h1>
+	<header>
+		<h1>Gestión de Usuarios</h1>
+	</header>
 
     <!-- FORMULARIO: Buscar Roles por Usuario -->
     <section>
@@ -18,8 +20,6 @@
 	</form>
 
     </section>
-
-    <hr/>
 
     <!-- FORMULARIO: Agregar Usuario -->
     <section>
@@ -49,7 +49,6 @@
     </form>
     </section>
 
-    <hr/>
 
     <!-- FORMULARIO: Modificar Usuario -->
 <section>
@@ -80,8 +79,6 @@
     </form>
 </section>
 
-    <hr/>
-
     <!-- FORMULARIO: Eliminar Usuario -->
     <section>
         <h2>Eliminar Usuario</h2>
@@ -92,7 +89,6 @@
         </form>
     </section>
 
-    <hr/>
 
     <!-- FORMULARIO: Buscar Usuario por ID -->
     <section>
@@ -104,12 +100,10 @@
         </form>
     </section>
 
-    <hr/>
 
-    <!-- ENLACE: Ver todos los usuarios -->
-    <section>
-        <a href="/usuarios/todos">Ver todos los usuarios</a>
-    </section>
+	<div style="max-width: 600px; margin-top: 40px;">
+			<button onclick="window.history.back()" class="btn-volver">← Volver</button>
+		</div>
 
 </body>
 </html>

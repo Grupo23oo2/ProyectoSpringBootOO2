@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Formulario Servicio</title>
+	<link rel="stylesheet" th:href="@{/css/servicios.css}">
+</head>
+<body>
+	<header>
+		<h1>Gestión de Servicio</h1>
+	</header>
+
+	<!-- Formulario para agregar o modificar un servicio -->
+	<section>
+		<h2>Agregar Nuevo Servicio</h2>
+		<form th:action="@{${servicioDTO.idServicio} != null ? '/servicios/modificar?id=' + ${servicioDTO.idServicio} : '/servicios/agregar'}"
+		      th:object="${servicioDTO}"
+		      method="post">
+		
+		    <div th:if="${servicioDTO.idServicio} != null">
+		        <label>ID Servicio:</label>
+		        <input type="text" th:field="*{idServicio}" readonly />
+		        <br/>
+		    </div>
+		
+		    <label for="descripcion">Descripción:</label>
+		    <input type="text" id="descripcion" th:field="*{descripcion}" required />
+		    <br/>
+		
+		    <label for="duracion">Duración (minutos):</label>
+		    <input type="number" id="duracion" th:field="*{duracion}" min="1" required />
+		    <br/>
+		
+		    <label for="activo">Activo:</label>
+		    <input type="checkbox" id="activo" th:field="*{activo}" checked/>
+		    <br/>
+		
+		    <button type="submit" th:text="${servicioDTO.idServicio} != null ? 'Modificar' : 'Agregar'">Agregar</button>
+		</form>
+	</section>
+
+	<section>
+		<!-- Buscar servicio por ID -->
+		<h2>Buscar Servicio por ID</h2>
+		<form th:action="@{/servicios/buscar-por-id}" method="get">
+		    <label for="buscarId">ID Servicio:</label>
+		    <input type="number" name="id" id="buscarId" required />
+		    <button type="submit">Buscar</button>
+		</form>
+	</section>
+
+	<section>
+		<!-- Eliminar servicio por ID -->
+		<h2>Eliminar Servicio por ID</h2>
+		<form th:action="@{/servicios/eliminar}" method="post">
+		    <label for="eliminarId">ID Servicio:</label>
+		    <input type="number" name="id" id="eliminarId" required />
+		    <button type="submit">Eliminar</button>
+		</form>
+	</section>
+
+	<div style="max-width: 600px; margin-top: 40px;">
+		<button onclick="window.history.back()" class="btn-volver">← Volver</button>
+	</div>
+</body>
+</html>

@@ -18,10 +18,10 @@ public class UsuarioWebControlador {
     private IUsuarioServicio usuarioServicio;
 
     // Formulario para ingresar ID de usuario para ver roles
-    @GetMapping("/formulario-roles")
+    @GetMapping("/formulario")
     public String mostrarFormularioRoles(Model model) {
     	model.addAttribute("usuario", new UsuarioDTO());
-        return "buscar-roles";
+        return "buscar-usuario";
     }
 
     // Consulta los roles activos de un usuario
