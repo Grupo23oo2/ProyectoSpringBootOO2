@@ -2,6 +2,7 @@ package org.example.turnos.repositorios;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.example.turnos.modelo.RolUsuario;
 import org.example.turnos.modelo.Usuario;
@@ -17,6 +18,6 @@ public interface IUsuarioRepositorio extends JpaRepository<Usuario, Long> {
 		""")
 		List<RolUsuario> findRolesUsuarioByUsuario(@Param("idUsuario") Long idUsuario);
 
-
+	Optional<Usuario> findByNombreUsuario(String nombreUsuario);
 
 }

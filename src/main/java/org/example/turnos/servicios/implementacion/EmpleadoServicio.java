@@ -1,6 +1,7 @@
 package org.example.turnos.servicios.implementacion;
 
 import org.example.turnos.dtos.EmpleadoDTO;
+import org.example.turnos.excepciones.DniEmpleadoDuplicadoException;
 import org.example.turnos.excepciones.MiExcepcionPersonalizada;
 import org.example.turnos.modelo.Empleado;
 import org.example.turnos.modelo.Usuario;
@@ -29,12 +30,16 @@ public class EmpleadoServicio implements IEmpleadoServicio {
 
     @Override
     public EmpleadoDTO agregarEmpleado(EmpleadoDTO dto) {
-    	try {
-        Empleado empleado = toEntity(dto);
-        Empleado guardado = empleadoRepositorio.save(empleado);
-        return toDTO(guardado);
-    	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo agregar el empleado" + e.getMessage());
+        if (empleadoRepositorio.existsByDni(dto.getDni())) {
+            throw new DniEmpleadoDuplicadoException("Ya existe un empleado con el DNI: " + dto.getDni());
+        }
+
+        try {
+            Empleado empleado = toEntity(dto);
+            Empleado guardado = empleadoRepositorio.save(empleado);
+            return toDTO(guardado);
+        } catch (Exception e) {
+            throw new MiExcepcionPersonalizada("No se pudo agregar el empleado: " + e.getMessage());
         }
     }
 

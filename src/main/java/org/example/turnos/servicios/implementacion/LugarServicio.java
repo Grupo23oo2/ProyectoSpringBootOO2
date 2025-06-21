@@ -1,6 +1,7 @@
 package org.example.turnos.servicios.implementacion;
 
 import org.example.turnos.dtos.LugarDTO;
+import org.example.turnos.excepciones.DireccionLugarDuplicadaException;
 import org.example.turnos.excepciones.MiExcepcionPersonalizada;
 import org.example.turnos.modelo.Lugar;
 import org.modelmapper.ModelMapper;
@@ -23,12 +24,16 @@ public class LugarServicio implements ILugarServicio {
 
     @Override
     public LugarDTO agregarLugar(LugarDTO dto) {
-    	try {
-        Lugar lugar = modelMapper.map(dto, Lugar.class);
-        Lugar guardado = lugarRepositorio.save(lugar);
-        return modelMapper.map(guardado, LugarDTO.class);
-    	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo agregar el lugar" + e.getMessage());
+        if (lugarRepositorio.existsByDireccion(dto.getDireccion())) {
+            throw new DireccionLugarDuplicadaException("Ya existe un lugar con la dirección: " + dto.getDireccion());
+        }
+
+        try {
+            Lugar lugar = modelMapper.map(dto, Lugar.class);
+            Lugar guardado = lugarRepositorio.save(lugar);
+            return modelMapper.map(guardado, LugarDTO.class);
+        } catch (Exception e) {
+            throw new MiExcepcionPersonalizada("No se pudo agregar el lugar: " + e.getMessage());
         }
     }
 

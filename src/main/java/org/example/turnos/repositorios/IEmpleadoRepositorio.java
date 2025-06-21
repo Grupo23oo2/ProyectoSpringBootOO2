@@ -20,4 +20,6 @@ public interface IEmpleadoRepositorio extends JpaRepository<Empleado, Long> {
 	List<Empleado> findByRol(@Param("role") String role);
 
 	List<Empleado> findByFechaInicio(LocalDate fechaInicio);
+	
+	boolean existsByDni(String dni); // para la excepcion
 }

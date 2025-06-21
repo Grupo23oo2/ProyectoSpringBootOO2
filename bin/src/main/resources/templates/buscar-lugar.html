@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Gestión de Lugares</title>
+	<link rel="stylesheet" th:href="@{/css/lugares.css}">
 </head>
 <body>
-
-<h1>Formulario de Lugares</h1>
-
-<hr/>
+	<header>
+		<h1>Gestión de Lugares</h1>
+	</header>
 
 <!-- Buscar Lugar por ID -->
 <section>
@@ -20,7 +20,7 @@
     </form>
 </section>
 
-<hr/>
+
 
 <!-- Agregar Lugar -->
 <section>
@@ -33,7 +33,7 @@
     </form>
 </section>
 
-<hr/>
+
 
 <!-- Modificar Lugar -->
 <section>
@@ -51,7 +51,7 @@
     </form>
 </section>
 
-<hr/>
+
 
 <!-- Eliminar Lugar -->
 <section>
@@ -63,10 +63,11 @@
     </form>
 </section>
 
-<hr/>
 
-<!-- Ir a lista completa -->
-<a href="/lugares/todos">Ver todos los lugares</a>
+
+	<div style="max-width: 600px; margin-top: 40px;">
+		<button onclick="window.history.back()" class="btn-volver">← Volver</button>
+	</div>
 
 </body>
 </html>
