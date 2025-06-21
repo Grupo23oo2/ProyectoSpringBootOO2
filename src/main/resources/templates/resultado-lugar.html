@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Resultado de Operación</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
 </head>
 <body>
 
-<h1>Resultado de la operación sobre Lugar</h1>
+    <h1>Resultado de la operación sobre Lugar</h1>
+    <hr/>
 
-<!-- Mostrar un solo lugar -->
-<section th:if="${lugar != null}">
-    <p><strong>ID Lugar:</strong> <span th:text="${lugar.idLugar}"></span></p>
-    <p><strong>Dirección:</strong> <span th:text="${lugar.direccion}"></span></p>
-</section>
+    <!-- Mostrar un solo lugar -->
+    <section th:if="${lugar != null}">
+        <h2>Lugar Encontrado</h2>
+        <p><strong>ID Lugar:</strong> <span th:text="${lugar.idLugar}"></span></p>
+        <p><strong>Dirección:</strong> <span th:text="${lugar.direccion}"></span></p>
+    </section>
 
-<!-- Mensaje de eliminación u otros -->
-<section th:if="${mensaje != null}">
-    <p><strong th:text="${mensaje}"></strong></p>
-</section>
-
-<br/>
-<a href="/lugares/formulario-lugares">Volver al formulario</a>
+    <div style="margin-top: 30px; text-align: center;">
+        <button onclick="window.history.back()" class="btn-volver">← Volver</button>
+    </div>
 
 </body>
 </html>

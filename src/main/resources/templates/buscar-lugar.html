@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Gestión de Lugares</title>
-	<link rel="stylesheet" th:href="@{/css/lugares.css}">
+    <link rel="stylesheet" th:href="@{/css/general.css}">
 </head>
 <body>
-	<header>
-		<h1>Gestión de Lugares</h1>
-	</header>
+
+<h1>Gestión de Lugares</h1>
+
+<hr/>
 
 <!-- Buscar Lugar por ID -->
 <section>
@@ -20,20 +21,15 @@
     </form>
 </section>
 
-
-
 <!-- Agregar Lugar -->
 <section>
     <h2>Agregar Nuevo Lugar</h2>
     <form th:action="@{/lugares/agregar}" th:object="${lugarDTO}" method="post">
         <label for="direccionAgregar">Dirección:</label>
         <input type="text" id="direccionAgregar" th:field="*{direccion}" required />
-        <br/>
         <button type="submit">Agregar Lugar</button>
     </form>
 </section>
-
-
 
 <!-- Modificar Lugar -->
 <section>
@@ -41,17 +37,13 @@
     <form th:action="@{/lugares/modificar}" method="post">
         <label for="idModificar">ID Lugar:</label>
         <input type="number" id="idModificar" name="id" required />
-        <br/>
 
         <label for="direccionModificar">Nueva Dirección:</label>
         <input type="text" id="direccionModificar" name="direccion" required />
-        <br/>
 
         <button type="submit">Modificar Lugar</button>
     </form>
 </section>
-
-
 
 <!-- Eliminar Lugar -->
 <section>
@@ -63,11 +55,9 @@
     </form>
 </section>
 
-
-
-	<div style="max-width: 600px; margin-top: 40px;">
-		<button onclick="window.history.back()" class="btn-volver">← Volver</button>
-	</div>
+<div style="max-width: 600px; margin-top: 40px; text-align: center;">
+    <button onclick="window.history.back()" class="btn-volver">← Volver</button>
+</div>
 
 </body>
 </html>

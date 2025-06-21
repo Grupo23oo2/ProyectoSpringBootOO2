@@ -3,36 +3,41 @@
 <head>
     <meta charset="UTF-8" />
     <title>Listado de Servicios</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}">
 </head>
 <body>
 
-<h1>Lista de Servicios</h1>
+    <h1>Lista de Servicios</h1>
+    <hr/>
 
-<!-- Mostrar tabla si hay servicios -->
-<table border="1" th:if="${servicios != null and !servicios.isEmpty()}">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Descripción</th>
-            <th>Duración (min)</th>
-            <th>Activo</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="servicio : ${servicios}">
-            <td th:text="${servicio.idServicio}">ID</td>
-            <td th:text="${servicio.descripcion}">Descripción</td>
-            <td th:text="${servicio.duracion}">Duración</td>
-            <td th:text="${servicio.activo} ? 'Sí' : 'No'">Activo</td>
-        </tr>
-    </tbody>
-</table>
+    <section th:if="${servicios != null and !servicios.isEmpty()}">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descripción</th>
+                    <th>Duración (min)</th>
+                    <th>Activo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="servicio : ${servicios}">
+                    <td th:text="${servicio.idServicio}">ID</td>
+                    <td th:text="${servicio.descripcion}">Descripción</td>
+                    <td th:text="${servicio.duracion}">Duración</td>
+                    <td th:text="${servicio.activo} ? 'Sí' : 'No'">Activo</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
 
-<!-- Si no hay servicios -->
-<p th:if="${servicios == null or servicios.isEmpty()}">No hay servicios disponibles.</p>
+    <section th:if="${servicios == null or servicios.isEmpty()}">
+        <p>No hay servicios disponibles.</p>
+    </section>
 
-<br/>
-<a href="/servicios/formulario">Volver al formulario</a>
+    <div style="margin-top: 30px; text-align: center;">
+        <button onclick="window.history.back()" class="btn-volver">← Volver al formulario</button>
+    </div>
 
 </body>
 </html>
