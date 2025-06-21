@@ -28,7 +28,7 @@ public class Usuario {
 
     private boolean estado;
 
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch=FetchType.EAGER, mappedBy="usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<RolUsuario> rolesUsuario = new HashSet<>();
 
 	public Usuario() {

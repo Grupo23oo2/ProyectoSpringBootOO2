@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" />
     <title>Formulario de Turnos</title>
@@ -10,7 +11,7 @@
         <h1>Gestión de Turnos</h1>
     </header>
 
-    <section>
+    <section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
         <h2>Buscar Turnos</h2>
         <form th:action="@{/turnos/buscar-por-id}" method="get">
             <label>ID Turno:</label>
@@ -19,7 +20,7 @@
         </form>
     </section>
 
-    <section>
+    <section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
         <h2>Agregar Turno</h2>
         <form th:action="@{/turnos/agregar}" method="post">
             <label>Presencial:</label>
@@ -50,7 +51,7 @@
         </form>
     </section>
 
-    <section>
+    <section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
         <h2>Modificar Turno</h2>
         <form th:action="@{/turnos/modificar}" method="post">
             <label>ID Turno (a modificar):</label>
@@ -82,9 +83,9 @@
 
             <button type="submit">Modificar Turno</button>
         </form>
-    </section>
+   		 </section>
 
-    <section>
+   		 <section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
         <h2>Eliminar Turno</h2>
         <form th:action="@{/turnos/eliminar}" method="post">
             <label>ID Turno a eliminar:</label>
@@ -94,9 +95,11 @@
     </section>
 
     <!-- Reutilizamos un solo section para los filtros -->
-    <section>
+   
+   
+    
         <h2>Buscar Turnos Avanzado</h2>
-
+		<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
         <form th:action="@{/turnos/buscar-entre-fechas}" method="get">
             <label>Desde:</label>
             <input type="datetime-local" name="desde" required />
@@ -104,7 +107,9 @@
             <input type="datetime-local" name="hasta" required />
             <button type="submit">Buscar entre fechas</button>
         </form>
-
+        </section>
+        
+		<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
         <form th:action="@{/turnos/buscar-por-cliente}" method="get">
             <label>ID Cliente:</label>
             <input type="number" name="id" required />
@@ -114,7 +119,9 @@
             <input type="datetime-local" name="hasta" required />
             <button type="submit">Buscar por cliente</button>
         </form>
+        </section>
 
+		<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
         <form th:action="@{/turnos/buscar-por-empleado}" method="get">
             <label>ID Empleado:</label>
             <input type="number" name="id" required />
@@ -124,7 +131,9 @@
             <input type="datetime-local" name="hasta" required />
             <button type="submit">Buscar por empleado</button>
         </form>
+        </section>
 
+		<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
         <form th:action="@{/turnos/buscar-por-lugar}" method="get">
             <label>ID Lugar:</label>
             <input type="number" name="id" required />
@@ -134,7 +143,9 @@
             <input type="datetime-local" name="hasta" required />
             <button type="submit">Buscar por lugar</button>
         </form>
+        </section>
 
+		<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
         <form th:action="@{/turnos/buscar-por-presencial}" method="get">
             <label>¿Es presencial?</label>
             <select name="presencial">
@@ -147,7 +158,9 @@
             <input type="datetime-local" name="hasta" required />
             <button type="submit">Buscar por presencialidad</button>
         </form>
+		</section>
 
+		<section sec:authorize="hasRole('CLIENTE')">
         <form th:action="@{/turnos/buscar-por-nombre-cliente}" method="get">
             <label>Nombre Cliente:</label>
             <input type="text" name="nombre" required />
@@ -157,7 +170,9 @@
             <input type="datetime-local" name="hasta" required />
             <button type="submit">Buscar por nombre cliente</button>
         </form>
+		</section>
 
+		<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
         <form th:action="@{/turnos/buscar-por-rol-empleado}" method="get">
             <label>Rol Empleado:</label>
             <input type="text" name="rol" required />
@@ -167,7 +182,9 @@
             <input type="datetime-local" name="hasta" required />
             <button type="submit">Buscar por rol</button>
         </form>
+        </section>
 
+		<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
         <form th:action="@{/turnos/buscar-por-direccion-lugar}" method="get">
             <label>Dirección:</label>
             <input type="text" name="direccion" required />
@@ -177,7 +194,9 @@
             <input type="datetime-local" name="hasta" required />
             <button type="submit">Buscar por dirección del lugar</button>
         </form>
+        </section>
 
+		<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
         <form th:action="@{/turnos/buscar-por-apellido-empleado}" method="get">
             <label>Apellido Empleado:</label>
             <input type="text" name="apellido" required />

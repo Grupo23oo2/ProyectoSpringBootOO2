@@ -4,6 +4,7 @@ import org.example.turnos.dtos.TurnoDTO;
 import org.example.turnos.servicios.ITurnoServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,7 @@ public class TurnoControlador {
  // --- ABM Turnos ---
 
     @GetMapping("/todos")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
     public String traerTodosLosTurnos(Model model) {
         List<TurnoDTO> turnos = turnoServicio.traerTurnos();
         model.addAttribute("turnos", turnos);
@@ -34,6 +36,7 @@ public class TurnoControlador {
     }
 
     @GetMapping("/buscar-por-id")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
     public String buscarPorId(@RequestParam("id") Long id, Model model) {
         TurnoDTO turno = turnoServicio.traerTurno(id);
         model.addAttribute("turno", turno);
@@ -41,6 +44,7 @@ public class TurnoControlador {
     }
 
     @PostMapping("/agregar")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
     public String agregarTurno(@ModelAttribute TurnoDTO dto, Model model) {
         TurnoDTO agregado = turnoServicio.agregarTurno(dto);
         model.addAttribute("turno", agregado);
@@ -48,6 +52,7 @@ public class TurnoControlador {
     }
 
     @PostMapping("/modificar")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
     public String modificarTurno(@RequestParam Long id, @ModelAttribute TurnoDTO dto, Model model) {
         TurnoDTO actualizado = turnoServicio.modificarTurno(id, dto);
         model.addAttribute("turno", actualizado);
@@ -55,6 +60,7 @@ public class TurnoControlador {
     }
 
     @PostMapping("/eliminar")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
     public String eliminarTurno(@RequestParam Long id, Model model) {
         turnoServicio.eliminarTurno(id);
         model.addAttribute("mensaje", "Turno eliminado con éxito (ID: " + id + ")");
@@ -64,6 +70,7 @@ public class TurnoControlador {
     // --- CONSULTAS POR FILTROS ---
     
     @GetMapping("/buscar-entre-fechas")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
     public String buscarEntreFechas(@RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
                                     @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta,
                                     Model model) {
@@ -73,6 +80,7 @@ public class TurnoControlador {
     }
 
     @GetMapping("/buscar-por-cliente")
+    @PreAuthorize("hasRole('CLIENTE') or hasRole('EMPLEADO')")
     public String buscarPorClienteEntreFechas(@RequestParam("id") Long id,
                                               @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
                                               @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta,
@@ -83,6 +91,7 @@ public class TurnoControlador {
     }
 
     @GetMapping("/buscar-por-empleado")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
     public String buscarPorEmpleadoEntreFechas(@RequestParam("id") Long id,
                                                @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
                                                @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta,
@@ -93,6 +102,7 @@ public class TurnoControlador {
     }
 
     @GetMapping("/buscar-por-lugar")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
     public String buscarPorLugarEntreFechas(@RequestParam("id") Integer id,
                                             @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
                                             @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta,
@@ -105,6 +115,7 @@ public class TurnoControlador {
     // --- CONSULTAS AVANZADAS ---
 
     @GetMapping("/buscar-por-presencial")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
     public String buscarPorPresencial(@RequestParam("presencial") boolean presencial,
                                       @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
                                       @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta,
@@ -115,6 +126,7 @@ public class TurnoControlador {
     }
 
     @GetMapping("/buscar-por-nombre-cliente")
+    @PreAuthorize("hasRole('CLIENTE') or hasRole('EMPLEADO')")
     public String buscarPorNombreCliente(@RequestParam("nombre") String nombre,
                                          @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
                                          @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta,
@@ -125,6 +137,7 @@ public class TurnoControlador {
     }
 
     @GetMapping("/buscar-por-rol-empleado")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
     public String buscarPorRolEmpleado(@RequestParam("rol") String rol,
                                        @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
                                        @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta,
@@ -135,6 +148,7 @@ public class TurnoControlador {
     }
 
     @GetMapping("/buscar-por-direccion-lugar")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
     public String buscarPorDireccionLugar(@RequestParam("direccion") String direccion,
                                           @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
                                           @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta,
@@ -145,6 +159,7 @@ public class TurnoControlador {
     }
 
     @GetMapping("/turnos-presenciales")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
     public String mostrarTurnosPresenciales(Model model) {
         List<TurnoDTO> turnos = turnoServicio.obtenerTurnosPresenciales(true);
         model.addAttribute("turnos", turnos);
@@ -152,6 +167,7 @@ public class TurnoControlador {
     }
 
     @GetMapping("/buscar-por-apellido-empleado")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
     public String buscarTurnosPorApellidoEmpleado(@RequestParam("apellido") String apellido, Model model) {
         List<TurnoDTO> turnos = turnoServicio.traerTurnosPorApellidoEmpleado(apellido);
         model.addAttribute("turnos", turnos);
