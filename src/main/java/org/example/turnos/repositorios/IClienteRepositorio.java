@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface IClienteRepositorio extends JpaRepository<Cliente, Long> {
-	// Podés agregar métodos personalizados si los necesitás
+
 	@Query("""
 			    SELECT c FROM Cliente c
 			    JOIN c.usuario u

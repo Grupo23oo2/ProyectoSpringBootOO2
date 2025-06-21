@@ -20,11 +20,11 @@ public class ServicioWebControlador {
     @Autowired
     private IServicioServicio servicioServicio;
 
-    // Mostrar formulario para agregar un nuevo servicio
+    // Mostrar formulario 
     @GetMapping("/formulario")
     public String mostrarFormulario(Model model) {
         model.addAttribute("servicioDTO", new ServicioDTO());
-        return "buscar-servicio";  // nombre del HTML para el formulario
+        return "buscar-servicio";  
     }
 
     // Traer todos los servicios
@@ -32,7 +32,7 @@ public class ServicioWebControlador {
     public String traerTodos(Model model) {
         List<ServicioDTO> servicios = servicioServicio.traerServicios();
         model.addAttribute("servicios", servicios);
-        return "resultado-servicios";  // nombre del HTML para listar todos
+        return "resultado-servicios";  
     }
 
     // Buscar servicio por ID
@@ -40,7 +40,7 @@ public class ServicioWebControlador {
     public String buscarPorId(@RequestParam Long id, Model model) {
         ServicioDTO servicio = servicioServicio.traerServicio(id);
         model.addAttribute("servicio", servicio);
-        return "resultado-servicio";  // nombre del HTML para mostrar 1 servicio
+        return "resultado-servicio"; 
     }
 
     // Agregar nuevo servicio
@@ -48,7 +48,7 @@ public class ServicioWebControlador {
     public String agregarServicio(@ModelAttribute ServicioDTO servicioDTO, Model model) {
         ServicioDTO agregado = servicioServicio.agregarServicio(servicioDTO);
         model.addAttribute("servicio", agregado);
-        return "resultado-servicio";  // tras agregar muestra detalle
+        return "resultado-servicio";  
     }
 
     // Modificar servicio
@@ -56,7 +56,7 @@ public class ServicioWebControlador {
     public String modificarServicio(@RequestParam Long id, @ModelAttribute ServicioDTO servicioDTO, Model model) {
         ServicioDTO actualizado = servicioServicio.modificarServicio(id, servicioDTO);
         model.addAttribute("servicio", actualizado);
-        return "resultado-servicio";  // tras modificar muestra detalle
+        return "resultado-servicio"; 
     }
 
     // Eliminar servicio
@@ -64,6 +64,6 @@ public class ServicioWebControlador {
     public String eliminarServicio(@RequestParam Long id, Model model) {
         servicioServicio.eliminarServicio(id);
         model.addAttribute("mensaje", "Servicio eliminado con éxito (ID: " + id + ")");
-        return "resultado-servicio";  // podés mostrar mensaje en misma vista detalle o lista
+        return "resultado-servicio";  
     }
 }

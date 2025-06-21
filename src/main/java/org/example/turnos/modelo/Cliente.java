@@ -12,7 +12,7 @@ public class Cliente extends Persona {
     private String cuit;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
-    @PrimaryKeyJoinColumn // le dice que comparten el mismo id
+    @PrimaryKeyJoinColumn // comparten el mismo id
     private Contacto contacto;
 
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

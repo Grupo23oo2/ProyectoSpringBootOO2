@@ -22,9 +22,8 @@ public class RolUsuarioWebControlador {
     
     @GetMapping ("/formulario-roles-usuarios")
     public String mostrarPaginaInicial(Model model) {
-        // Podés preparar datos o DTOs si los necesitás en la vista
         model.addAttribute("rolUsuarioDTO", new RolUsuarioDTO());
-        return "buscar-rol-usuario";  // Nombre de la plantilla Thymeleaf para el formulario inicial
+        return "buscar-rol-usuario";  
     }
     
     

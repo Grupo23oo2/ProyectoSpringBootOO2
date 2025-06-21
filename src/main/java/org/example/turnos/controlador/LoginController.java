@@ -22,6 +22,6 @@ public class LoginController {
             model.addAttribute("mensajeLogout", "Sesión cerrada exitosamente");
         }
 
-        return "login"; // HTML login.html en templates/
+        return "login"; 
     }
 }

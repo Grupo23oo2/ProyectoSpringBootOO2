@@ -38,22 +38,22 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true; // Opcional: podés manejar vencimiento si querés
+        return true; 
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true; // Podés implementar lógica si se bloquea
+        return true; 
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true; // Igual que arriba
+        return true; 
     }
 
     @Override
     public boolean isEnabled() {
-        return usuario.isEstado(); // si el usuario está activo o no
+        return usuario.isEstado(); 
     }
 
     public Usuario getUsuario() {

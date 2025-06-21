@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Maneja MiExcepcionPersonalizada
+    
     @ExceptionHandler(MiExcepcionPersonalizada.class)
     public String manejarMiExcepcionPersonalizada(MiExcepcionPersonalizada ex, Model model) {
         model.addAttribute("mensajeError", ex.getMessage());

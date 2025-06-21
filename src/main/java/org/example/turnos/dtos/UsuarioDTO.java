@@ -1,10 +1,8 @@
 package org.example.turnos.dtos;
 
-//import java.util.List;
-//import java.util.Set;
 
 public class UsuarioDTO {
-
+	
     private Long idUsuario;
     private String nombreUsuario;
     private String contraseniaUsuario;
@@ -12,14 +10,8 @@ public class UsuarioDTO {
     private Long idPersona;
     private String email;
 
-   /* @Getter @Setter
-    private Set<String> roles;*/
-
     public UsuarioDTO() {
     }
-
-    
-
 
 	public UsuarioDTO(Long idUsuario, String nombreUsuario, String contraseniaUsuario, boolean estado, Long idPersona,
 			String email) {
@@ -32,19 +24,6 @@ public class UsuarioDTO {
 		this.email = email;
 	}
 
-
-
-
-/*
-	public UsuarioDTO(Long idUsuario, String nombreUsuario, String contraseniaUsuario, boolean estado, Long idPersona,
-			Set<String> roles) {
-		this.idUsuario = idUsuario;
-		this.nombreUsuario = nombreUsuario;
-		this.contraseniaUsuario = contraseniaUsuario;
-		this.estado = estado;
-		this.idPersona = idPersona;
-		this.roles = roles;
-	}*/
     
 	public Long getIdUsuario() {
 		return idUsuario;

@@ -10,7 +10,7 @@ public class Contacto {
     @Id
     private Long idContacto; // Es igual al idPersona del Cliente
     private String direccion;
-    private String email; // suponiendo que "main" era "mail"
+    private String email; 
     private String telefono;
     
     public Contacto() {

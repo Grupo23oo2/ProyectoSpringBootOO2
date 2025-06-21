@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface IEmpleadoRepositorio extends JpaRepository<Empleado, Long> {
-	// Podés agregar métodos personalizados si los necesitás
+
 	@Query("""
 			    SELECT e FROM Empleado e
 			    JOIN e.usuario u
@@ -21,5 +21,5 @@ public interface IEmpleadoRepositorio extends JpaRepository<Empleado, Long> {
 
 	List<Empleado> findByFechaInicio(LocalDate fechaInicio);
 	
-	boolean existsByDni(String dni); // para la excepcion
+	boolean existsByDni(String dni); 
 }

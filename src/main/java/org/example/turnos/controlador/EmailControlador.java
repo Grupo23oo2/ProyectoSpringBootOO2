@@ -21,7 +21,7 @@ public class EmailControlador {
     @GetMapping("/enviar")
     public String enviarEmailDePrueba() {
         emailServicio.enviarCorreo(
-        		mail, //Correo destinatario
+        		mail, 
                 "Correo de prueba desde Spring Boot",
                 "Hola! Este es un correo de prueba enviado con Spring Boot."
         );
@@ -35,8 +35,8 @@ public class EmailControlador {
         String contenidoHtml = """
             <html>
             <body>
-                <h1 style='color: blue;'>Hola desde Spring Boot!</h1>
-                <p>Este es un correo <b>con formato HTML</b>.</p>
+                <h1 style='color: blue;'>Bienvenido</h1>
+                <p>Su cuenta se ha <b>creado con exito</b>.</p>
             </body>
             </html>
             """;

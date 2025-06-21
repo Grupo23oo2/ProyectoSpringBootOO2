@@ -37,15 +37,14 @@ public class SecurityConfig {
                 .requestMatchers("/lugares/**").hasAnyRole("EMPLEADO", "ADMIN")
                 .requestMatchers("/roles-usuarios/**").hasAnyRole("EMPLEADO", "ADMIN")
                 .requestMatchers("/servicios/**").hasAnyRole("EMPLEADO", "ADMIN")
-             //   .requestMatchers("/turnos/**").hasAnyRole("EMPLEADO", "ADMIN")
                 .requestMatchers("/usuarios/**").hasAnyRole("EMPLEADO", "ADMIN")
                 
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
-                .loginPage("/login") // Tu HTML personalizado
-                .loginProcessingUrl("/login") // Donde se manda el POST con username y password
+                .loginPage("/login") 
+                .loginProcessingUrl("/login") 
                 .defaultSuccessUrl("/", true)
                 .failureUrl("/login?error=true")
                 .permitAll()
@@ -64,9 +63,5 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    // Solo para desarrollo: no encripta la contraseña
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance(); // Para pruebas, usá bcrypt en producción
-    }
+    
 }

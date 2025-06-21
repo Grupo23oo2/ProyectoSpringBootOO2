@@ -13,8 +13,9 @@
 <hr/>
 
 <!-- Buscar por ID -->
-<section>
+<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
     <h2>Buscar Turno por ID</h2>
+    
     <form th:action="@{/turnos/buscar-por-id}" method="get">
         <label for="idBuscar">ID Turno:</label>
         <input type="number" id="idBuscar" name="id" required />
@@ -23,7 +24,7 @@
 </section>
 
 <!-- Agregar Turno -->
-<section>
+<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
     <h2>Agregar Nuevo Turno</h2>
     <form th:action="@{/turnos/agregar}" method="post">
         <label for="presencial">Presencial:</label>
@@ -55,7 +56,7 @@
 </section>
 
 <!-- Modificar Turno -->
-<section>
+<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
     <h2>Modificar Turno</h2>
     <form th:action="@{/turnos/modificar}" method="post">
         <label for="idMod">ID Turno:</label>
@@ -90,7 +91,7 @@
 </section>
 
 <!-- Eliminar Turno -->
-<section>
+<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
     <h2>Eliminar Turno</h2>
     <form th:action="@{/turnos/eliminar}" method="post">
         <label for="idEliminar">ID Turno:</label>
@@ -100,9 +101,8 @@
 </section>
 
 <!-- Filtros Avanzados -->
-<section>
-    <h2>Buscar Turnos Avanzado</h2>
-
+<h2>Buscar Turnos Avanzado</h2>
+<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
     <form th:action="@{/turnos/buscar-entre-fechas}" method="get">
         <label for="desde1">Desde:</label>
         <input type="datetime-local" id="desde1" name="desde" required />
@@ -110,7 +110,9 @@
         <input type="datetime-local" id="hasta1" name="hasta" required />
         <button type="submit">Buscar entre fechas</button>
     </form>
+</section>
 
+<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
     <form th:action="@{/turnos/buscar-por-cliente}" method="get">
         <label for="idCliente2">ID Cliente:</label>
         <input type="number" id="idCliente2" name="id" required />
@@ -120,7 +122,9 @@
         <input type="datetime-local" id="hasta2" name="hasta" required />
         <button type="submit">Buscar por cliente</button>
     </form>
-
+    </section>
+    
+<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
     <form th:action="@{/turnos/buscar-por-empleado}" method="get">
         <label for="idEmpleado2">ID Empleado:</label>
         <input type="number" id="idEmpleado2" name="id" required />
@@ -130,7 +134,9 @@
         <input type="datetime-local" id="hasta3" name="hasta" required />
         <button type="submit">Buscar por empleado</button>
     </form>
+</section>
 
+<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
     <form th:action="@{/turnos/buscar-por-lugar}" method="get">
         <label for="idLugar3">ID Lugar:</label>
         <input type="number" id="idLugar3" name="id" required />
@@ -140,7 +146,9 @@
         <input type="datetime-local" id="hasta4" name="hasta" required />
         <button type="submit">Buscar por lugar</button>
     </form>
+</section>
 
+<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
     <form th:action="@{/turnos/buscar-por-presencial}" method="get">
         <label for="presencialFiltro">¿Es presencial?</label>
         <select id="presencialFiltro" name="presencial">
@@ -153,7 +161,9 @@
         <input type="datetime-local" id="hasta5" name="hasta" required />
         <button type="submit">Buscar por presencialidad</button>
     </form>
+</section>
 
+<section sec:authorize="hasAnyRole('CLIENTE')">
     <form th:action="@{/turnos/buscar-por-nombre-cliente}" method="get">
         <label for="nombreCliente">Nombre Cliente:</label>
         <input type="text" id="nombreCliente" name="nombre" required />
@@ -163,7 +173,9 @@
         <input type="datetime-local" id="hasta6" name="hasta" required />
         <button type="submit">Buscar por nombre cliente</button>
     </form>
+</section>
 
+<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
     <form th:action="@{/turnos/buscar-por-rol-empleado}" method="get">
         <label for="rolEmpleado">Rol Empleado:</label>
         <input type="text" id="rolEmpleado" name="rol" required />
@@ -173,7 +185,9 @@
         <input type="datetime-local" id="hasta7" name="hasta" required />
         <button type="submit">Buscar por rol</button>
     </form>
+</section>
 
+<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
     <form th:action="@{/turnos/buscar-por-direccion-lugar}" method="get">
         <label for="direccionLugar">Dirección:</label>
         <input type="text" id="direccionLugar" name="direccion" required />
@@ -183,7 +197,9 @@
         <input type="datetime-local" id="hasta8" name="hasta" required />
         <button type="submit">Buscar por dirección del lugar</button>
     </form>
+</section>
 
+<section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
     <form th:action="@{/turnos/buscar-por-apellido-empleado}" method="get">
         <label for="apellidoEmpleado">Apellido Empleado:</label>
         <input type="text" id="apellidoEmpleado" name="apellido" required />

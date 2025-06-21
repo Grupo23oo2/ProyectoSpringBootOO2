@@ -3,7 +3,7 @@ package org.example.turnos.modelo;
 import jakarta.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED) // o SINGLE_TABLE, dependiendo tu elección
+@Inheritance(strategy = InheritanceType.JOINED) 
 
 public abstract class Persona {
 
