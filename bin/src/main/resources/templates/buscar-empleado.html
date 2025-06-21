@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Gestión de Empleados</title>
+	<link rel="stylesheet" th:href="@{/css/empleados.css}">
 </head>
 <body>
-    <h1>Gestión de Empleados</h1>
+    <header>
+		<h1>Gestión de Empleados</h1>
+	</header>
 
     <!-- Buscar por ID -->
     <h2>Buscar Empleado por ID</h2>
@@ -65,6 +68,10 @@
         <label>ID: <input type="number" name="id" required></label>
         <button type="submit">Eliminar</button>
     </form>
+	
+	<div style="max-width: 600px; margin-top: 40px;">
+		<button onclick="window.history.back()" class="btn-volver">← Volver</button>
+	</div>
 </body>
 </html>
 

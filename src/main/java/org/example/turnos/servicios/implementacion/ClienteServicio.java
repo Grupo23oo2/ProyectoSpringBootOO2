@@ -3,6 +3,7 @@ package org.example.turnos.servicios.implementacion;
 import org.example.turnos.dtos.ClienteDTO;
 import org.example.turnos.dtos.ContactoDTO;
 import org.example.turnos.excepciones.CuitClienteDuplicadoException;
+import org.example.turnos.excepciones.DniClienteDuplicadoException;
 import org.example.turnos.excepciones.MiExcepcionPersonalizada;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -37,17 +38,20 @@ public class ClienteServicio implements IClienteServicio {
     private ModelMapper modelMapper;
 
     public ClienteDTO agregarCliente(ClienteDTO dto) {
-    	
-        if (clienteRepositorio.existsByCuit(dto.getCuit())) {// excepcion personalizada de cuit duplicado
+        if (clienteRepositorio.existsByCuit(dto.getCuit())) {
             throw new CuitClienteDuplicadoException("Ya existe un cliente con el CUIT: " + dto.getCuit());
         }
-    	
-    	try {
-        Cliente cliente = toEntity(dto);
-        Cliente guardado = clienteRepositorio.save(cliente);
-        return toDTO(guardado);
-    	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo agregar el cliente" + e.getMessage());
+
+        if (clienteRepositorio.existsByDni(dto.getDni())) {
+            throw new DniClienteDuplicadoException("Ya existe un cliente con el DNI: " + dto.getDni());
+        }
+
+        try {
+            Cliente cliente = toEntity(dto);
+            Cliente guardado = clienteRepositorio.save(cliente);
+            return toDTO(guardado);
+        } catch (Exception e) {
+            throw new MiExcepcionPersonalizada("No se pudo agregar el cliente: " + e.getMessage());
         }
     }
 

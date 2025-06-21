@@ -20,7 +20,23 @@ public class GlobalExceptionHandler {
         return "error/errorCuitClienteDuplicado";
     }
     
+    @ExceptionHandler(DniEmpleadoDuplicadoException.class)
+    public String manejarDniDuplicado(DniEmpleadoDuplicadoException ex, Model model) {
+        model.addAttribute("mensajeError", ex.getMessage());
+        return "error/errorDniEmpleadoDuplicado";  
+    }
     
+    @ExceptionHandler(DniClienteDuplicadoException.class)
+    public String manejarDniClienteDuplicado(DniClienteDuplicadoException ex, Model model) {
+        model.addAttribute("mensajeError", ex.getMessage());
+        return "error/errorDniClienteDuplicado"; 
+    }
+    
+    @ExceptionHandler(DireccionLugarDuplicadaException.class)
+    public String manejarDireccionLugarDuplicada(DireccionLugarDuplicadaException ex, Model model) {
+        model.addAttribute("mensajeError", ex.getMessage());
+        return "error/errorDireccionLugarDuplicada";
+    }
     
     
     // Manejo general de otras excepciones no controladas

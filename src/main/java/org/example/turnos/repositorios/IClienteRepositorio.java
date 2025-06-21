@@ -22,6 +22,7 @@ public interface IClienteRepositorio extends JpaRepository<Cliente, Long> {
 	List<Cliente> findByCuit(String cuit);
 	
 	boolean existsByCuit(String cuit); //para la excepcion de cuit duplicado
+	boolean existsByDni(String dni); //para la excepcion de dni duplicado
 
 	@Query("""
 			    SELECT c.contacto FROM Cliente c

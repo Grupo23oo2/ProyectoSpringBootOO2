@@ -2,14 +2,14 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Error - Cuit duplicado</title>
+    <title>Error - Dni duplicado</title>
     <link rel="stylesheet" th:href="@{/css/error.css}" />
 </head>
 <body>
     <div class="error-container">
-        <h1>Recurso no encontrado</h1>
-        <p th:text="${mensajeError}">Error: el cuit ingresado ya existe en el sistema</p>
-        <a href="/" class="btn-volver">← Volver al inicio</a>
+        <h1>Recurso duplicado</h1>
+        <p th:text="${mensajeError}">Error: el DNI ingresado ya existe en el sistema</p>
+    <a th:href="@{/}">Volver al inicio</a>
     </div>
 </body>
 </html>
