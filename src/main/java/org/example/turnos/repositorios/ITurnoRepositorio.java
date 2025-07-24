@@ -45,7 +45,7 @@ public interface ITurnoRepositorio extends JpaRepository<Turno, Long> {
                                                            @Param("fin") LocalDateTime fin);
 
     // 7. Turnos por fecha y rol del empleado
-    @Query("""
+  /*  @Query("""
     	    SELECT t FROM Turno t
     	    JOIN t.empleado e
     	    JOIN e.usuario u
@@ -55,7 +55,7 @@ public interface ITurnoRepositorio extends JpaRepository<Turno, Long> {
     	""")
     	List<Turno> buscarTurnosPorRolEmpleadoYFechas(@Param("rolEmpleado") String rolEmpleado,
     	                                                    @Param("inicio") LocalDateTime inicio,
-    	                                                    @Param("fin") LocalDateTime fin);
+    	                                                    @Param("fin") LocalDateTime fin);*/
 
     // 8. Turnos por fecha y dirección del lugar
     @Query("SELECT t FROM Turno t WHERE t.lugarTurno.direccion = :direccionLugar AND t.fechaHoraInicio BETWEEN :inicio AND :fin")

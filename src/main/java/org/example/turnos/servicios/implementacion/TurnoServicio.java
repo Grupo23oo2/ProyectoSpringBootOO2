@@ -190,7 +190,7 @@ public class TurnoServicio implements ITurnoServicio {
             throw new MiExcepcionPersonalizada("No se pudo traer los turnos por nombre del cliente y fechas" + e.getMessage());
         }
 	}
-
+/*
 	@Override
 	public List<TurnoDTO> traerTurnosPorRolEmpleadoYFechas(String rolEmpleado, LocalDateTime desde,
 			LocalDateTime hasta) {
@@ -200,7 +200,7 @@ public class TurnoServicio implements ITurnoServicio {
 		} catch (Exception e){
             throw new MiExcepcionPersonalizada("No se pudo traer los turnos por el rol del empleado entre fechas" + e.getMessage());
         }
-	}
+	}*/
 
 	@Override
 	public List<TurnoDTO> traerTurnosPorDireccionLugarYFechas(String direccionLugar, LocalDateTime desde,

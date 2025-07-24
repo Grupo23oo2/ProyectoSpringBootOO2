@@ -1,12 +1,12 @@
 package org.example.turnos.configurations;
 
 import org.example.turnos.modelo.Usuario;
-import org.example.turnos.modelo.RolUsuario;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,10 +20,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<SimpleGrantedAuthority> authorities = usuario.getRolesUsuario().stream()
-                .map(rol -> new SimpleGrantedAuthority("ROLE_" + rol.getRole()))
-                .collect(Collectors.toSet());
-        return authorities;
+        return List.of(new SimpleGrantedAuthority("ROLE_" + usuario.getRole()));
     }
 
     @Override
