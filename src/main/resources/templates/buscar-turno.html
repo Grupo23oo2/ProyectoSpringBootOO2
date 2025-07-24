@@ -23,10 +23,10 @@
     </form>
 </section>
 
-<!-- Agregar Turno -->
+<!--Agregar Turno-->
 <section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
     <h2>Agregar Nuevo Turno</h2>
-    <form th:action="@{/turnos/agregar}" method="post">
+    <form th:action="@{/turnos/guardarNuevo}" method="post">
         <label for="presencial">Presencial:</label>
         <select id="presencial" name="presencial">
             <option value="true">Sí</option>
@@ -45,12 +45,21 @@
         <label for="idServicio">ID Servicio:</label>
         <input type="number" id="idServicio" name="idServicio" />
 
-        <label for="fechaHoraInicio">Fecha y Hora Inicio:</label>
-        <input type="datetime-local" id="fechaHoraInicio" name="fechaHoraInicio" required />
+        <!--Día-->
+        <label for="fecha">Día:</label><!--parte de la nueva logica-->
+        <select id="fecha" name="fecha" required>
+            <option th:each="dia : ${diasDisponibles}" th:value="${dia}" th:text="${dia}"></option>
+        </select>
 
-		<label for="duracionMinutos">Duración (minutos):</label>
-		<input type="number" id="duracionMinutos" name="duracionMinutos" required />
-		
+        <!--Hora-->
+        <label for="hora">Hora:</label><!--parte de la nueva logica-->
+        <select id="hora" name="hora" required>
+            <option th:each="hora : ${horasDisponibles}" th:value="${hora}" th:text="${hora}"></option>
+        </select>
+
+        <label for="duracion">Duración (minutos):</label>
+        <input type="number" id="duracion" name="duracion" required />
+
         <button type="submit">Agregar Turno</button>
     </form>
 </section>

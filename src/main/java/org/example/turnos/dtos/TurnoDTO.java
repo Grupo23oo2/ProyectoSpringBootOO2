@@ -1,6 +1,8 @@
 package org.example.turnos.dtos;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class TurnoDTO {
 
@@ -91,6 +93,14 @@ public class TurnoDTO {
 
 	public void setDuracionMinutos(int duracionMinutos) {
 	    this.duracionMinutos = duracionMinutos;
+	}
+	
+	public LocalDate getFecha() {
+	    return fechaHoraInicio != null ? fechaHoraInicio.toLocalDate() : null;
+	}
+
+	public LocalTime getHora() {
+	    return fechaHoraInicio != null ? fechaHoraInicio.toLocalTime() : null;
 	}
 }
 

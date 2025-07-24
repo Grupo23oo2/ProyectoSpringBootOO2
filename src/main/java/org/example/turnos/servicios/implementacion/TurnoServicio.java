@@ -247,6 +247,16 @@ public class TurnoServicio implements ITurnoServicio {
 	}
 	
 	@Override
+	public List<LocalDate> obtenerDiasProximos(int cantidadDias) {
+	    List<LocalDate> dias = new ArrayList<>();
+	    LocalDate hoy = LocalDate.now();
+	    for (int i = 0; i < cantidadDias; i++) {
+	        dias.add(hoy.plusDays(i));
+	    }
+	    return dias;
+	}
+
+	@Override
 	public List<String> obtenerHorasDisponiblesFijas() {
 	    List<String> horas = new ArrayList<>();
 	    LocalTime inicio = LocalTime.of(8, 0);

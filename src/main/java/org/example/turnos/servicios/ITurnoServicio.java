@@ -2,6 +2,7 @@ package org.example.turnos.servicios;
 
 import org.example.turnos.dtos.TurnoDTO;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -27,4 +28,5 @@ public interface ITurnoServicio {
     
     List<TurnoDTO> obtenerTurnosPresenciales(boolean presencial);
     List<TurnoDTO> traerTurnosPorApellidoEmpleado(String apellido);
+	List<LocalDate> obtenerDiasProximos(int cantidadDias);
 }
