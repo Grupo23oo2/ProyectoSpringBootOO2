@@ -47,6 +47,8 @@ public class TurnoServicio implements ITurnoServicio {
 	public TurnoDTO agregarTurno(TurnoDTO dto) {
 	    try {
 	        Turno turno = modelMapper.map(dto, Turno.class);
+	        
+	        turno.setDuracionMinutos(dto.getDuracionMinutos());
 
 	        Cliente cliente = clienteRepositorio.findById(dto.getIdCliente())
 	                .orElseThrow(() -> new MiExcepcionPersonalizada("Cliente no encontrado con id: " + dto.getIdCliente()));
@@ -63,6 +65,7 @@ public class TurnoServicio implements ITurnoServicio {
 	        if (dto.getIdServicio() != null) {
 	            Servicio servicio = servicioRepositorio.findById(dto.getIdServicio())
 	                .orElseThrow(() -> new MiExcepcionPersonalizada("Servicio no encontrado con id: " + dto.getIdServicio()));
+	            
 	            turno.setServicio(servicio);
 	        } else {
 	            turno.setServicio(null);
@@ -234,8 +237,8 @@ public class TurnoServicio implements ITurnoServicio {
 	            s.getEmpleado() != null ? s.getEmpleado().getIdPersona() : null,
 	            s.getCliente() != null ? s.getCliente().getIdPersona() : null,
 	            s.getFechaHoraInicio(),
-	            s.getServicio().getIdServicio(), 0 //ojo aca con lo de duracion del turno
-	            
+	            s.getServicio().getIdServicio(),
+	            s.getDuracionMinutos()	            
 	        ))
 	        .toList();
 		} catch (Exception e){
