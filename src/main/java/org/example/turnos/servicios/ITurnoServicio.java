@@ -23,7 +23,7 @@ public interface ITurnoServicio {
     // Consultas por fecha + atributo
     List<TurnoDTO> traerTurnosPorPresencialYFechas(boolean presencial, LocalDateTime desde, LocalDateTime hasta);
     List<TurnoDTO> traerTurnosPorNombreClienteYFechas(String nombreCliente, LocalDateTime desde, LocalDateTime hasta);
-    List<TurnoDTO> traerTurnosPorRolEmpleadoYFechas(String rolEmpleado, LocalDateTime desde, LocalDateTime hasta);
+  /*  List<TurnoDTO> traerTurnosPorRolEmpleadoYFechas(String rolEmpleado, LocalDateTime desde, LocalDateTime hasta);*/
     List<TurnoDTO> traerTurnosPorDireccionLugarYFechas(String direccionLugar, LocalDateTime desde, LocalDateTime hasta);
     
     List<TurnoDTO> obtenerTurnosPresenciales(boolean presencial);

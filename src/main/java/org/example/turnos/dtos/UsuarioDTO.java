@@ -1,5 +1,6 @@
 package org.example.turnos.dtos;
 
+import java.time.LocalDateTime;
 
 public class UsuarioDTO {
 	
@@ -9,12 +10,16 @@ public class UsuarioDTO {
     private boolean estado;
     private Long idPersona;
     private String email;
+    private String role;
+    private LocalDateTime fechaCreacion;
 
     public UsuarioDTO() {
     }
 
+
+
 	public UsuarioDTO(Long idUsuario, String nombreUsuario, String contraseniaUsuario, boolean estado, Long idPersona,
-			String email) {
+			String email, String role, LocalDateTime fechaCreacion) {
 		super();
 		this.idUsuario = idUsuario;
 		this.nombreUsuario = nombreUsuario;
@@ -22,7 +27,9 @@ public class UsuarioDTO {
 		this.estado = estado;
 		this.idPersona = idPersona;
 		this.email = email;
-	}
+		this.role = role;
+		this.fechaCreacion = fechaCreacion;
+	} 
 
     
 	public Long getIdUsuario() {
@@ -72,7 +79,26 @@ public class UsuarioDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
-	} 
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public LocalDateTime getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+	public void setFechaCreacion(LocalDateTime fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
+
+
+
 	
 	
     

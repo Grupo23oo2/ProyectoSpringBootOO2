@@ -12,12 +12,10 @@ import org.springframework.data.repository.query.Param;
 public interface IEmpleadoRepositorio extends JpaRepository<Empleado, Long> {
 
 	@Query("""
-			    SELECT e FROM Empleado e
-			    JOIN e.usuario u
-			    JOIN u.rolesUsuario ru
-			    WHERE ru.role = :role
-			""")
-	List<Empleado> findByRol(@Param("role") String role);
+    SELECT e FROM Empleado e
+    WHERE e.usuario.role = :role
+	""")
+	List<Empleado> empleadosPorRol(@Param("role") String role);
 
 	List<Empleado> findByFechaInicio(LocalDate fechaInicio);
 	

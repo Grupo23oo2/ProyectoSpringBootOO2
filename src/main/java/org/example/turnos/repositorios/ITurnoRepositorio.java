@@ -44,7 +44,8 @@ public interface ITurnoRepositorio extends JpaRepository<Turno, Long> {
                                                      @Param("inicio") LocalDateTime inicio,
                                                      @Param("fin") LocalDateTime fin);
 
-    // 7. Turnos por fecha y rol del empleado
+    // 7. Turnos por fecha y rol del empleado. ESTABA COMENTADO EN MERGE CON WILSON
+    
     @Query("""
            SELECT t FROM Turno t
            JOIN t.empleado e
