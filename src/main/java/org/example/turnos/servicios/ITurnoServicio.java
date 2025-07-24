@@ -11,6 +11,7 @@ public interface ITurnoServicio {
     List<TurnoDTO> traerTurnos();
     TurnoDTO modificarTurno(Long id, TurnoDTO dto);  // solo fechas modificables
     void eliminarTurno(Long id);
+    List<String> obtenerHorasDisponiblesFijas();//horas disponibles para generar turno
 
     // Consultas por fecha
     List<TurnoDTO> traerTurnosEntreFechas(LocalDateTime desde, LocalDateTime hasta);

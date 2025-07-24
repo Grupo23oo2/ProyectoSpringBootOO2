@@ -17,7 +17,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -105,7 +106,6 @@ public class TurnoServicio implements ITurnoServicio {
 
 		// Solo modificamos fechas según tu comentario
 		turno.setFechaHoraInicio(dto.getFechaHoraInicio());
-		turno.setFechaHoraFin(dto.getFechaHoraFin());
 
 		Turno actualizado = turnoRepositorio.save(turno);
 		return modelMapper.map(actualizado, TurnoDTO.class);
@@ -234,12 +234,28 @@ public class TurnoServicio implements ITurnoServicio {
 	            s.getEmpleado() != null ? s.getEmpleado().getIdPersona() : null,
 	            s.getCliente() != null ? s.getCliente().getIdPersona() : null,
 	            s.getFechaHoraInicio(),
-	            s.getFechaHoraFin(),
-	            s.getServicio().getIdServicio()
+	            s.getServicio().getIdServicio(), 0 //ojo aca con lo de duracion del turno
+	            
 	        ))
 	        .toList();
 		} catch (Exception e){
             throw new MiExcepcionPersonalizada("No se pudo traer los turnos por apellido del empleado" + e.getMessage());
         }
 	}
+	
+	@Override
+	public List<String> obtenerHorasDisponiblesFijas() {
+	    List<String> horas = new ArrayList<>();
+	    LocalTime inicio = LocalTime.of(8, 0);
+	    LocalTime fin = LocalTime.of(18, 0);
+
+	    while (!inicio.isAfter(fin)) {
+	        horas.add(inicio.toString());
+	        inicio = inicio.plusMinutes(30);
+	    }
+
+	    return horas;
+	}
+	
+	
 }

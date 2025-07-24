@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.time.*;
 import java.util.List;
 
 @Controller
@@ -174,5 +174,33 @@ public class TurnoControlador {
         return "resultado-turnos";
     }
 
+    @GetMapping("/nuevo")//nueva logica de turno
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
+    public String mostrarFormularioNuevoTurno(Model model) {
+        model.addAttribute("horasDisponibles", turnoServicio.obtenerHorasDisponiblesFijas());
+        return "home/nuevoTurno";
+    }
+    
+    @PostMapping("/guardarNuevo")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
+    public String guardarNuevoTurno(
+            @RequestParam("fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
+            @RequestParam("hora") String hora,
+            @RequestParam("duracion") int duracion,
+            Model model
+    ) {
+        LocalTime horaSeleccionada = LocalTime.parse(hora);
+        LocalDateTime fechaHoraInicio = LocalDateTime.of(fecha, horaSeleccionada);
+
+        TurnoDTO turnoDTO = new TurnoDTO();
+        turnoDTO.setFechaHoraInicio(fechaHoraInicio);
+        turnoDTO.setDuracionMinutos(duracion);
+
+        TurnoDTO guardado = turnoServicio.agregarTurno(turnoDTO);
+        model.addAttribute("turno", guardado);
+        return "resultado-turno";
+    }
+    
+    
     
 }
