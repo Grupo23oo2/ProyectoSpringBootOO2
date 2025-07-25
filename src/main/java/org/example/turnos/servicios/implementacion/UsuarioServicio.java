@@ -1,10 +1,10 @@
 package org.example.turnos.servicios.implementacion;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.example.turnos.dtos.RolUsuarioDTO;
 import org.example.turnos.dtos.UsuarioDTO;
 import org.example.turnos.excepciones.MiExcepcionPersonalizada;
 import org.example.turnos.modelo.Cliente;
@@ -13,12 +13,12 @@ import org.example.turnos.modelo.Persona;
 import org.example.turnos.modelo.Usuario;
 import org.example.turnos.repositorios.IClienteRepositorio;
 import org.example.turnos.repositorios.IEmpleadoRepositorio;
-import org.example.turnos.repositorios.IRolUsuarioRepositorio;
 import org.example.turnos.repositorios.IUsuarioRepositorio;
 import org.example.turnos.servicios.IEmailServicio;
 import org.example.turnos.servicios.IUsuarioServicio;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,13 +34,13 @@ public class UsuarioServicio implements IUsuarioServicio {
     private IClienteRepositorio clienteRepositorio;
 
     @Autowired
-    private IRolUsuarioRepositorio rolUsuarioRepositorio;
-
-    @Autowired
     private ModelMapper modelMapper;
     
     @Autowired
     private IEmailServicio emailServicio;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UsuarioDTO agregarUsuario(UsuarioDTO dto) {
@@ -48,6 +48,10 @@ public class UsuarioServicio implements IUsuarioServicio {
             Persona persona = buscarPersonaPorId(dto.getIdPersona());
 
             Usuario usuario = toEntity(dto, persona);
+            
+            LocalDateTime hora = LocalDateTime.now();
+            dto.setFechaCreacion(hora);
+            
             Usuario usuarioGuardado = usuarioRepositorio.save(usuario);
             String contenidoHtml = """
                     <html>
@@ -116,6 +120,8 @@ public class UsuarioServicio implements IUsuarioServicio {
             usuarioExistente.setContraseniaUsuario(dto.getContraseniaUsuario());
             usuarioExistente.setEstado(dto.isEstado());
             usuarioExistente.setEmail(dto.getEmail());
+            usuarioExistente.setRol(dto.getRol());
+            usuarioExistente.setFechaCreacion(dto.getFechaCreacion());
 
             Usuario usuarioModificado = usuarioRepositorio.save(usuarioExistente);
             return toDTO(usuarioModificado);
@@ -142,6 +148,8 @@ public class UsuarioServicio implements IUsuarioServicio {
             dto.setIdPersona(usuario.getPersona().getIdPersona());
         }
 
+        dto.setRol(usuario.getRol());
+        
         return dto;
     }
 
@@ -161,22 +169,10 @@ public class UsuarioServicio implements IUsuarioServicio {
         usuario.setRol(dto.getRol());
 
         usuario.setPersona(persona);
+        
+        usuario.setRol(dto.getRol());
+        usuario.setFechaCreacion(dto.getFechaCreacion());
 
         return usuario;
-    }
-
-    @Override
-    public List<RolUsuarioDTO> obtenerRolesUsuariosPorUsuario(Long idUsuario) {
-        try {
-            return usuarioRepositorio.findRolesUsuarioByUsuario(idUsuario)
-                    .stream()
-                    .map(rol -> modelMapper.map(rol, RolUsuarioDTO.class))
-                    .collect(Collectors.toList());
-        } catch (Exception e) {
-            throw new MiExcepcionPersonalizada("No se pudo traer la lista de roles por usuario: " + e.getMessage());
-        }
-        
-        
-    }
+    }   
 }
-

@@ -12,15 +12,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface IEmpleadoRepositorio extends JpaRepository<Empleado, Long> {
-
-	//antes
-	/*@Query("""
-			    SELECT e FROM Empleado e
-			    JOIN e.usuario u
-			    JOIN u.rolesUsuario ru
-			    WHERE ru.role = :role
-			""")
-	List<Empleado> findByRol(@Param("role") String role);*/
 	@Query("""
 		    SELECT e FROM Empleado e
 		    WHERE e.usuario.rol = :rol

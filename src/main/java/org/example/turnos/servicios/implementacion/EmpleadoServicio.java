@@ -138,13 +138,13 @@ public class EmpleadoServicio implements IEmpleadoServicio {
     
     @Override
     public List<EmpleadoDTO> empleadosPorRol(String rol) {
-    	try {
-        return empleadoRepositorio.findByRol(rol)
+        try {
+            return empleadoRepositorio.findByRol(rol)
                 .stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
-    	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo traer empleados por rol" + e.getMessage());
+        } catch (Exception e) {
+            throw new MiExcepcionPersonalizada("No se pudo traer empleados por rol: " + e.getMessage());
         }
     }
     

@@ -11,6 +11,7 @@ import org.example.turnos.servicios.IContactoServicio;
 import org.example.turnos.servicios.IEmpleadoServicio;
 import org.example.turnos.servicios.IUsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,9 @@ public class RegistroWebControlador {
     @Autowired
     private IUsuarioServicio usuarioServicio;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
     @GetMapping("/formulario-empleado")
     public String mostrarFormularioEmpleado() {
         return "registrarEmpleadoUsuario";
@@ -73,7 +77,7 @@ public class RegistroWebControlador {
             usuarioDTO.setIdPersona(nuevoEmpleado.getIdPersona());
             usuarioDTO.setNombreUsuario(nombreUsuario);
             usuarioDTO.setEmail(email);
-            usuarioDTO.setContraseniaUsuario("{noop}" + contraseniaUsuario);
+            usuarioDTO.setContraseniaUsuario(passwordEncoder.encode(contraseniaUsuario));
             usuarioDTO.setEstado(estado);
             usuarioDTO.setRol("ROLE_EMPLEADO"); //como esta en la pagina de empleado, no hace falta que lo reciba del formulario, lo ponemos directamente
 
@@ -127,7 +131,7 @@ public class RegistroWebControlador {
             usuario.setIdPersona(nuevoCliente.getIdPersona());
             usuario.setNombreUsuario(nombreUsuario);
             usuario.setEmail(emailUsuario);
-            usuario.setContraseniaUsuario("{noop}" + contraseniaUsuario);
+            usuario.setContraseniaUsuario(passwordEncoder.encode(contraseniaUsuario));
             usuario.setEstado(estado);
             usuario.setRol("ROLE_CLIENTE"); //como esta en la pagina de empleado, no hace falta que lo reciba del formulario, lo ponemos directamente
 

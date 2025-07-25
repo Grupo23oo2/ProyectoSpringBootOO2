@@ -1,5 +1,5 @@
-#server: 
-  #port: 8081  # o 8081 si el 8080 sigue en uso
+server:
+  port: 8080  # o 8081 si el 8080 sigue en uso
 
 spring:
   datasource:
@@ -16,6 +16,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
   mail:
     host: smtp.gmail.com
     port: 587
@@ -29,15 +30,15 @@ spring:
             enable: true
 
 logging:
-  config: 
-  exception-conversion-word: "%wEx"     # Cómo mostrar excepciones (w = stack trace corto)
+  config:
+  exception-conversion-word: "%wEx"
   file:
-    name: logs/app.log                  # Ruta del archivo de log (puede ser relativo o absoluto)
-    path: logs                          # Directorio de logs
+    name: logs/app.log
+    path: logs
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
   level:
-    root: INFO                         # Nivel global de logs
-    org.springframework.web: DEBUG     # Nivel para los controladores web de Spring
-    org.hibernate: ERROR               # Hibernate produce mucho log, se recomienda ERROR o WARN
+    root: INFO
+    org.springframework.web: DEBUG
+    org.hibernate: ERROR

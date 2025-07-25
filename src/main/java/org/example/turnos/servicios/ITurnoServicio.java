@@ -2,6 +2,7 @@ package org.example.turnos.servicios;
 
 import org.example.turnos.dtos.TurnoDTO;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,6 +12,7 @@ public interface ITurnoServicio {
     List<TurnoDTO> traerTurnos();
     TurnoDTO modificarTurno(Long id, TurnoDTO dto);  // solo fechas modificables
     void eliminarTurno(Long id);
+    List<String> obtenerHorasDisponiblesFijas();//horas disponibles para generar turno
 
     // Consultas por fecha
     List<TurnoDTO> traerTurnosEntreFechas(LocalDateTime desde, LocalDateTime hasta);
@@ -21,9 +23,10 @@ public interface ITurnoServicio {
     // Consultas por fecha + atributo
     List<TurnoDTO> traerTurnosPorPresencialYFechas(boolean presencial, LocalDateTime desde, LocalDateTime hasta);
     List<TurnoDTO> traerTurnosPorNombreClienteYFechas(String nombreCliente, LocalDateTime desde, LocalDateTime hasta);
-    List<TurnoDTO> traerTurnosPorRolEmpleadoYFechas(String rolEmpleado, LocalDateTime desde, LocalDateTime hasta);
+  /*  List<TurnoDTO> traerTurnosPorRolEmpleadoYFechas(String rolEmpleado, LocalDateTime desde, LocalDateTime hasta);*/
     List<TurnoDTO> traerTurnosPorDireccionLugarYFechas(String direccionLugar, LocalDateTime desde, LocalDateTime hasta);
     
     List<TurnoDTO> obtenerTurnosPresenciales(boolean presencial);
     List<TurnoDTO> traerTurnosPorApellidoEmpleado(String apellido);
+	List<LocalDate> obtenerDiasProximos(int cantidadDias);
 }

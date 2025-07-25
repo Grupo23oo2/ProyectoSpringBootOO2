@@ -10,15 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface IClienteRepositorio extends JpaRepository<Cliente, Long> {
-
-	//antes
-	/*@Query("""
-			    SELECT c FROM Cliente c
-			    JOIN c.usuario u
-			    JOIN u.rolesUsuario ru
-			    WHERE ru.role = :role
-			""")
-	List<Cliente> findByRol(@Param("role") String role);*/
 	@Query("""
 		    SELECT c FROM Cliente c
 		    WHERE c.usuario.rol = :rol

@@ -25,27 +25,28 @@ public class Turno {
     private Cliente cliente;
 
     private LocalDateTime fechaHoraInicio;
-    private LocalDateTime fechaHoraFin;
     
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
     private Servicio servicio;
+    
+    @Column(nullable = false)
+    private int duracionMinutos;
     
     public Turno() {
     	
     }
 
-	public Turno(Long idTurno, boolean presencial, Lugar lugarTurno, Empleado empleado, Cliente cliente,
-			LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Servicio servicio) {
-		super();
-		this.idTurno = idTurno;
-		this.presencial = presencial;
-		this.lugarTurno = lugarTurno;
-		this.empleado = empleado;
-		this.cliente = cliente;
-		this.fechaHoraInicio = fechaHoraInicio;
-		this.fechaHoraFin = fechaHoraFin;
-		this.servicio = servicio;
-	}
+    public Turno(Long idTurno, boolean presencial, Lugar lugarTurno, Empleado empleado, Cliente cliente,
+            LocalDateTime fechaHoraInicio, Servicio servicio, int duracionMinutos) {
+   this.idTurno = idTurno;
+   this.presencial = presencial;
+   this.lugarTurno = lugarTurno;
+   this.empleado = empleado;
+   this.cliente = cliente;
+   this.fechaHoraInicio = fechaHoraInicio;
+   this.servicio = servicio;
+   this.duracionMinutos = duracionMinutos;
+}
 
 	public Long getIdTurno() {
 		return idTurno;
@@ -95,19 +96,19 @@ public class Turno {
 		this.fechaHoraInicio = fechaHoraInicio;
 	}
 
-	public LocalDateTime getFechaHoraFin() {
-		return fechaHoraFin;
-	}
-
-	public void setFechaHoraFin(LocalDateTime fechaHoraFin) {
-		this.fechaHoraFin = fechaHoraFin;
-	}
-
 	public Servicio getServicio() {
 		return servicio;
 	}
 
 	public void setServicio(Servicio servicio) {
 		this.servicio = servicio;
+	}
+	
+	public int getDuracionMinutos() {
+	    return duracionMinutos;
+	}
+
+	public void setDuracionMinutos(int duracionMinutos) {
+	    this.duracionMinutos = duracionMinutos;
 	}
 }

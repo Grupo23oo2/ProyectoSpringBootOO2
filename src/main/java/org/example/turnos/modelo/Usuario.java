@@ -3,8 +3,11 @@ package org.example.turnos.modelo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 public class Usuario {
@@ -28,21 +31,14 @@ public class Usuario {
 
     private boolean estado;
 
-    /*@OneToMany(fetch=FetchType.EAGER, mappedBy="usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<RolUsuario> rolesUsuario = new HashSet<>();*/
-    
-    @Column(name = "rol", nullable = false)
+    @Column(name = "rol", nullable = false, length=100)
     private String rol; // Ej: "ROLE_ADMIN", "ROLE_EMPLEADO", "ROLE_CLIENTE"
 
-
-	public Usuario() {
-		
-	}
+    @CreationTimestamp
+    private LocalDateTime fechaCreacion;
     
-   
-    //antes Set<RolUsuario> y this.rolesUsuario = rolesUsuario;
     public Usuario(long idUsuario, Persona persona, String email, String nombreUsuario, String contraseniaUsuario,
-			boolean estado, String rol) {
+			boolean estado, String rol, LocalDateTime fechaCreacion) {
 		super();
 		this.idUsuario = idUsuario;
 		this.persona = persona;
@@ -51,11 +47,11 @@ public class Usuario {
 		this.contraseniaUsuario = contraseniaUsuario;
 		this.estado = estado;
 		this.rol = rol;
+		this.fechaCreacion = fechaCreacion;
 	}
 
-
-
-	public Usuario(Persona persona, String email, String nombreUsuario, String contraseniaUsuario, boolean estado, String rol) {
+	public Usuario(Persona persona, @Email String email, String nombreUsuario, String contraseniaUsuario,
+			boolean estado, String rol, LocalDateTime fechaCreacion) {
 		super();
 		this.persona = persona;
 		this.email = email;
@@ -63,7 +59,15 @@ public class Usuario {
 		this.contraseniaUsuario = contraseniaUsuario;
 		this.estado = estado;
 		this.rol = rol;
+		this.fechaCreacion = fechaCreacion;
 	}
+    
+
+	public Usuario() {
+		
+	}
+    
+   
 
 	public long getIdUsuario() {
 		return idUsuario;
@@ -105,14 +109,6 @@ public class Usuario {
 		this.estado = estado;
 	}
 
-	/*public Set<RolUsuario> getRolesUsuario() {
-		return rolesUsuario;
-	}
-
-	public void setRolesUsuario(Set<RolUsuario> rolesUsuario) {
-		this.rolesUsuario = rolesUsuario;
-	}*/
-	
 	public String getRol() {
 		return rol;
 	}
@@ -128,7 +124,13 @@ public class Usuario {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
 
+	public LocalDateTime getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+
+	public void setFechaCreacion(LocalDateTime fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
 }
