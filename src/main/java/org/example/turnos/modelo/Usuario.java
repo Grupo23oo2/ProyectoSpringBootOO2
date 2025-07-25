@@ -28,17 +28,21 @@ public class Usuario {
 
     private boolean estado;
 
-    @OneToMany(fetch=FetchType.EAGER, mappedBy="usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<RolUsuario> rolesUsuario = new HashSet<>();
+    /*@OneToMany(fetch=FetchType.EAGER, mappedBy="usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<RolUsuario> rolesUsuario = new HashSet<>();*/
+    
+    @Column(name = "rol", nullable = false)
+    private String rol; // Ej: "ROLE_ADMIN", "ROLE_EMPLEADO", "ROLE_CLIENTE"
+
 
 	public Usuario() {
 		
 	}
     
    
-    
+    //antes Set<RolUsuario> y this.rolesUsuario = rolesUsuario;
     public Usuario(long idUsuario, Persona persona, String email, String nombreUsuario, String contraseniaUsuario,
-			boolean estado, Set<RolUsuario> rolesUsuario) {
+			boolean estado, String rol) {
 		super();
 		this.idUsuario = idUsuario;
 		this.persona = persona;
@@ -46,18 +50,19 @@ public class Usuario {
 		this.nombreUsuario = nombreUsuario;
 		this.contraseniaUsuario = contraseniaUsuario;
 		this.estado = estado;
-		this.rolesUsuario = rolesUsuario;
+		this.rol = rol;
 	}
 
 
 
-	public Usuario(Persona persona, String email, String nombreUsuario, String contraseniaUsuario, boolean estado) {
+	public Usuario(Persona persona, String email, String nombreUsuario, String contraseniaUsuario, boolean estado, String rol) {
 		super();
 		this.persona = persona;
 		this.email = email;
 		this.nombreUsuario = nombreUsuario;
 		this.contraseniaUsuario = contraseniaUsuario;
 		this.estado = estado;
+		this.rol = rol;
 	}
 
 	public long getIdUsuario() {
@@ -100,12 +105,20 @@ public class Usuario {
 		this.estado = estado;
 	}
 
-	public Set<RolUsuario> getRolesUsuario() {
+	/*public Set<RolUsuario> getRolesUsuario() {
 		return rolesUsuario;
 	}
 
 	public void setRolesUsuario(Set<RolUsuario> rolesUsuario) {
 		this.rolesUsuario = rolesUsuario;
+	}*/
+	
+	public String getRol() {
+		return rol;
+	}
+
+	public void setRol(String rol) {
+		this.rol = rol;
 	}
 
 	public String getEmail() {

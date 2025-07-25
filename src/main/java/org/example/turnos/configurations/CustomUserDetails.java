@@ -18,12 +18,18 @@ public class CustomUserDetails implements UserDetails {
         this.usuario = usuario;
     }
 
-    @Override
+    //antes
+    /*@Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<SimpleGrantedAuthority> authorities = usuario.getRolesUsuario().stream()
                 .map(rol -> new SimpleGrantedAuthority("ROLE_" + rol.getRole()))
                 .collect(Collectors.toSet());
         return authorities;
+    }*/
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Set.of(new SimpleGrantedAuthority(usuario.getRol()));
     }
 
     @Override

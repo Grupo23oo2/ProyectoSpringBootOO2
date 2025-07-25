@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>Roles del Usuario</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}">
 </head>
 <body>
     <h1>Roles Activos del Usuario</h1>
@@ -18,17 +19,17 @@
         </thead>
         <tbody>
             <tr th:each="rol : ${roles}">
-                <td th:text="${rol.id}">1</td>
-                <td th:text="${rol.nombreRol}">RolNombre</td>
-                <td th:text="${rol.descripcion}">Descripción del rol</td>
-                <td th:text="${rol.estado}">Activo</td>
+                <td th:text="${rol.id}" data-label="ID Rol Usuario">1</td>
+                <td th:text="${rol.nombreRol}" data-label="Nombre Rol">RolNombre</td>
+                <td th:text="${rol.descripcion}" data-label="Descripción">Descripción del rol</td>
+                <td th:text="${rol.estado}" data-label="Estado">Activo</td>
             </tr>
         </tbody>
     </table>
 
-    <br />
-    <a href="/usuarios/formulario-roles">Volver a buscar roles</a>
-    <br />
-    <a href="/usuarios/todos">Ver todos los usuarios</a>
+    <div style="text-align:center;">
+        <a href="/usuarios/formulario-roles">Volver a buscar roles</a>
+        <a href="/usuarios/todos">Ver todos los usuarios</a>
+    </div>
 </body>
 </html>

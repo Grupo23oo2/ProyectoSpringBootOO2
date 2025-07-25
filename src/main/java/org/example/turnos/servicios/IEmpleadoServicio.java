@@ -14,4 +14,6 @@ public interface IEmpleadoServicio {
     
     public List<EmpleadoDTO> empleadosPorRol(String rol);
     public List<EmpleadoDTO> empleadosPorFechaInicio(LocalDate fecha);
+    
+    void eliminarEmpleadoPorDni(String dni);
 }

@@ -1,6 +1,9 @@
 package org.example.turnos.controlador;
 
 import org.example.turnos.dtos.EmpleadoDTO;
+import org.example.turnos.excepciones.MiExcepcionPersonalizada;
+import org.example.turnos.modelo.Empleado;
+import org.example.turnos.repositorios.IEmpleadoRepositorio;
 import org.example.turnos.servicios.IEmpleadoServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,6 +20,9 @@ public class EmpleadoWebControlador {
 
     @Autowired
     private IEmpleadoServicio empleadoServicio;
+    
+    @Autowired
+    private IEmpleadoRepositorio empleadoRepositorio;
 
     @GetMapping("/formulario")
     public String mostrarFormularioBusqueda() {
@@ -55,6 +61,15 @@ public class EmpleadoWebControlador {
     public String agregarEmpleado(@ModelAttribute EmpleadoDTO dto, Model model) {
         EmpleadoDTO agregado = empleadoServicio.agregarEmpleado(dto);
         model.addAttribute("empleado", agregado);
+        return "resultado-empleados";
+    }
+
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEdicion(@PathVariable("id") Long id, Model model) {
+    	Empleado empleado = empleadoRepositorio.findById(id)
+    		    .orElseThrow(() -> (RuntimeException) new MiExcepcionPersonalizada("Empleado no encontrado con ID: " + id));
+
+        model.addAttribute("empleadoEditar", empleado);
         return "resultado-empleados";
     }
 

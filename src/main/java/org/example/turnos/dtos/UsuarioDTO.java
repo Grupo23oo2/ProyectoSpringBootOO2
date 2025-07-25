@@ -9,12 +9,13 @@ public class UsuarioDTO {
     private boolean estado;
     private Long idPersona;
     private String email;
+    private String rol;
 
     public UsuarioDTO() {
     }
 
 	public UsuarioDTO(Long idUsuario, String nombreUsuario, String contraseniaUsuario, boolean estado, Long idPersona,
-			String email) {
+			String email, String rol) {
 		super();
 		this.idUsuario = idUsuario;
 		this.nombreUsuario = nombreUsuario;
@@ -22,6 +23,7 @@ public class UsuarioDTO {
 		this.estado = estado;
 		this.idPersona = idPersona;
 		this.email = email;
+		this.rol = rol;
 	}
 
     
@@ -72,8 +74,13 @@ public class UsuarioDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getRol() {
+		return rol;
+	}
+
+	public void setRol(String rol) {
+		this.rol = rol;
 	} 
-	
-	
-    
 }

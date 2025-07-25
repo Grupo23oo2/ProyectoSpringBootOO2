@@ -2,6 +2,7 @@ package org.example.turnos.controlador;
 
 import org.example.turnos.dtos.ClienteDTO;
 import org.example.turnos.dtos.ContactoDTO;
+import org.example.turnos.dtos.EmpleadoDTO;
 import org.example.turnos.servicios.IClienteServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -68,6 +69,17 @@ public class ClienteWebControlador {
         model.addAttribute("cliente", agregado);
         return "resultado-cliente";
     }
+    
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEdicion(@PathVariable("id") Long id, Model model) {
+        Optional<ClienteDTO> clienteOpt = clienteServicio.traerClientePorId(id);
+        if (clienteOpt.isPresent()) {
+            model.addAttribute("clienteEditar", clienteOpt.get());
+        } else {
+            model.addAttribute("mensaje", "Cliente no encontrado con ID: " + id);
+        }
+        return "resultado-clientes";
+    }
 
     @PostMapping("/modificar")
     public String modificarCliente(@RequestParam Long id, @ModelAttribute ClienteDTO dto, Model model) {
@@ -84,6 +96,6 @@ public class ClienteWebControlador {
     public String eliminarCliente(@RequestParam Long id, Model model) {
         clienteServicio.eliminarCliente(id);
         model.addAttribute("mensaje", "Cliente eliminado correctamente (ID: " + id + ")");
-        return "resultado-cliente";
+        return "resultado-clientes";
     }
 }

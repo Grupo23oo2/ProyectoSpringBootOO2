@@ -41,5 +41,3 @@ logging:
     root: INFO                         # Nivel global de logs
     org.springframework.web: DEBUG     # Nivel para los controladores web de Spring
     org.hibernate: ERROR               # Hibernate produce mucho log, se recomienda ERROR o WARN
-
-

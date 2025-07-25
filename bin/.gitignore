@@ -36,9 +36,3 @@ build/
 
 ### Mac OS ###
 .DS_Store
-/.gitignore
-/.idea/
-/README.md
-/logs/
-/pom.xml
-/src/

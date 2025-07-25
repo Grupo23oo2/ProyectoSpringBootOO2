@@ -52,8 +52,8 @@ public class UsuarioServicio implements IUsuarioServicio {
             String contenidoHtml = """
                     <html>
                     <body>
-                        <h1 style='color: blue;'>Hola desde Spring Boot!</h1>
-                        <p>Este es un correo <b>con formato HTML</b>.</p>
+                        <h1 style='color: blue;'>Sistema de Turnos!</h1>
+                        <p>Se registro <b>correctamente</b>.</p>
                     </body>
                     </html>
                     """;
@@ -158,6 +158,7 @@ public class UsuarioServicio implements IUsuarioServicio {
         usuario.setContraseniaUsuario(dto.getContraseniaUsuario());
         usuario.setEstado(dto.isEstado());
         usuario.setEmail(dto.getEmail());
+        usuario.setRol(dto.getRol());
 
         usuario.setPersona(persona);
 

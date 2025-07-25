@@ -1,77 +1,107 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Gestión de Empleados</title>
-	<link rel="stylesheet" th:href="@{/css/empleados.css}">
+    <link rel="stylesheet" th:href="@{/css/general.css}">
 </head>
 <body>
-    <header>
-		<h1>Gestión de Empleados</h1>
-	</header>
+    <h1>Gestión de Empleados</h1>
 
-    <!-- Buscar por ID -->
-    <h2>Buscar Empleado por ID</h2>
-    <form th:action="@{/empleados/buscar}" method="get">
-        ID: <input type="number" name="id" required>
-        <button type="submit">Buscar</button>
-    </form>
+    <hr/>
 
-    <!-- Buscar por Rol -->
-    <h2>Buscar Empleados por Rol</h2>
-    <form th:action="@{/empleados/buscar-por-rol}" method="get">
-        Rol: <input type="text" name="rol" required>
-        <button type="submit">Buscar</button>
-    </form>
+    <section>
+        <h2>Buscar Empleado por ID</h2>
+        <form th:action="@{/empleados/buscar}" method="get">
+            <label for="idBuscar">ID:</label>
+            <input type="number" id="idBuscar" name="id" required />
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
 
-    <!-- Buscar por Fecha de Inicio -->
-    <h2>Buscar Empleados por Fecha de Inicio</h2>
-    <form th:action="@{/empleados/buscar-por-fecha}" method="get">
-        Fecha: <input type="date" name="fecha" required>
-        <button type="submit">Buscar</button>
-    </form>
+    <section>
+        <h2>Buscar Empleados por Rol</h2>
+        <form th:action="@{/empleados/buscar-por-rol}" method="get">
+            <label for="rolBuscar">Rol:</label>
+            <input type="text" id="rolBuscar" name="rol" required />
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
 
-    <!-- Traer Todos -->
-    <h2>Ver Todos los Empleados</h2>
-    <form th:action="@{/empleados/todos}" method="get">
-        <button type="submit">Mostrar Todos</button>
-    </form>
+    <section>
+        <h2>Buscar Empleados por Fecha de Inicio</h2>
+        <form th:action="@{/empleados/buscar-por-fecha}" method="get">
+            <label for="fechaBuscar">Fecha:</label>
+            <input type="date" id="fechaBuscar" name="fecha" required />
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
 
-    <!-- Agregar Empleado -->
-    <h2>Agregar Nuevo Empleado</h2>
-    <form th:action="@{/empleados/agregar}" method="post">
-        <label>Nombre: <input type="text" name="nombre" required></label><br>
-        <label>Apellido: <input type="text" name="apellido" required></label><br>
-        <label>DNI: <input type="text" name="dni" required></label><br>
-        
-        <label>Usuario (opcional): <input type="text" name="idUsuario"></label><br>
-        <label>Fecha de Inicio: <input type="date" name="fechaInicio" required></label><br>
-        <button type="submit">Agregar</button>
-    </form>
+    <section>
+        <h2>Ver Todos los Empleados</h2>
+        <form th:action="@{/empleados/todos}" method="get">
+            <button type="submit">Mostrar Todos</button>
+        </form>
+    </section>
 
-    <!-- Modificar Empleado -->
-    <h2>Modificar Empleado</h2>
-    <form th:action="@{/empleados/modificar}" method="post">
-        <label>ID: <input type="number" name="id" required></label><br>
-        <label>Nombre: <input type="text" name="nombre"></label><br>
-        <label>Apellido: <input type="text" name="apellido"></label><br>
-        <label>DNI: <input type="text" name="dni"></label><br>
-        
-        <label>Usuario (opcional): <input type="text" name="idUsuario"></label><br>
-        <label>Fecha de Inicio: <input type="date" name="fechaInicio"></label><br>
-        <button type="submit">Modificar</button>
-    </form>
+    <section>
+        <h2>Agregar Nuevo Empleado</h2>
+        <form th:action="@{/empleados/agregar}" method="post">
+            <label for="nombreNuevo">Nombre:</label>
+            <input type="text" id="nombreNuevo" name="nombre" required />
 
-    <!-- Eliminar Empleado -->
-    <h2>Eliminar Empleado</h2>
-    <form th:action="@{/empleados/eliminar}" method="post">
-        <label>ID: <input type="number" name="id" required></label>
-        <button type="submit">Eliminar</button>
-    </form>
-	
-	<div style="max-width: 600px; margin-top: 40px;">
-		<button onclick="window.history.back()" class="btn-volver">← Volver</button>
-	</div>
+            <label for="apellidoNuevo">Apellido:</label>
+            <input type="text" id="apellidoNuevo" name="apellido" required />
+
+            <label for="dniNuevo">DNI:</label>
+            <input type="text" id="dniNuevo" name="dni" required />
+
+            <label for="usuarioNuevo">Usuario (opcional):</label>
+            <input type="text" id="usuarioNuevo" name="idUsuario" />
+
+            <label for="fechaInicioNuevo">Fecha de Inicio:</label>
+            <input type="date" id="fechaInicioNuevo" name="fechaInicio" required />
+
+            <button type="submit">Agregar</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Modificar Empleado</h2>
+        <form th:action="@{/empleados/modificar}" method="post">
+            <label for="idMod">ID:</label>
+            <input type="number" id="idMod" name="id" required />
+
+            <label for="nombreMod">Nombre:</label>
+            <input type="text" id="nombreMod" name="nombre" />
+
+            <label for="apellidoMod">Apellido:</label>
+            <input type="text" id="apellidoMod" name="apellido" />
+
+            <label for="dniMod">DNI:</label>
+            <input type="text" id="dniMod" name="dni" />
+
+            <label for="usuarioMod">Usuario (opcional):</label>
+            <input type="text" id="usuarioMod" name="idUsuario" />
+
+            <label for="fechaInicioMod">Fecha de Inicio:</label>
+            <input type="date" id="fechaInicioMod" name="fechaInicio" />
+
+            <button type="submit">Modificar</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Eliminar Empleado</h2>
+        <form th:action="@{/empleados/eliminar}" method="post">
+            <label for="idEliminar">ID:</label>
+            <input type="number" id="idEliminar" name="id" required />
+            <button type="submit">Eliminar</button>
+        </form>
+    </section>
+
+    <div style="max-width: 600px; margin-top: 40px; text-align: center;">
+        <button onclick="window.history.back()" class="btn-volver">← Volver</button>
+    </div>
 </body>
 </html>
-
