@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Resultado Empleados</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}">
+</head>
+<body>
+
+    <h1>Resultado de Búsqueda</h1>
+    <hr/>
+
+    <!-- Mensaje informativo -->
+    <p class="mensaje" th:if="${mensaje}" th:text="${mensaje}"></p>
+
+    <!-- Empleado individual -->
+    <section th:if="${empleado != null}">
+        <h2>Empleado Encontrado</h2>
+        <p><strong>ID:</strong> <span th:text="${empleado.idPersona}"></span></p>
+        <p><strong>Nombre:</strong> <span th:text="${empleado.nombre}"></span></p>
+        <p><strong>Apellido:</strong> <span th:text="${empleado.apellido}"></span></p>
+        <p><strong>DNI:</strong> <span th:text="${empleado.dni}"></span></p>
+        <p><strong>ID Usuario:</strong> 
+            <span th:if="${empleado.idUsuario != null}" th:text="${empleado.idUsuario}"></span>
+            <span th:unless="${empleado.idUsuario != null}">Sin usuario</span>
+        </p>
+        <p><strong>Fecha de inicio:</strong> <span th:text="${empleado.fechaInicio}"></span></p>
+    </section>
+
+    <!-- Lista de empleados -->
+    <section th:if="${empleados != null}">
+        <h2>Empleados Encontrados</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>DNI</th>
+                    <th>Usuario</th>
+                    <th>Fecha de Inicio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="emp : ${empleados}">
+                    <td th:text="${emp.idPersona}"></td>
+                    <td th:text="${emp.nombre}"></td>
+                    <td th:text="${emp.apellido}"></td>
+                    <td th:text="${emp.dni}"></td>
+                    <td>
+                        <span th:if="${emp.idUsuario != null}" th:text="${emp.idUsuario}"></span>
+                        <span th:unless="${emp.idUsuario != null}">Sin usuario</span>
+                    </td>
+                    <td th:text="${emp.fechaInicio}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Botón volver -->
+    <div style="margin-top: 30px; text-align: center;">
+        <button onclick="window.history.back()" class="btn-volver">← Volver</button>
+    </div>
+
+</body>
+</html>

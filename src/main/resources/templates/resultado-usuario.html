@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Detalle Usuario</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}">
+</head>
+<body>
+
+    <h1>Detalle de Usuario</h1>
+    <hr/>
+
+    <!-- Mensaje informativo -->
+    <p class="mensaje" th:if="${mensaje}" th:text="${mensaje}"></p>
+
+    <!-- Detalle de usuario -->
+    <section th:if="${usuario != null}">
+        <p><strong>ID:</strong> <span th:text="${usuario.idUsuario}"></span></p>
+        <p><strong>Nombre de Usuario:</strong> <span th:text="${usuario.nombreUsuario}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${usuario.email}"></span></p>
+    </section>
+
+    <!-- Mensaje si no hay usuario -->
+    <section th:if="${usuario == null}">
+        <p>No se encontró información del usuario.</p>
+    </section>
+
+	<div style="margin-top: 30px; text-align: center;">
+	        <button onclick="window.history.back()" class="btn-volver">← Volver</button>
+	    </div>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Gestión de Usuarios</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}">
+</head>
+<body>
+
+<h1>Gestión de Usuarios</h1>
+
+<hr/>
+
+<!-- Buscar Roles por Usuario -->
+<section>
+    <h2>Buscar Roles por Usuario</h2>
+    <form th:action="@{/usuarios/roles-por-usuario}" method="get">
+        <label for="idUsuario">ID Usuario:</label>
+        <input type="number" id="idUsuario" name="idUsuario" required />
+        <button type="submit">Buscar Roles</button>
+    </form>
+</section>
+
+<!-- Agregar Usuario -->
+<section>
+    <h2>Agregar Nuevo Usuario</h2>
+    <form th:action="@{/usuarios/agregar}" method="post">
+        <label for="idPersona">ID de Persona:</label>
+        <input type="number" id="idPersona" name="idPersona" required />
+
+        <label for="nombreUsuario">Nombre de Usuario:</label>
+        <input type="text" id="nombreUsuario" name="nombreUsuario" required />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="contraseniaUsuario">Contraseña:</label>
+        <input type="password" id="contraseniaUsuario" name="contraseniaUsuario" required />
+
+        <label for="estado">Estado (activo):</label>
+        <input type="checkbox" id="estado" name="estado" checked />
+
+        <button type="submit">Agregar</button>
+    </form>
+</section>
+
+<!-- Modificar Usuario -->
+<section>
+    <h2>Modificar Usuario</h2>
+    <form th:action="@{/usuarios/modificar}" method="post">
+        <label for="idUsuario">ID del Usuario a modificar:</label>
+        <input type="number" id="idUsuario" name="id" required />
+
+        <label for="nombreUsuario">Nombre de Usuario:</label>
+        <input type="text" id="nombreUsuario" name="nombreUsuario" required />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="contraseniaUsuario">Contraseña:</label>
+        <input type="password" id="contraseniaUsuario" name="contraseniaUsuario" required />
+
+        <label for="estadoMod">Estado (activo):</label>
+        <input type="checkbox" id="estadoMod" name="estado" checked />
+
+        <button type="submit">Modificar Usuario</button>
+    </form>
+</section>
+
+<!-- Eliminar Usuario -->
+<section>
+    <h2>Eliminar Usuario</h2>
+    <form th:action="@{/usuarios/eliminar}" method="post">
+        <label for="idEliminar">ID del Usuario a eliminar:</label>
+        <input type="number" id="idEliminar" name="id" required />
+        <button type="submit">Eliminar Usuario</button>
+    </form>
+</section>
+
+<!-- Buscar Usuario por ID -->
+<section>
+    <h2>Buscar Usuario por Email</h2>
+    <form th:action="@{/usuarios/buscar-por-email}" method="get">
+        <label for="emailBuscar">Email:</label>
+        <input type="email" id="emailBuscar" name="email" required />
+        <button type="submit">Buscar</button>
+    </form>
+</section>
+
+
+<div style="max-width: 600px; margin-top: 40px; text-align: center;">
+    <button onclick="window.history.back()" class="btn-volver">← Volver</button>
+</div>
+
+</body>
+</html>
