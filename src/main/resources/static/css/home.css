@@ -43,4 +43,23 @@ h1 {
 .link-card:hover {
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 	transform: translateY(-3px);
+<<<<<<< HEAD
 }
+=======
+}
+
+button {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+>>>>>>> 83e45e824b156e44f84c81972db58fc84f24b7be

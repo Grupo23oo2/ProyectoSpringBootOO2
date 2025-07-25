@@ -38,6 +38,7 @@ public class LugarServicio implements ILugarServicio {
     }
 
     @Override
+
     public LugarDTO traerLugarPorDireccion(String direccion) {
         try {
             Lugar lugar = lugarRepositorio.findByDireccion(direccion)
@@ -45,6 +46,7 @@ public class LugarServicio implements ILugarServicio {
             return modelMapper.map(lugar, LugarDTO.class);
         } catch (Exception e) {
             throw new MiExcepcionPersonalizada("No se pudo traer el lugar: " + e.getMessage());
+
         }
     }
 

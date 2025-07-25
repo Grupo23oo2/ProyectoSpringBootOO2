@@ -11,6 +11,7 @@
     <hr/>
 
     <section>
+<<<<<<< HEAD
     <h2>Buscar Empleado por DNI</h2>
     <form th:action="@{/empleados/buscar}" method="get">
         <label for="dniBuscar">DNI:</label>
@@ -18,6 +19,15 @@
         <button type="submit">Buscar</button>
     </form>
 </section>
+=======
+        <h2>Buscar Empleado por ID</h2>
+        <form th:action="@{/empleados/buscar}" method="get">
+            <label for="idBuscar">ID:</label>
+            <input type="number" id="idBuscar" name="id" required />
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
+>>>>>>> 83e45e824b156e44f84c81972db58fc84f24b7be
 
     <section>
         <h2>Buscar Empleados por Rol</h2>
@@ -44,6 +54,7 @@
         </form>
     </section>
 
+<<<<<<< HEAD
     <section>
         <h2>Agregar Nuevo Empleado</h2>
         <form th:action="@{/empleados/agregar}" method="post">
@@ -102,6 +113,10 @@
 
     <div style="max-width: 600px; margin-top: 40px; text-align: center;">
         <button onclick="window.history.back()" class="btn-volver">← Volver</button>
+=======
+	<div style="text-align: center; margin-top: 20px;">
+        <a href="/" class="btn">← Volver</a>
+>>>>>>> 83e45e824b156e44f84c81972db58fc84f24b7be
     </div>
 </body>
 </html>

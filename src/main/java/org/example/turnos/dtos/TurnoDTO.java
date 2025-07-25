@@ -1,6 +1,10 @@
 package org.example.turnos.dtos;
 
+
 import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 
 public class TurnoDTO {
 
@@ -10,14 +14,16 @@ public class TurnoDTO {
     private Long idEmpleado;
     private Long idCliente;
     private LocalDateTime fechaHoraInicio;
-    private LocalDateTime fechaHoraFin;
     private Long idServicio;
+    private int duracionMinutos;
+
     
     public TurnoDTO() {
     }
 
 	public TurnoDTO(Long idTurno, boolean presencial, Long idLugarTurno, Long idEmpleado, Long idCliente,
-			LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Long idServicio) {
+			LocalDateTime fechaHoraInicio, Long idServicio, int duracionMinutos) {
+
 		super();
 		this.idTurno = idTurno;
 		this.presencial = presencial;
@@ -25,8 +31,9 @@ public class TurnoDTO {
 		this.idEmpleado = idEmpleado;
 		this.idCliente = idCliente;
 		this.fechaHoraInicio = fechaHoraInicio;
-		this.fechaHoraFin = fechaHoraFin;
 		this.idServicio = idServicio;
+	    this.duracionMinutos = duracionMinutos;
+
 	}
 
 	public Long getIdTurno() {
@@ -77,13 +84,7 @@ public class TurnoDTO {
 		this.fechaHoraInicio = fechaHoraInicio;
 	}
 
-	public LocalDateTime getFechaHoraFin() {
-		return fechaHoraFin;
-	}
 
-	public void setFechaHoraFin(LocalDateTime fechaHoraFin) {
-		this.fechaHoraFin = fechaHoraFin;
-	}
 
 	public Long getIdServicio() {
 		return idServicio;
@@ -92,5 +93,22 @@ public class TurnoDTO {
 	public void setIdServicio(Long idServicio) {
 		this.idServicio = idServicio;
 	}
+
+	public int getDuracionMinutos() {
+	    return duracionMinutos;
+	}
+
+	public void setDuracionMinutos(int duracionMinutos) {
+	    this.duracionMinutos = duracionMinutos;
+	}
+	
+	public LocalDate getFecha() {
+	    return fechaHoraInicio != null ? fechaHoraInicio.toLocalDate() : null;
+	}
+
+	public LocalTime getHora() {
+	    return fechaHoraInicio != null ? fechaHoraInicio.toLocalTime() : null;
+	}
+
 }
 

@@ -35,13 +35,16 @@ public class ServicioWebControlador {
         return "resultado-servicios";  
     }
 
-    // Buscar servicio por ID
+    // Buscar servicio por descripcion
+
     @GetMapping("/buscar-por-descripcion")
     public String buscarPorDescripcion(@RequestParam String descripcion, Model model) {
         ServicioDTO servicio = servicioServicio.traerServicioPorDescripcion(descripcion);
         model.addAttribute("servicio", servicio);
         return "resultado-servicio";
     }
+
+
 
 
     // Agregar nuevo servicio

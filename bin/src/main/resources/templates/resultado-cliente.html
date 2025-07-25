@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Detalle Cliente</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}">
+</head>
+<body>
+
+    <h1>Información del Cliente</h1>
+    <hr/>
+
+    <p class="mensaje" th:if="${mensaje}" th:text="${mensaje}"></p>
+
+    <!-- Datos del Cliente -->
+    <section th:if="${cliente != null}">
+        <h2>Datos Personales</h2>
+        <p><strong>ID:</strong> <span th:text="${cliente.idPersona}"></span></p>
+        <p><strong>Nombre:</strong> <span th:text="${cliente.nombre}"></span></p>
+        <p><strong>Apellido:</strong> <span th:text="${cliente.apellido}"></span></p>
+        <p><strong>DNI:</strong> <span th:text="${cliente.dni}"></span></p>
+        <p><strong>CUIT:</strong> <span th:text="${cliente.cuit}"></span></p>
+
+        <p><strong>ID de Usuario:</strong> 
+            <span th:if="${cliente.idUsuario != null}" th:text="${cliente.idUsuario}"></span>
+            <span th:unless="${cliente.idUsuario != null}">Sin usuario</span>
+        </p>
+    </section>
+
+    <!-- Datos de Contacto -->
+    <section th:if="${contacto != null}">
+        <h2>Contacto</h2>
+        <p><strong>Teléfono:</strong> <span th:text="${contacto.telefono}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${contacto.email}"></span></p>
+        <p><strong>Dirección:</strong> <span th:text="${contacto.direccion}"></span></p>
+    </section>
+
+    <p class="mensaje" th:if="${contacto == null}">No se encontró contacto para el CUIT proporcionado.</p>
+
+    <div style="margin-top: 30px; text-align: center;">
+        <button onclick="window.history.back()" class="btn-volver">← Volver</button>
+    </div>
+
+</body>
+</html>

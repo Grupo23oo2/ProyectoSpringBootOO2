@@ -10,6 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+
+import java.time.*;
+import java.util.ArrayList;
+
 import java.util.List;
 
 @Controller
@@ -20,8 +24,12 @@ public class TurnoControlador {
     private ITurnoServicio turnoServicio;
 
     @GetMapping("/formulario")
-    public String mostrarFormulario() {
-        return "buscar-turno"; // Vista con el formulario de búsqueda
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
+    public String mostrarFormulario(Model model) {
+        model.addAttribute("horasDisponibles", turnoServicio.obtenerHorasDisponiblesFijas());//agregado en nueva logica de turno
+        model.addAttribute("diasDisponibles", turnoServicio.obtenerDiasProximos(7));
+        return "buscar-turno";
+
     }
     
     
@@ -79,9 +87,11 @@ public class TurnoControlador {
                                               @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta,
                                               Model model) {
         List<TurnoDTO> turnos = turnoServicio.traerTurnosDeClientePorCuitEntreFechas(cuit, desde, hasta);
+
         model.addAttribute("turnos", turnos);
         return "resultado-turnos";
     }
+
 
 
     @GetMapping("/buscar-por-empleado")
@@ -132,16 +142,7 @@ public class TurnoControlador {
         return "resultado-turnos";
     }
 
-    @GetMapping("/buscar-por-rol-empleado")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
-    public String buscarPorRolEmpleado(@RequestParam("rol") String rol,
-                                       @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
-                                       @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta,
-                                       Model model) {
-        List<TurnoDTO> turnos = turnoServicio.traerTurnosPorRolEmpleadoYFechas(rol, desde, hasta);
-        model.addAttribute("turnos", turnos);
-        return "resultado-turnos";
-    }
+  
 
     @GetMapping("/buscar-por-direccion-lugar")
     @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
@@ -169,6 +170,56 @@ public class TurnoControlador {
         model.addAttribute("turnos", turnos);
         return "resultado-turnos";
     }
+
+
+    @GetMapping("/nuevo")//nueva logica turno
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
+    public String mostrarFormularioNuevoTurno(Model model) {
+        // Generamos una lista de los próximos 7 días
+        List<LocalDate> diasDisponibles = new ArrayList<>();
+        LocalDate hoy = LocalDate.now();
+        for (int i = 0; i < 7; i++) {
+            diasDisponibles.add(hoy.plusDays(i));
+        }
+
+        // Horarios disponibles fijos (08:00 a 18:00 cada 30 minutos)
+        List<String> horasDisponibles = turnoServicio.obtenerHorasDisponiblesFijas();
+
+        model.addAttribute("dias", diasDisponibles);
+        model.addAttribute("horas", horasDisponibles);
+        return "home/nuevoTurno";
+    }
+    
+    @PostMapping("/guardarNuevo")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
+    public String guardarNuevoTurno(
+            @RequestParam("fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
+            @RequestParam("hora") String hora,
+            @RequestParam("duracion") int duracion,
+            @RequestParam("idCliente") Long idCliente,
+            @RequestParam("idEmpleado") Long idEmpleado,
+            @RequestParam("idLugarTurno") Long idLugar,
+            @RequestParam(value = "idServicio", required = false) Long idServicio,
+            @RequestParam("presencial") boolean presencial,
+            Model model
+    ) {
+        LocalDateTime fechaHoraInicio = LocalDateTime.of(fecha, LocalTime.parse(hora));
+
+        TurnoDTO turnoDTO = new TurnoDTO();
+        turnoDTO.setFechaHoraInicio(fechaHoraInicio);
+        turnoDTO.setDuracionMinutos(duracion);
+        turnoDTO.setIdCliente(idCliente);
+        turnoDTO.setIdEmpleado(idEmpleado);
+        turnoDTO.setIdLugarTurno(idLugar);
+        turnoDTO.setIdServicio(idServicio);
+        turnoDTO.setPresencial(presencial);
+
+        TurnoDTO guardado = turnoServicio.agregarTurno(turnoDTO);
+        model.addAttribute("turno", guardado);
+        return "resultado-turno";
+    }
+    
+    
 
     
 }

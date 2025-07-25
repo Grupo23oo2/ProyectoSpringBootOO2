@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #server: 
   #port: 8081  # o 8081 si el 8080 sigue en uso
 
@@ -6,6 +7,16 @@ spring:
     url: jdbc:mysql://localhost:3306/servicios?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
     password: 12345
+=======
+server:
+  port: 8080  # o 8081 si el 8080 sigue en uso
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/servicios?useSSL=false&serverTimezone=UTC
+    username: root
+    password: 
+>>>>>>> 83e45e824b156e44f84c81972db58fc84f24b7be
 
   jpa:
     hibernate:
@@ -16,7 +27,11 @@ spring:
     properties:
       hibernate:
         format_sql: true
+<<<<<<< HEAD
         dialect: org.hibernate.dialect.MySQL8Dialect
+=======
+
+>>>>>>> 83e45e824b156e44f84c81972db58fc84f24b7be
   mail:
     host: smtp.gmail.com
     port: 587
@@ -30,15 +45,29 @@ spring:
             enable: true
 
 logging:
+<<<<<<< HEAD
   config: 
   exception-conversion-word: "%wEx"     # Cómo mostrar excepciones (w = stack trace corto)
   file:
     name: logs/app.log                  # Ruta del archivo de log (puede ser relativo o absoluto)
     path: logs                          # Directorio de logs
+=======
+  config:
+  exception-conversion-word: "%wEx"
+  file:
+    name: logs/app.log
+    path: logs
+>>>>>>> 83e45e824b156e44f84c81972db58fc84f24b7be
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
   level:
+<<<<<<< HEAD
     root: INFO                         # Nivel global de logs
     org.springframework.web: DEBUG     # Nivel para los controladores web de Spring
     org.hibernate: ERROR               # Hibernate produce mucho log, se recomienda ERROR o WARN
+=======
+    root: INFO
+    org.springframework.web: DEBUG
+    org.hibernate: ERROR
+>>>>>>> 83e45e824b156e44f84c81972db58fc84f24b7be

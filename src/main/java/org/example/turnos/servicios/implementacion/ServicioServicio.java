@@ -30,9 +30,11 @@ public class ServicioServicio implements IServicioServicio {
     }
 
     @Override
+
     public ServicioDTO traerServicioPorDescripcion(String descripcion) {
         Servicio servicio = servicioRepositorio.findByDescripcion(descripcion)
                 .orElseThrow(() -> new RuntimeException("Servicio no encontrado con descripción: " + descripcion));
+
         return modelMapper.map(servicio, ServicioDTO.class);
     }
 

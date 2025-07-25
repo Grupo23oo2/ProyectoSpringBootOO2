@@ -143,6 +143,7 @@ public class ClienteServicio implements IClienteServicio {
     }
     
     @Override
+
     public List<ClienteDTO> clientesPorRol(String rol) {
     	try {
         return clienteRepositorio.findByRol(rol)
@@ -151,6 +152,7 @@ public class ClienteServicio implements IClienteServicio {
                 .collect(Collectors.toList());
     	} catch (Exception e){
             throw new MiExcepcionPersonalizada("No se pudo traer los clientes por rol" + e.getMessage());
+
         }
     }
 

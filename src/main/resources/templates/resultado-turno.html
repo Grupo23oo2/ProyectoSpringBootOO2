@@ -13,8 +13,14 @@
     <!-- Detalle del turno -->
     <section th:if="${turno != null}">
         <p><strong>ID:</strong> <span th:text="${turno.idTurno}"></span></p>
+<<<<<<< HEAD
         <p><strong>Fecha y Hora Inicio:</strong> <span th:text="${turno.fechaHoraInicio}"></span></p>
         <p><strong>Fecha y Hora Fin:</strong> <span th:text="${turno.fechaHoraFin}"></span></p>
+=======
+        <p><strong>Fecha:</strong> <span th:text="${turno.fecha}"></span></p>
+        <p><strong>Hora:</strong> <span th:text="${turno.hora}"></span></p>
+        <p><strong>Duración:</strong> <span th:text="${turno.duracionMinutos} + ' minutos'"></span></p>
+>>>>>>> 83e45e824b156e44f84c81972db58fc84f24b7be
         <p><strong>Cliente:</strong> <span th:text="${turno.idCliente}"></span></p>
         <p><strong>Empleado:</strong> <span th:text="${turno.idEmpleado}"></span></p>
         <p><strong>Lugar:</strong> <span th:text="${turno.idLugarTurno}"></span></p>
@@ -33,4 +39,8 @@
     </div>
 
 </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> 83e45e824b156e44f84c81972db58fc84f24b7be

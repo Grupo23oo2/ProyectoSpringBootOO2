@@ -56,23 +56,7 @@ public class EmailServicio implements IEmailServicio {
             throw new MiExcepcionPersonalizada("No se pudo enviar el correo con la plantilla" + e.getMessage());
         }
     }
-/*
-    @Override
-    public void enviarCorreoHtml(String para, String asunto, String htmlBody) {
-        try {
-            MimeMessage mensaje = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mensaje, true, "UTF-8");
 
-            helper.setTo(para);
-            helper.setSubject(asunto);
-            helper.setText(htmlBody, true); // true = contenido HTML
-
-            mailSender.send(mensaje);
-        } catch (MessagingException e) {
-            e.printStackTrace(); // o usar un logger
-        }
-    }*/
-    
     @Override
     public void enviarCorreoHtml(String para, String asunto, String htmlBody) {
         try {

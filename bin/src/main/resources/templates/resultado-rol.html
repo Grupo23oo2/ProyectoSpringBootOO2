@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Resultado Rol de Usuario</title>
+	<link rel="stylesheet" th:href="@{/css/general.css}">
+</head>
+<body>
+
+<h1>Gestión de Roles de Usuario</h1>
+
+<hr/>
+
+
+<!-- Resultado de operaciones -->
+<section th:if="${rol != null}">
+    <h2>Detalles del Rol Usuario</h2>
+    <p><strong>ID Rol Usuario:</strong> <span th:text="${rol.idRolUsuario}"></span></p>
+    <p><strong>ID Usuario:</strong> <span th:text="${rol.usuarioId}"></span></p>
+    <p><strong>Nombre del Rol:</strong> <span th:text="${rol.role}"></span></p>
+    <p><strong>Fecha Creación:</strong> <span th:text="${#temporals.format(rol.fechaCreacion, 'yyyy-MM-dd HH:mm')}"></span></p>
+</section>
+
+<!-- Mensaje de confirmación -->
+<section th:if="${mensaje != null}">
+    <p><strong th:text="${mensaje}"></strong></p>
+</section>
+
+<!-- Lista de roles para /roles-usuarios/todos -->
+<section th:if="${roles != null}">
+    <h2>Lista de Roles de Usuario</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID Rol Usuario</th>
+                <th>ID Usuario</th>
+                <th>Nombre Rol</th>
+                <th>Fecha Creación</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="rol : ${roles}">
+                <td th:text="${rol.idRolUsuario}"></td>
+                <td th:text="${rol.usuarioId}"></td>
+                <td th:text="${rol.role}"></td>
+                <td th:text="${#temporals.format(rol.fechaCreacion, 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<div style="max-width: 600px; margin-top: 40px; text-align: center;">
+    <button onclick="window.history.back()" class="btn-volver">← Volver</button>
+</div>
+
+</body>
+</html>

@@ -1,6 +1,5 @@
 package org.example.turnos.controlador;
 
-import org.example.turnos.dtos.RolUsuarioDTO;
 import org.example.turnos.dtos.UsuarioDTO;
 import org.example.turnos.servicios.IUsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +23,6 @@ public class UsuarioWebControlador {
         return "buscar-usuario";
     }
 
-    // Consulta los roles activos de un usuario
-    @GetMapping("/roles-por-usuario")
-    public String obtenerRolesUsuariosPorUsuario(@RequestParam Long idUsuario, Model model) {
-        List<RolUsuarioDTO> roles = usuarioServicio.obtenerRolesUsuariosPorUsuario(idUsuario);
-        model.addAttribute("roles", roles);
-        return "resultado-roles";
-    }
 
     // ABM USUARIOS
 
@@ -49,7 +41,6 @@ public class UsuarioWebControlador {
         model.addAttribute("usuario", usuario);
         return "resultado-usuario";
     }
-
 
     // Agregar usuario
     @PostMapping("/agregar")

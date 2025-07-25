@@ -39,6 +39,10 @@
                     <th>DNI</th>
                     <th>Usuario</th>
                     <th>Fecha de Inicio</th>
+<<<<<<< HEAD
+=======
+					<th>Acciones</th>
+>>>>>>> 83e45e824b156e44f84c81972db58fc84f24b7be
                 </tr>
             </thead>
             <tbody>
@@ -52,15 +56,60 @@
                         <span th:unless="${emp.idUsuario != null}">Sin usuario</span>
                     </td>
                     <td th:text="${emp.fechaInicio}"></td>
+<<<<<<< HEAD
+=======
+					<td>
+						<div style="display: flex; align-items: center; gap: 10px;">
+					        <a th:href="@{'/empleados/editar/' + ${emp.idPersona}}" title="Editar">
+					            <img th:src="@{/icons/pencil.svg}" alt="Editar" width="20" height="20" />
+					        </a>
+
+					        <form th:action="@{/empleados/eliminar}" method="post">
+								<input type="hidden" name="id" th:value="${emp.idPersona}" />
+							    <button type="submit" title="Eliminar" style="background: none; border: none; padding: 0; cursor: pointer;">
+							        <img th:src="@{/icons/trash.svg}" alt="Eliminar" width="20" height="20" />
+							    </button>
+					        </form>
+					    </div>
+			        </td>
+>>>>>>> 83e45e824b156e44f84c81972db58fc84f24b7be
                 </tr>
             </tbody>
         </table>
     </section>
 
+<<<<<<< HEAD
     <!-- Botón volver -->
     <div style="margin-top: 30px; text-align: center;">
         <button onclick="window.history.back()" class="btn-volver">← Volver</button>
     </div>
 
+=======
+	<section th:if="${empleadoEditar != null}">
+	    <h2>Modificar Empleado</h2>
+	    <form th:action="@{/empleados/modificar}" method="post">
+	        <label for="idMod">ID:</label>
+	        <input type="number" id="idMod" name="id" th:value="${empleadoEditar.idPersona}" readonly />
+
+	        <label for="nombreMod">Nombre:</label>
+	        <input type="text" id="nombreMod" name="nombre" th:value="${empleadoEditar.nombre}" />
+
+	        <label for="apellidoMod">Apellido:</label>
+	        <input type="text" id="apellidoMod" name="apellido" th:value="${empleadoEditar.apellido}" />
+
+	        <label for="dniMod">DNI:</label>
+	        <input type="text" id="dniMod" name="dni" th:value="${empleadoEditar.dni}" />
+
+	        <label for="fechaInicioMod">Fecha de Inicio:</label>
+	        <input type="date" id="fechaInicioMod" name="fechaInicio" th:value="${empleadoEditar.fechaInicio}" />
+
+	        <button type="submit">Modificar</button>
+	    </form>
+	</section>
+
+	<div style="text-align: center; margin-top: 20px;">
+        <a href="/" class="btn">← Volver</a>
+    </div>
+>>>>>>> 83e45e824b156e44f84c81972db58fc84f24b7be
 </body>
 </html>
