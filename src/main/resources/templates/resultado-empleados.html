@@ -39,10 +39,8 @@
                     <th>DNI</th>
                     <th>Usuario</th>
                     <th>Fecha de Inicio</th>
-<<<<<<< HEAD
-=======
 					<th>Acciones</th>
->>>>>>> 83e45e824b156e44f84c81972db58fc84f24b7be
+
                 </tr>
             </thead>
             <tbody>
@@ -56,8 +54,7 @@
                         <span th:unless="${emp.idUsuario != null}">Sin usuario</span>
                     </td>
                     <td th:text="${emp.fechaInicio}"></td>
-<<<<<<< HEAD
-=======
+
 					<td>
 						<div style="display: flex; align-items: center; gap: 10px;">
 					        <a th:href="@{'/empleados/editar/' + ${emp.idPersona}}" title="Editar">
@@ -72,19 +69,12 @@
 					        </form>
 					    </div>
 			        </td>
->>>>>>> 83e45e824b156e44f84c81972db58fc84f24b7be
+
                 </tr>
             </tbody>
         </table>
     </section>
 
-<<<<<<< HEAD
-    <!-- Botón volver -->
-    <div style="margin-top: 30px; text-align: center;">
-        <button onclick="window.history.back()" class="btn-volver">← Volver</button>
-    </div>
-
-=======
 	<section th:if="${empleadoEditar != null}">
 	    <h2>Modificar Empleado</h2>
 	    <form th:action="@{/empleados/modificar}" method="post">
@@ -110,6 +100,6 @@
 	<div style="text-align: center; margin-top: 20px;">
         <a href="/" class="btn">← Volver</a>
     </div>
->>>>>>> 83e45e824b156e44f84c81972db58fc84f24b7be
+
 </body>
 </html>

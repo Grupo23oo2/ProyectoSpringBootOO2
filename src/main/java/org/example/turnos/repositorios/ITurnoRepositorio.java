@@ -12,7 +12,7 @@ public interface ITurnoRepositorio extends JpaRepository<Turno, Long> {
 
     // 1. Turnos entre dos fechas
 
-    @Query("SELECT t FROM Turno t WHERE t.fechaHoraInicio >= :inicio AND t.fechaHoraFin <= :fin")
+    @Query("SELECT t FROM Turno t WHERE t.fechaHoraInicio >= :inicio")
     List<Turno> buscarTurnosEntreFechas(@Param("inicio") LocalDateTime inicio, @Param("fin") LocalDateTime fin);
 
     // 2. Turnos de un cliente entre fechas
@@ -55,12 +55,8 @@ public interface ITurnoRepositorio extends JpaRepository<Turno, Long> {
     	    SELECT t FROM Turno t
     	    JOIN t.empleado e
     	    JOIN e.usuario u
-<<<<<<< HEAD
-    	    JOIN u.rolesUsuario r
-    	    WHERE r.role = :rolEmpleado
-=======
     	    WHERE u.rol = :rolEmpleado
->>>>>>> 83e45e824b156e44f84c81972db58fc84f24b7be
+
     	      AND t.fechaHoraInicio BETWEEN :inicio AND :fin
     	""")
     	List<Turno> buscarTurnosPorRolEmpleadoYFechas(@Param("rolEmpleado") String rolEmpleado,
