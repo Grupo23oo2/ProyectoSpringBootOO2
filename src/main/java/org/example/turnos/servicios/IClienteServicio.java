@@ -10,13 +10,14 @@ public interface IClienteServicio {
 
     public ClienteDTO agregarCliente(ClienteDTO dto);
 
-    public Optional<ClienteDTO> traerClientePorId(Long id);
+    public Optional<ClienteDTO> traerClientePorDni(String dni);
 
     public List<ClienteDTO> traerClientes();
-
-    public Optional<ClienteDTO> modificarCliente(Long id, ClienteDTO dto);
-
-    public void eliminarCliente(Long id);
+    
+    public Optional<ClienteDTO> modificarClientePorDni(String dniOriginal, ClienteDTO dto);
+    //public Optional<ClienteDTO> modificarClienteYContactoPorDni(String dniOriginal, ClienteDTO clienteDTO, ContactoDTO contactoDTO);
+    
+    void eliminarClientePorDni(String dni);
 
     public List<ClienteDTO> clientesPorRol(String rol);
     public List<ClienteDTO> clientesPorCuit(String cuit);

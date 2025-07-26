@@ -2,7 +2,9 @@ package org.example.turnos.controlador;
 
 import org.example.turnos.dtos.ClienteDTO;
 import org.example.turnos.dtos.ContactoDTO;
+import org.example.turnos.dtos.UsuarioDTO;
 import org.example.turnos.servicios.IClienteServicio;
+import org.example.turnos.servicios.IContactoServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,9 @@ public class ClienteWebControlador {
 
     @Autowired
     private IClienteServicio clienteServicio;
+    
+    @Autowired
+    private IContactoServicio contactoServicio;
 
     @GetMapping("/formulario")
     public String mostrarFormularioBusqueda() {
@@ -51,13 +56,13 @@ public class ClienteWebControlador {
         return "resultado-clientes";
     }
 
-    @GetMapping("/buscar-por-id")
-    public String traerPorId(@RequestParam("id") Long id, Model model) {
-        Optional<ClienteDTO> clienteOpt = clienteServicio.traerClientePorId(id);
+    @GetMapping("/buscar-por-dni")
+    public String traerPorDni(@RequestParam("dni") String dni, Model model) {
+        Optional<ClienteDTO> clienteOpt = clienteServicio.traerClientePorDni(dni);
         if (clienteOpt.isPresent()) {
             model.addAttribute("cliente", clienteOpt.get());
         } else {
-            model.addAttribute("mensaje", "Cliente no encontrado con ID: " + id);
+            model.addAttribute("mensaje", "Cliente no encontrado con DNI: " + dni);
         }
         return "resultado-cliente";
     }
@@ -69,33 +74,79 @@ public class ClienteWebControlador {
         return "resultado-cliente";
     }
     
-    @GetMapping("/editar/{id}")
-    public String mostrarFormularioEdicion(@PathVariable("id") Long id, Model model) {
-        Optional<ClienteDTO> clienteOpt = clienteServicio.traerClientePorId(id);
+    @GetMapping("/editar/{dni}")
+    public String mostrarFormularioEdicion(@PathVariable("dni") String dni, Model model) {
+        Optional<ClienteDTO> clienteOpt = clienteServicio.traerClientePorDni(dni);
         if (clienteOpt.isPresent()) {
-            model.addAttribute("clienteEditar", clienteOpt.get());
+        	ClienteDTO cliente = clienteOpt.get();
+            model.addAttribute("clienteEditar", cliente);
+
+            // Obtener contacto por idPersona o dni
+            ContactoDTO contacto = contactoServicio.traerContacto(cliente.getIdPersona());
+            model.addAttribute("contactoEditar", contacto); // <- nuevo atributo
         } else {
-            model.addAttribute("mensaje", "Cliente no encontrado con ID: " + id);
+            model.addAttribute("mensaje", "Cliente no encontrado con DNI: " + dni);
         }
         return "resultado-clientes";
     }
 
-    @PostMapping("/modificar")
-    public String modificarCliente(@RequestParam Long id, @ModelAttribute ClienteDTO dto, Model model) {
-        Optional<ClienteDTO> modificado = clienteServicio.modificarCliente(id, dto);
+    /*@PostMapping("/modificar")
+    public String modificarCliente(@RequestParam("dniOriginal") String dniOriginal, @ModelAttribute ClienteDTO dto, Model model) {
+        Optional<ClienteDTO> modificado = clienteServicio.modificarClientePorDni(dniOriginal, dto);
         if (modificado.isPresent()) {
             model.addAttribute("cliente", modificado.get());
         } else {
-            model.addAttribute("mensaje", "No se pudo modificar el cliente con ID: " + id);
+            model.addAttribute("mensaje", "No se pudo modificar el cliente con DNI: " + dniOriginal);
         }
+        return "resultado-cliente";
+    }*/
+    @PostMapping("/modificar")
+    public String modificarClienteYContacto(
+            @RequestParam String dniOriginal,
+            @RequestParam String nombre,
+            @RequestParam String apellido,
+            @RequestParam String dni,
+            @RequestParam String cuit,
+            @RequestParam("emailContacto") String emailContacto,
+            @RequestParam("telefonoContacto") String telefono,
+            @RequestParam("direccionContacto") String direccion,
+            Model model) {
+
+        // Modificamos cliente
+        ClienteDTO clienteDTO = new ClienteDTO();
+        clienteDTO.setNombre(nombre);
+        clienteDTO.setApellido(apellido);
+        clienteDTO.setDni(dni);
+        clienteDTO.setCuit(cuit);
+
+        Optional<ClienteDTO> modificadoOpt = clienteServicio.modificarClientePorDni(dniOriginal, clienteDTO);
+
+        if (modificadoOpt.isPresent()) {
+            ClienteDTO clienteModificado = modificadoOpt.get();
+
+            ContactoDTO contactoDTO = new ContactoDTO();
+            contactoDTO.setIdContacto(clienteModificado.getIdPersona());
+            contactoDTO.setEmail(emailContacto);
+            contactoDTO.setTelefono(telefono);
+            contactoDTO.setDireccion(direccion);
+
+            contactoServicio.modificarContacto(clienteModificado.getIdPersona(), contactoDTO);
+           
+            model.addAttribute("mensaje", "Cliente y contacto modificados correctamente");
+            model.addAttribute("cliente", clienteModificado);
+        } else {
+            model.addAttribute("mensaje", "No se pudo modificar el cliente con DNI: " + dniOriginal);
+        }
+
         return "resultado-cliente";
     }
 
-    @PostMapping("/eliminar")
-    public String eliminarCliente(@RequestParam Long id, Model model) {
-        clienteServicio.eliminarCliente(id);
-        model.addAttribute("mensaje", "Cliente eliminado correctamente (ID: " + id + ")");
-        return "resultado-clientes";
 
+
+    @PostMapping("/eliminar")
+    public String eliminarCliente(@RequestParam String dni, Model model) {
+        clienteServicio.eliminarClientePorDni(dni);
+        model.addAttribute("mensaje", "Cliente eliminado correctamente (DNI: " + dni + ")");
+        return "resultado-clientes";
     }
 }

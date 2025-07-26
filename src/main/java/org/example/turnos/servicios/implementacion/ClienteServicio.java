@@ -55,9 +55,9 @@ public class ClienteServicio implements IClienteServicio {
         }
     }
 
-    public Optional<ClienteDTO> traerClientePorId(Long id) {
+    public Optional<ClienteDTO> traerClientePorDni(String dni) {
     	try {
-        return clienteRepositorio.findById(id).map(this::toDTO);
+        return clienteRepositorio.findByDni(dni).map(this::toDTO);
     	} catch (Exception e){
             throw new MiExcepcionPersonalizada("No se pudo traer el cliente" + e.getMessage());
         }
@@ -74,9 +74,9 @@ public class ClienteServicio implements IClienteServicio {
         }
     }
 
-    public Optional<ClienteDTO> modificarCliente(Long id, ClienteDTO dto) {
+    public Optional<ClienteDTO> modificarClientePorDni(String dniOriginal, ClienteDTO dto) {
     	try {
-        return clienteRepositorio.findById(id).map(clienteExistente -> {
+    	return clienteRepositorio.findByDni(dniOriginal).map(clienteExistente -> {
             clienteExistente.setNombre(dto.getNombre());
             clienteExistente.setApellido(dto.getApellido());
             clienteExistente.setDni(dto.getDni());
@@ -103,11 +103,52 @@ public class ClienteServicio implements IClienteServicio {
             throw new MiExcepcionPersonalizada("No se pudo modificar el cliente");
         }
     }
+   /* public Optional<ClienteDTO> modificarClienteYContactoPorDni(String dniOriginal, ClienteDTO clienteDTO, ContactoDTO contactoDTO) {
+        Optional<Cliente> clienteOpt = clienteRepositorio.findByDni(dniOriginal);
 
-    public void eliminarCliente(Long id) {
+        if (clienteOpt.isPresent()) {
+            Cliente cliente = clienteOpt.get();
+
+            // Modificar datos del cliente
+            cliente.setNombre(clienteDTO.getNombre());
+            cliente.setApellido(clienteDTO.getApellido());
+            cliente.setDni(clienteDTO.getDni());
+            cliente.setCuit(clienteDTO.getCuit());
+
+            // Modificar o crear datos de contacto
+            Contacto contacto = cliente.getContacto();
+            if (contacto == null) {
+                contacto = new Contacto();
+                contacto.setIdContacto(cliente.getIdPersona()); // muy importante!
+            }
+
+            contacto.setEmail(contactoDTO.getEmail());
+            contacto.setTelefono(contactoDTO.getTelefono());
+            contacto.setDireccion(contactoDTO.getDireccion());
+
+            cliente.setContacto(contacto); // asegura que esté vinculado
+
+            clienteRepositorio.save(cliente);
+
+            return Optional.of(new ClienteDTO(
+            	    cliente.getIdPersona(),
+            	    cliente.getNombre(),
+            	    cliente.getApellido(),
+            	    cliente.getDni(),
+            	    cliente.getUsuario() != null ? cliente.getUsuario().getIdUsuario() : null,
+            	    cliente.getCuit(),
+            	    cliente.getContacto() != null ? cliente.getContacto().getIdContacto() : null
+            	));
+        }
+
+        return Optional.empty();
+    }*/
+
+
+    public void eliminarClientePorDni(String dni) {
     	try {
-        Cliente cliente = clienteRepositorio.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("No se encontró Cliente con ID: " + id));
+    	Cliente cliente = clienteRepositorio.findByDni(dni)
+    			.orElseThrow(() -> new EntityNotFoundException("No se encontró cliente con DNI: " + dni));
         clienteRepositorio.delete(cliente);
         } catch (Exception e){
             throw new MiExcepcionPersonalizada("No se pudo eliminar el cliente" + e.getMessage());
@@ -143,7 +184,6 @@ public class ClienteServicio implements IClienteServicio {
     }
     
     @Override
-
     public List<ClienteDTO> clientesPorRol(String rol) {
     	try {
         return clienteRepositorio.findByRol(rol)

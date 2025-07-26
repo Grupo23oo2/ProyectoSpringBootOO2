@@ -11,11 +11,11 @@
     </header>
 
     <div class="container">
-		<a class="link-card" href="/clientes/formulario">Gestión de Cliente</a>
-		<a class="link-card" href="/empleados/formulario">Gestión de Empleado</a>
+		<a class="link-card" href="/clientes/formulario" sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">Gestión de Cliente</a>
+		<a class="link-card" href="/empleados/formulario" sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">Gestión de Empleado</a>
 		<a class="link-card" href="/lugares/formulario">Gestión de Lugar</a>
 		<a class="link-card" href="/usuarios/formulario">Gestión de Usuario</a>
-		<a class="link-card" href="/servicios/formulario">Gestión de Servicio</a>
+		<a class="link-card" href="/servicios/formulario" sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">Gestión de Servicio</a>
 		<a class="link-card" href="/turnos/formulario">Gestión de Turno</a>
 		
     </div>

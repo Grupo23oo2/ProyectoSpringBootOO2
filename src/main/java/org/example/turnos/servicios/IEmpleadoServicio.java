@@ -11,14 +11,10 @@ public interface IEmpleadoServicio {
     public EmpleadoDTO traerEmpleadoPorDni(String dni);
 
     public List<EmpleadoDTO> traerEmpleados();
-    public EmpleadoDTO modificarEmpleado(Long id, EmpleadoDTO dto);
+    EmpleadoDTO modificarEmpleadoPorDni(String dniOriginal, EmpleadoDTO dto);
     
-    void eliminarEmpleado(Long id);
+    void eliminarEmpleadoPorDni(String dni);
     
     public List<EmpleadoDTO> empleadosPorRol(String rol);
     public List<EmpleadoDTO> empleadosPorFechaInicio(LocalDate fecha);
-
-    
-    void eliminarEmpleadoPorDni(String dni);
-
 }
