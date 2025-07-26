@@ -2,6 +2,7 @@ package org.example.turnos.servicios;
 
 import org.example.turnos.dtos.ClienteDTO;
 import org.example.turnos.dtos.ContactoDTO;
+import org.example.turnos.modelo.Cliente;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +20,11 @@ public interface IClienteServicio {
     public void eliminarCliente(Long id);
 
     public List<ClienteDTO> clientesPorRol(String rol);
-    public List<ClienteDTO> clientesPorCuit(String cuit);
+    
+    public List<ClienteDTO> findAllByCuit(String cuit);
+    
+    public ClienteDTO findByCuit(String cuit);
+
 
     public ContactoDTO buscarContactoPorCuit(String cuit);
 }

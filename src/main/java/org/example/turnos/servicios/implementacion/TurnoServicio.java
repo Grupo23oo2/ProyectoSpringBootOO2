@@ -50,40 +50,54 @@ public class TurnoServicio implements ITurnoServicio {
 	@Override
 	public TurnoDTO agregarTurno(TurnoDTO dto) {
 	    try {
-	        Turno turno = modelMapper.map(dto, Turno.class);
-
-	        
+	        Turno turno = new Turno();
+	        turno.setPresencial(dto.isPresencial());
+	        turno.setFechaHoraInicio(dto.getFechaHoraInicio());
 	        turno.setDuracionMinutos(dto.getDuracionMinutos());
 
-
-	        Cliente cliente = clienteRepositorio.findById(dto.getIdCliente())
-	                .orElseThrow(() -> new MiExcepcionPersonalizada("Cliente no encontrado con id: " + dto.getIdCliente()));
+	        // Buscar cliente por CUIT
+	        Cliente cliente = clienteRepositorio.findByCuit(dto.getCuitCliente())
+	            .orElseThrow(() -> new MiExcepcionPersonalizada("Cliente no encontrado con CUIT: " + dto.getCuitCliente()));
 	        turno.setCliente(cliente);
 
-	        Empleado empleado = empleadoRepositorio.findById(dto.getIdEmpleado())
-	                .orElseThrow(() -> new MiExcepcionPersonalizada("Empleado no encontrado con id: " + dto.getIdEmpleado()));
+	        // Buscar empleado por DNI
+	        Empleado empleado = empleadoRepositorio.findByDni(dto.getDniEmpleado())
+	            .orElseThrow(() -> new MiExcepcionPersonalizada("Empleado no encontrado con DNI: " + dto.getDniEmpleado()));
 	        turno.setEmpleado(empleado);
 
-	        Lugar lugar = lugarRepositorio.findById(dto.getIdLugarTurno())
-	                .orElseThrow(() -> new MiExcepcionPersonalizada("Lugar no encontrado con id: " + dto.getIdLugarTurno()));
+	        // Buscar lugar por dirección
+	        Lugar lugar = lugarRepositorio.findByDireccion(dto.getDireccionLugar())
+	            .orElseThrow(() -> new MiExcepcionPersonalizada("Lugar no encontrado con dirección: " + dto.getDireccionLugar()));
 	        turno.setLugarTurno(lugar);
 
-	        if (dto.getIdServicio() != null) {
-	            Servicio servicio = servicioRepositorio.findById(dto.getIdServicio())
-	                .orElseThrow(() -> new MiExcepcionPersonalizada("Servicio no encontrado con id: " + dto.getIdServicio()));
-
+	        // Buscar servicio por descripción (opcional)
+	        if (dto.getDescripcionServicio() != null && !dto.getDescripcionServicio().isBlank()) {
+	            Servicio servicio = servicioRepositorio.findByDescripcion(dto.getDescripcionServicio())
+	                .orElseThrow(() -> new MiExcepcionPersonalizada("Servicio no encontrado con descripción: " + dto.getDescripcionServicio()));
 	            turno.setServicio(servicio);
 	        } else {
 	            turno.setServicio(null);
 	        }
 
 	        Turno guardado = turnoRepositorio.save(turno);
-	        return modelMapper.map(guardado, TurnoDTO.class);
+
+	        // Devolver DTO actualizado
+	        return new TurnoDTO(
+	            guardado.getIdTurno(),
+	            guardado.isPresencial(),
+	            guardado.getLugarTurno().getDireccion(),
+	            guardado.getEmpleado().getDni(),
+	            guardado.getCliente().getCuit(),
+	            guardado.getFechaHoraInicio(),
+	            guardado.getServicio() != null ? guardado.getServicio().getDescripcion() : null,
+	            guardado.getDuracionMinutos()
+	        );
 
 	    } catch (Exception e) {
 	        throw new MiExcepcionPersonalizada("No se pudo agregar el turno: " + e.getMessage());
 	    }
 	}
+
 
 
 
@@ -99,19 +113,45 @@ public class TurnoServicio implements ITurnoServicio {
 
 	@Override
 	public TurnoDTO modificarTurno(Long id, TurnoDTO dto) {
-		try {
-		Turno turno = turnoRepositorio.findById(id)
-				.orElseThrow(() -> new MiExcepcionPersonalizada("Turno no encontrado con id: " + id));
+	    try {
+	        Turno turno = turnoRepositorio.findById(id)
+	            .orElseThrow(() -> new MiExcepcionPersonalizada("Turno no encontrado con id: " + id));
+	        
+	        // Actualizar campo presencial
+	        turno.setPresencial(dto.isPresencial());
 
-		// Solo modificamos fechas según tu comentario
-		turno.setFechaHoraInicio(dto.getFechaHoraInicio());
+	        // Actualizar fecha y hora inicio
+	        turno.setFechaHoraInicio(dto.getFechaHoraInicio());
 
+	        // Actualizar duración (suponiendo que Turno tenga un campo duración en minutos)
+	        turno.setDuracionMinutos(dto.getDuracionMinutos());
 
-		Turno actualizado = turnoRepositorio.save(turno);
-		return modelMapper.map(actualizado, TurnoDTO.class);
-		} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo modificar los turnos" + e.getMessage());
-        }
+	        // Buscar y setear Lugar por dirección
+	        Lugar lugar = lugarRepositorio.findByDireccion(dto.getDireccionLugar())
+	            .orElseThrow(() -> new MiExcepcionPersonalizada("Lugar no encontrado con dirección: " + dto.getDireccionLugar()));
+	        turno.setLugarTurno(lugar);
+
+	        // Buscar y setear Empleado por DNI
+	        Empleado empleado = empleadoRepositorio.findByDni(dto.getDniEmpleado())
+	            .orElseThrow(() -> new MiExcepcionPersonalizada("Empleado no encontrado con DNI: " + dto.getDniEmpleado()));
+	        turno.setEmpleado(empleado);
+
+	        // Buscar y setear Cliente por CUIT
+	        Cliente cliente = clienteRepositorio.findByCuit(dto.getCuitCliente())
+	            .orElseThrow(() -> new MiExcepcionPersonalizada("Cliente no encontrado con CUIT: " + dto.getCuitCliente()));
+	        turno.setCliente(cliente);
+
+	        // Buscar y setear Servicio por descripción
+	        Servicio servicio = servicioRepositorio.findByDescripcion(dto.getDescripcionServicio())
+	            .orElseThrow(() -> new MiExcepcionPersonalizada("Servicio no encontrado con descripción: " + dto.getDescripcionServicio()));
+	        turno.setServicio(servicio);
+
+	        Turno actualizado = turnoRepositorio.save(turno);
+	        return modelMapper.map(actualizado, TurnoDTO.class);
+
+	    } catch (Exception e) {
+	        throw new MiExcepcionPersonalizada("No se pudo modificar el turno: " + e.getMessage());
+	    }
 	}
 
 	@Override
@@ -230,25 +270,27 @@ public class TurnoServicio implements ITurnoServicio {
 	
 	@Override
 	public List<TurnoDTO> traerTurnosPorApellidoEmpleado(String apellido) {
-		try {
-	    List<Turno> turnos = turnoRepositorio.findTurnosByApellidoEmpleado(apellido);
-	    return turnos.stream()
-	        .map(s -> new TurnoDTO(
-	            s.getIdTurno(),
-	            s.isPresencial(),
-	            s.getLugarTurno() != null ? s.getLugarTurno().getIdLugar() : null,
-	            s.getEmpleado() != null ? s.getEmpleado().getIdPersona() : null,
-	            s.getCliente() != null ? s.getCliente().getIdPersona() : null,
-	            s.getFechaHoraInicio(),
-	            s.getServicio().getIdServicio(),
-	            s.getDuracionMinutos()	            
-
-	        ))
-	        .toList();
-		} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo traer los turnos por apellido del empleado" + e.getMessage());
-        }
+	    try {
+	        List<Turno> turnos = turnoRepositorio.findTurnosByApellidoEmpleado(apellido);
+	        return turnos.stream()
+	            .map(s -> {
+	                TurnoDTO dto = new TurnoDTO();
+	                dto.setIdTurno(s.getIdTurno());
+	                dto.setPresencial(s.isPresencial());
+	                dto.setDireccionLugar(s.getLugarTurno() != null ? s.getLugarTurno().getDireccion() : null);
+	                dto.setDniEmpleado(s.getEmpleado() != null ? s.getEmpleado().getDni() : null);
+	                dto.setCuitCliente(s.getCliente() != null ? s.getCliente().getCuit() : null);
+	                dto.setFechaHoraInicio(s.getFechaHoraInicio());
+	                dto.setDescripcionServicio(s.getServicio() != null ? s.getServicio().getDescripcion() : null);
+	                dto.setDuracionMinutos(s.getDuracionMinutos());
+	                return dto;
+	            })
+	            .toList();
+	    } catch (Exception e) {
+	        throw new MiExcepcionPersonalizada("No se pudo traer los turnos por apellido del empleado: " + e.getMessage());
+	    }
 	}
+
 
 	
 	@Override
