@@ -26,10 +26,12 @@ public class Turno {
 
     private LocalDateTime fechaHoraInicio;
 
+    /*@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
+    private Servicio servicio;*/
     
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "servicio_id", nullable = true)
     private Servicio servicio;
-    
 
     @Column(nullable = false)
     private int duracionMinutos;

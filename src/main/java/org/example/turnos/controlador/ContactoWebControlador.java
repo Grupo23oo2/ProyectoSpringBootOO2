@@ -19,6 +19,13 @@ public class ContactoWebControlador {
 
     @Autowired
     private IContactoServicio contactoServicio;
+    
+ // Formulario inicial para gestionar contactos
+    @GetMapping("/formulario")
+    public String mostrarFormularioContacto(Model model) {
+        model.addAttribute("contacto", new ContactoDTO()); // Por si querés usarlo en algún form
+        return "buscar-contacto";
+    }
 
     // Traer todos los contactos
     @GetMapping("/todos")
@@ -28,10 +35,10 @@ public class ContactoWebControlador {
         return "resultado-contactos";
     }
 
-    // Buscar contacto por ID
-    @GetMapping("/buscar-por-id")
-    public String buscarPorId(@RequestParam Long id, Model model) {
-        ContactoDTO contacto = contactoServicio.traerContacto(id);
+ // Buscar contacto por email
+    @GetMapping("/buscar-por-email")
+    public String buscarPorEmail(@RequestParam String email, Model model) {
+        ContactoDTO contacto = contactoServicio.traerContacto(email);
         model.addAttribute("contacto", contacto);
         return "resultado-contacto";
     }
@@ -44,19 +51,19 @@ public class ContactoWebControlador {
         return "resultado-contacto";
     }
 
-    // Modificar contacto
+ // Modificar contacto por email
     @PostMapping("/modificar")
-    public String modificarContacto(@RequestParam Long id, @ModelAttribute ContactoDTO dto, Model model) {
-        ContactoDTO actualizado = contactoServicio.modificarContacto(id, dto);
+    public String modificarContacto(@RequestParam String email, @ModelAttribute ContactoDTO dto, Model model) {
+        ContactoDTO actualizado = contactoServicio.modificarContacto(email, dto);
         model.addAttribute("contacto", actualizado);
         return "resultado-contacto";
     }
 
-    // Eliminar contacto
+ // Eliminar contacto por email
     @PostMapping("/eliminar")
-    public String eliminarContacto(@RequestParam Long id, Model model) {
-        contactoServicio.eliminarContacto(id);
-        model.addAttribute("mensaje", "Contacto eliminado con éxito (ID: " + id + ")");
+    public String eliminarContacto(@RequestParam String email, Model model) {
+        contactoServicio.eliminarContacto(email);
+        model.addAttribute("mensaje", "Contacto eliminado con éxito (Email: " + email + ")");
         return "resultado-contacto";
     }
 }

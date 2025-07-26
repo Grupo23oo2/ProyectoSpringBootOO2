@@ -66,26 +66,26 @@ public class EmpleadoWebControlador {
         return "resultado-empleados";
     }
 
-    @GetMapping("/editar/{id}")
-    public String mostrarFormularioEdicion(@PathVariable("id") Long id, Model model) {
-    	Empleado empleado = empleadoRepositorio.findById(id)
-    		    .orElseThrow(() -> (RuntimeException) new MiExcepcionPersonalizada("Empleado no encontrado con ID: " + id));
+    @GetMapping("/editar/{dni}")
+    public String mostrarFormularioEdicion(@PathVariable("dni") String dni, Model model) {
+    	Empleado empleado = empleadoRepositorio.findByDni(dni)
+    		    .orElseThrow(() -> (RuntimeException) new MiExcepcionPersonalizada("Empleado no encontrado con DNI: " + dni));
 
         model.addAttribute("empleadoEditar", empleado);
         return "resultado-empleados";
     }
 
     @PostMapping("/modificar")
-    public String modificarEmpleado(@RequestParam Long id, @ModelAttribute EmpleadoDTO dto, Model model) {
-        EmpleadoDTO actualizado = empleadoServicio.modificarEmpleado(id, dto);
+    public String modificarEmpleado(@RequestParam("dniOriginal") String dniOriginal, @ModelAttribute EmpleadoDTO dto, Model model) {
+        EmpleadoDTO actualizado = empleadoServicio.modificarEmpleadoPorDni(dniOriginal, dto);
         model.addAttribute("empleado", actualizado);
         return "resultado-empleados";
     }
 
     @PostMapping("/eliminar")
-    public String eliminarEmpleado(@RequestParam Long id, Model model) {
-        empleadoServicio.eliminarEmpleado(id);
-        model.addAttribute("mensaje", "Empleado eliminado con éxito (ID: " + id + ")");
+    public String eliminarEmpleado(@RequestParam String dni, Model model) {
+        empleadoServicio.eliminarEmpleadoPorDni(dni);
+        model.addAttribute("mensaje", "Empleado eliminado con éxito (DNI: " + dni + ")");
         return "resultado-empleados";
     }
 }

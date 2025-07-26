@@ -70,10 +70,10 @@ public class EmpleadoServicio implements IEmpleadoServicio {
     }
 
     @Override
-    public EmpleadoDTO modificarEmpleado(Long id, EmpleadoDTO dto) {
+    public EmpleadoDTO modificarEmpleadoPorDni(String dniOriginal, EmpleadoDTO dto) {
     	try {
-        Empleado existente = empleadoRepositorio.findById(id)
-                .orElseThrow(() -> new MiExcepcionPersonalizada("Empleado no encontrado con ID: " + id));
+        Empleado existente = empleadoRepositorio.findByDni(dniOriginal)
+                .orElseThrow(() -> new MiExcepcionPersonalizada("Empleado no encontrado con DNI: " + dniOriginal));
 
         existente.setNombre(dto.getNombre());
         existente.setApellido(dto.getApellido());
@@ -94,31 +94,24 @@ public class EmpleadoServicio implements IEmpleadoServicio {
         }
     }
 
-    @Override
-    public void eliminarEmpleado(Long id) {
-    	try {
-        empleadoRepositorio.deleteById(id);
-    	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo eliminar el empleado" + e.getMessage());
-        }
-    }
-
-    
     @Transactional
     @Override
-    public void eliminarEmpleadoPorDni(String dni) {
-        if (!empleadoRepositorio.existsByDni(dni)) {
-            throw new MiExcepcionPersonalizada("No se encontró un empleado con el DNI: " + dni);
-        }
+    public void eliminarEmpleadoPorDni(String dniOriginal) {
+        Empleado empleado = empleadoRepositorio.findByDni(dniOriginal)
+            .orElseThrow(() -> new MiExcepcionPersonalizada("No se encontró un empleado con el DNI: " + dniOriginal));
 
         try {
-            empleadoRepositorio.deleteByDni(dni);
+            if (empleado.getUsuario() != null) {
+                usuarioRepositorio.delete(empleado.getUsuario());
+                empleado.setUsuario(null);
+            }
+
+            empleadoRepositorio.delete(empleado);
+
         } catch (Exception e) {
-            throw new MiExcepcionPersonalizada("Error al eliminar el empleado con DNI " + dni + ": " + e.getMessage());
+            throw new MiExcepcionPersonalizada("Error al eliminar el empleado con DNI " + dniOriginal + ": " + e.getMessage());
         }
     }
-
-
 
     private EmpleadoDTO toDTO(Empleado empleado) {
         EmpleadoDTO dto = modelMapper.map(empleado, EmpleadoDTO.class);

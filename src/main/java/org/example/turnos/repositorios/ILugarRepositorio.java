@@ -9,9 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ILugarRepositorio extends JpaRepository<Lugar, Long> {
 	
 	boolean existsByDireccion(String direccion);
-
 	
 	Optional<Lugar> findByDireccion(String direccion);
-
-
 }

@@ -63,30 +63,29 @@ public class LugarServicio implements ILugarServicio {
     }
 
     @Override
-    public LugarDTO modificarLugar(Long id, LugarDTO dto) {
-    	try {
-        Lugar lugarExistente = lugarRepositorio.findById(id)
-                .orElseThrow(() -> new MiExcepcionPersonalizada("Lugar no encontrado con id: " + id));
+    public LugarDTO modificarLugar(String direccion, LugarDTO dto) {
+        try {
+            Lugar lugarExistente = lugarRepositorio.findByDireccion(direccion)
+                    .orElseThrow(() -> new MiExcepcionPersonalizada("Lugar no encontrado con dirección: " + direccion));
 
-        // Actualizo sólo lo necesario
-        lugarExistente.setDireccion(dto.getDireccion());
+            lugarExistente.setDireccion(dto.getDireccion());
 
-        Lugar actualizado = lugarRepositorio.save(lugarExistente);
-        return modelMapper.map(actualizado, LugarDTO.class);
-    	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo modificar el lugar" + e.getMessage());
+            Lugar actualizado = lugarRepositorio.save(lugarExistente);
+            return modelMapper.map(actualizado, LugarDTO.class);
+        } catch (Exception e){
+            throw new MiExcepcionPersonalizada("No se pudo modificar el lugar: " + e.getMessage());
         }
     }
 
     @Override
-    public void eliminarLugar(Long id) {
-    	try {
-        if (!lugarRepositorio.existsById(id)) {
-            throw new MiExcepcionPersonalizada("Lugar no encontrado con id: " + id);
-        }
-        lugarRepositorio.deleteById(id);
-    	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo eliminar el lugar" + e.getMessage());
+    public void eliminarLugar(String direccion) {
+        try {
+            Lugar lugar = lugarRepositorio.findByDireccion(direccion)
+                    .orElseThrow(() -> new MiExcepcionPersonalizada("Lugar no encontrado con dirección: " + direccion));
+
+            lugarRepositorio.delete(lugar);
+        } catch (Exception e){
+            throw new MiExcepcionPersonalizada("No se pudo eliminar el lugar: " + e.getMessage());
         }
     }
 }

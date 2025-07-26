@@ -60,9 +60,4 @@ public class Cliente extends Persona {
 	public void setTurnos(Set<Turno> turnos) {
 		this.turnos = turnos;
 	}
-	
-	
-
-    
-    
 }

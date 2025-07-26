@@ -24,7 +24,7 @@ public class TurnoControlador {
     private ITurnoServicio turnoServicio;
 
     @GetMapping("/formulario")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO') or hasRole('CLIENTE')")
     public String mostrarFormulario(Model model) {
         model.addAttribute("horasDisponibles", turnoServicio.obtenerHorasDisponiblesFijas());//agregado en nueva logica de turno
         model.addAttribute("diasDisponibles", turnoServicio.obtenerDiasProximos(7));
@@ -32,9 +32,7 @@ public class TurnoControlador {
 
     }
     
-    
  // --- ABM Turnos ---
-
     @GetMapping("/todos")
     @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
     public String traerTodosLosTurnos(Model model) {
@@ -132,7 +130,6 @@ public class TurnoControlador {
     }
 
     @GetMapping("/buscar-por-nombre-cliente")
-    @PreAuthorize("hasRole('CLIENTE') or hasRole('EMPLEADO')")
     public String buscarPorNombreCliente(@RequestParam("nombre") String nombre,
                                          @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
                                          @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta,
@@ -196,10 +193,10 @@ public class TurnoControlador {
             @RequestParam("fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
             @RequestParam("hora") String hora,
             @RequestParam("duracion") int duracion,
-            @RequestParam("idCliente") Long idCliente,
-            @RequestParam("idEmpleado") Long idEmpleado,
-            @RequestParam("idLugarTurno") Long idLugar,
-            @RequestParam(value = "idServicio", required = false) Long idServicio,
+            @RequestParam("cuitCliente") String cuitCliente,
+            @RequestParam("dniEmpleado") String dniEmpleado,
+            @RequestParam("direccionLugar") String direccionLugar,
+            @RequestParam(value = "descripcionServicio", required = false) String descripcionServicio,
             @RequestParam("presencial") boolean presencial,
             Model model
     ) {
@@ -208,18 +205,14 @@ public class TurnoControlador {
         TurnoDTO turnoDTO = new TurnoDTO();
         turnoDTO.setFechaHoraInicio(fechaHoraInicio);
         turnoDTO.setDuracionMinutos(duracion);
-        turnoDTO.setIdCliente(idCliente);
-        turnoDTO.setIdEmpleado(idEmpleado);
-        turnoDTO.setIdLugarTurno(idLugar);
-        turnoDTO.setIdServicio(idServicio);
+        turnoDTO.setCuitCliente(cuitCliente);
+        turnoDTO.setDniEmpleado(dniEmpleado);
+        turnoDTO.setDireccionLugar(direccionLugar);
+        turnoDTO.setDescripcionServicio(descripcionServicio);
         turnoDTO.setPresencial(presencial);
 
         TurnoDTO guardado = turnoServicio.agregarTurno(turnoDTO);
         model.addAttribute("turno", guardado);
         return "resultado-turno";
     }
-    
-    
-
-    
 }

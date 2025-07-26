@@ -36,17 +36,17 @@ public class ServicioServicio implements IServicioServicio {
     }
 
     @Override
-    public void eliminarServicio(Long id) {
-        if (!servicioRepositorio.existsById(id)) {
-            throw new RuntimeException("No existe el servicio con ID: " + id);
-        }
-        servicioRepositorio.deleteById(id);
+    public void eliminarServicio(String descripcion) {
+        Servicio servicio = servicioRepositorio.findByDescripcion(descripcion)
+            .orElseThrow(() -> new RuntimeException("No existe el servicio con descripción: " + descripcion));
+        
+        servicioRepositorio.delete(servicio);
     }
 
     @Override
-    public ServicioDTO modificarServicio(Long id, ServicioDTO servicioDTO) {
-        Servicio existente = servicioRepositorio.findById(id)
-            .orElseThrow(() -> new RuntimeException("Servicio no encontrado con ID: " + id));
+    public ServicioDTO modificarServicio(String descripcion, ServicioDTO servicioDTO) {
+        Servicio existente = servicioRepositorio.findByDescripcion(descripcion)
+            .orElseThrow(() -> new RuntimeException("Servicio no encontrado con descripción: " + descripcion));
         
         // Actualizar campos
         existente.setDescripcion(servicioDTO.getDescripcion());
@@ -64,7 +64,5 @@ public class ServicioServicio implements IServicioServicio {
             .map(servicio -> modelMapper.map(servicio, ServicioDTO.class))
             .collect(Collectors.toList());
     }
-    
-   
 }
 

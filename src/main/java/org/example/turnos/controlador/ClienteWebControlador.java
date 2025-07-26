@@ -2,7 +2,9 @@ package org.example.turnos.controlador;
 
 import org.example.turnos.dtos.ClienteDTO;
 import org.example.turnos.dtos.ContactoDTO;
+import org.example.turnos.excepciones.MiExcepcionPersonalizada;
 import org.example.turnos.servicios.IClienteServicio;
+import org.example.turnos.servicios.IContactoServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,9 @@ public class ClienteWebControlador {
 
     @Autowired
     private IClienteServicio clienteServicio;
+    
+    @Autowired
+    private IContactoServicio contactoServicio;
 
     @GetMapping("/formulario")
     public String mostrarFormularioBusqueda() {
@@ -24,10 +29,22 @@ public class ClienteWebControlador {
     }
 
     @GetMapping("/buscar")
-    public String buscarPorCuit(@RequestParam("cuit") String cuit, Model model) {
-        List<ClienteDTO> clientes = clienteServicio.clientesPorCuit(cuit);
+    public String findAllByCuit(@RequestParam("cuit") String cuit, Model model) {
+        List<ClienteDTO> clientes = clienteServicio.findAllByCuit(cuit);
         model.addAttribute("clientes", clientes);
         return "resultado-clientes";
+    }
+    
+    @GetMapping("/buscar-por-cuit")
+    public String findByCuit(@RequestParam("cuit") String cuit, Model model) {
+        try {
+            ClienteDTO cliente = clienteServicio.findByCuit(cuit);
+            model.addAttribute("cliente", cliente);
+            return "resultado-cliente"; 
+        } catch (MiExcepcionPersonalizada e) {
+            model.addAttribute("error", e.getMessage());
+            return "error-cliente"; 
+        }
     }
 
     @GetMapping("/buscar-por-role")
@@ -51,13 +68,13 @@ public class ClienteWebControlador {
         return "resultado-clientes";
     }
 
-    @GetMapping("/buscar-por-id")
-    public String traerPorId(@RequestParam("id") Long id, Model model) {
-        Optional<ClienteDTO> clienteOpt = clienteServicio.traerClientePorId(id);
+    @GetMapping("/buscar-por-dni")
+    public String traerPorDni(@RequestParam("dni") String dni, Model model) {
+        Optional<ClienteDTO> clienteOpt = clienteServicio.traerClientePorDni(dni);
         if (clienteOpt.isPresent()) {
             model.addAttribute("cliente", clienteOpt.get());
         } else {
-            model.addAttribute("mensaje", "Cliente no encontrado con ID: " + id);
+            model.addAttribute("mensaje", "Cliente no encontrado con DNI: " + dni);
         }
         return "resultado-cliente";
     }
@@ -69,33 +86,37 @@ public class ClienteWebControlador {
         return "resultado-cliente";
     }
     
-    @GetMapping("/editar/{id}")
-    public String mostrarFormularioEdicion(@PathVariable("id") Long id, Model model) {
-        Optional<ClienteDTO> clienteOpt = clienteServicio.traerClientePorId(id);
+    @GetMapping("/editar/{dni}")
+    public String mostrarFormularioEdicion(@PathVariable("dni") String dni, Model model) {
+        Optional<ClienteDTO> clienteOpt = clienteServicio.traerClientePorDni(dni);
         if (clienteOpt.isPresent()) {
-            model.addAttribute("clienteEditar", clienteOpt.get());
+        	ClienteDTO cliente = clienteOpt.get();
+            model.addAttribute("clienteEditar", cliente);
+
+            // Obtener contacto por idPersona o dni
+            ContactoDTO contacto = contactoServicio.traerContacto(cliente.getDni());
+            model.addAttribute("contactoEditar", contacto); // <- nuevo atributo
         } else {
-            model.addAttribute("mensaje", "Cliente no encontrado con ID: " + id);
+            model.addAttribute("mensaje", "Cliente no encontrado con DNI: " + dni);
         }
         return "resultado-clientes";
     }
 
     @PostMapping("/modificar")
-    public String modificarCliente(@RequestParam Long id, @ModelAttribute ClienteDTO dto, Model model) {
-        Optional<ClienteDTO> modificado = clienteServicio.modificarCliente(id, dto);
+    public String modificarCliente(@RequestParam("dniOriginal") String dniOriginal, @ModelAttribute ClienteDTO dto, Model model) {
+        Optional<ClienteDTO> modificado = clienteServicio.modificarClientePorDni(dniOriginal, dto);
         if (modificado.isPresent()) {
             model.addAttribute("cliente", modificado.get());
         } else {
-            model.addAttribute("mensaje", "No se pudo modificar el cliente con ID: " + id);
+            model.addAttribute("mensaje", "No se pudo modificar el cliente con DNI: " + dniOriginal);
         }
         return "resultado-cliente";
     }
 
     @PostMapping("/eliminar")
-    public String eliminarCliente(@RequestParam Long id, Model model) {
-        clienteServicio.eliminarCliente(id);
-        model.addAttribute("mensaje", "Cliente eliminado correctamente (ID: " + id + ")");
+    public String eliminarCliente(@RequestParam String dni, Model model) {
+        clienteServicio.eliminarClientePorDni(dni);
+        model.addAttribute("mensaje", "Cliente eliminado correctamente (DNI: " + dni + ")");
         return "resultado-clientes";
-
     }
 }

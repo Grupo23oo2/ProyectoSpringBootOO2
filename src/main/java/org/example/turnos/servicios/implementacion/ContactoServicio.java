@@ -44,13 +44,13 @@ public class ContactoServicio implements IContactoServicio {
     }
 
     @Override
-    public ContactoDTO traerContacto(Long id) {
-    	try {
-        return contactoRepositorio.findById(id)
-                .map(contacto -> modelMapper.map(contacto, ContactoDTO.class))
-                .orElse(null);
-    	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo trer el contacto" + e.getMessage());
+    public ContactoDTO traerContacto(String email) {
+        try {
+            return contactoRepositorio.findByEmail(email)
+                    .map(contacto -> modelMapper.map(contacto, ContactoDTO.class))
+                    .orElse(null);
+        } catch (Exception e) {
+            throw new MiExcepcionPersonalizada("No se pudo traer el contacto: " + e.getMessage());
         }
     }
 
@@ -67,26 +67,31 @@ public class ContactoServicio implements IContactoServicio {
     }
 
     @Override
-    public ContactoDTO modificarContacto(Long id, ContactoDTO dto) {
-    	try {
-        if (!contactoRepositorio.existsById(id)) {
-            throw new MiExcepcionPersonalizada("No existe un contacto con ID " + id);
-        }
-        dto.setIdContacto(id);
-        Contacto contacto = modelMapper.map(dto, Contacto.class);
-        contacto = contactoRepositorio.save(contacto);
-        return modelMapper.map(contacto, ContactoDTO.class);
-    	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo modificar el contacto" + e.getMessage());
+    public ContactoDTO modificarContacto(String email, ContactoDTO dto) {
+        try {
+            if (!contactoRepositorio.existsByEmail(email)) {
+                throw new MiExcepcionPersonalizada("No existe un contacto con email: " + email);
+            }
+
+            Contacto existente = contactoRepositorio.findByEmail(email).get();
+            dto.setIdContacto(existente.getIdContacto()); // mantener ID original
+            Contacto contacto = modelMapper.map(dto, Contacto.class);
+            contacto = contactoRepositorio.save(contacto);
+            return modelMapper.map(contacto, ContactoDTO.class);
+        } catch (Exception e) {
+            throw new MiExcepcionPersonalizada("No se pudo modificar el contacto: " + e.getMessage());
         }
     }
 
     @Override
-    public void eliminarContacto(Long id) {
-    	try {
-        contactoRepositorio.deleteById(id);
-    	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo eliminar el contacto" + e.getMessage());
+    public void eliminarContacto(String email) {
+        try {
+            if (!contactoRepositorio.existsByEmail(email)) {
+                throw new MiExcepcionPersonalizada("No existe un contacto con email: " + email);
+            }
+            contactoRepositorio.deleteByEmail(email);
+        } catch (Exception e) {
+            throw new MiExcepcionPersonalizada("No se pudo eliminar el contacto: " + e.getMessage());
         }
     }
 

@@ -33,7 +33,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
 
-            	.requestMatchers("/", "/login", "/css/**", "/js/**", "/registro/**").permitAll()
+            	.requestMatchers("/login", "/css/**", "/registro/**").permitAll()
 
                 
                 .requestMatchers("/clientes/**").hasAnyRole("EMPLEADO", "ADMIN")
@@ -41,9 +41,11 @@ public class SecurityConfig {
                 .requestMatchers("/email/**").hasAnyRole("EMPLEADO", "ADMIN")
                 .requestMatchers("/empleados/**").hasAnyRole("EMPLEADO", "ADMIN")
                 .requestMatchers("/lugares/**").hasAnyRole("EMPLEADO", "ADMIN")
-                .requestMatchers("/roles-usuarios/**").hasAnyRole("EMPLEADO", "ADMIN")
                 .requestMatchers("/servicios/**").hasAnyRole("EMPLEADO", "ADMIN")
                 .requestMatchers("/usuarios/**").hasAnyRole("EMPLEADO", "ADMIN")
+                .requestMatchers("/turnos/**").hasAnyRole("EMPLEADO", "ADMIN", "CLIENTE")
+                
+                .requestMatchers("/").hasAnyRole("EMPLEADO", "ADMIN", "CLIENTE")
                 
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()

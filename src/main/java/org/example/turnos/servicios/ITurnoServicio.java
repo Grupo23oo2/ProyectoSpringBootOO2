@@ -21,10 +21,7 @@ public interface ITurnoServicio {
     List<TurnoDTO> traerTurnosDeEmpleadoPorDniEntreFechas(String dni, LocalDateTime desde, LocalDateTime hasta);
     List<TurnoDTO> traerTurnosPorDireccionEntreFechas(String direccion, LocalDateTime desde, LocalDateTime hasta);
 
-
     List<String> obtenerHorasDisponiblesFijas();//horas disponibles para generar turno
-
-    
 
     // Consultas por fecha + atributo
     List<TurnoDTO> traerTurnosPorPresencialYFechas(boolean presencial, LocalDateTime desde, LocalDateTime hasta);
@@ -40,5 +37,4 @@ public interface ITurnoServicio {
     List<TurnoDTO> traerTurnosPorApellidoEmpleado(String apellido);
 
 	List<LocalDate> obtenerDiasProximos(int cantidadDias);
-
 }

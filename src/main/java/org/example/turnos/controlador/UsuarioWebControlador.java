@@ -23,9 +23,7 @@ public class UsuarioWebControlador {
         return "buscar-usuario";
     }
 
-
     // ABM USUARIOS
-
     // Mostrar todos los usuarios
     @GetMapping("/todos")
     public String traerTodos(Model model) {
@@ -50,19 +48,17 @@ public class UsuarioWebControlador {
         return "resultado-usuario";
     }
 
-    // Modificar usuario
     @PostMapping("/modificar")
-    public String modificarUsuario(@RequestParam Long id, @ModelAttribute UsuarioDTO usuarioDTO, Model model) {
-        UsuarioDTO actualizado = usuarioServicio.modificarUsuario(id, usuarioDTO);
+    public String modificarUsuario(@RequestParam String email, @ModelAttribute UsuarioDTO usuarioDTO, Model model) {
+        UsuarioDTO actualizado = usuarioServicio.modificarUsuario(email, usuarioDTO);
         model.addAttribute("usuario", actualizado);
         return "resultado-usuario";
     }
 
-    // Eliminar usuario
     @PostMapping("/eliminar")
-    public String eliminarUsuario(@RequestParam Long id, Model model) {
-        usuarioServicio.eliminarUsuario(id);
-        model.addAttribute("mensaje", "Usuario eliminado con éxito (ID: " + id + ")");
+    public String eliminarUsuario(@RequestParam String email, Model model) {
+        usuarioServicio.eliminarUsuario(email);
+        model.addAttribute("mensaje", "Usuario eliminado con éxito (Email: " + email + ")");
         return "resultado-usuario";
     }
 }
