@@ -30,7 +30,6 @@ public class Usuario {
 
     private boolean estado;
 
-
     @Column(name = "rol", nullable = false, length=100)
     private String rol; // Ej: "ROLE_ADMIN", "ROLE_EMPLEADO", "ROLE_CLIENTE"
 

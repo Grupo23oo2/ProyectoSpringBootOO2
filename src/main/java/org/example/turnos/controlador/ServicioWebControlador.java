@@ -44,9 +44,6 @@ public class ServicioWebControlador {
         return "resultado-servicio";
     }
 
-
-
-
     // Agregar nuevo servicio
     @PostMapping("/agregar")
     public String agregarServicio(@ModelAttribute ServicioDTO servicioDTO, Model model) {
@@ -55,19 +52,18 @@ public class ServicioWebControlador {
         return "resultado-servicio";  
     }
 
-    // Modificar servicio
     @PostMapping("/modificar")
-    public String modificarServicio(@RequestParam Long id, @ModelAttribute ServicioDTO servicioDTO, Model model) {
-        ServicioDTO actualizado = servicioServicio.modificarServicio(id, servicioDTO);
+    public String modificarServicio(@RequestParam String descripcion, @ModelAttribute ServicioDTO servicioDTO, Model model) {
+        ServicioDTO actualizado = servicioServicio.modificarServicio(descripcion, servicioDTO);
         model.addAttribute("servicio", actualizado);
         return "resultado-servicio"; 
     }
-
-    // Eliminar servicio
+    
+    
     @PostMapping("/eliminar")
-    public String eliminarServicio(@RequestParam Long id, Model model) {
-        servicioServicio.eliminarServicio(id);
-        model.addAttribute("mensaje", "Servicio eliminado con éxito (ID: " + id + ")");
+    public String eliminarServicio(@RequestParam String descripcion, Model model) {
+        servicioServicio.eliminarServicio(descripcion);
+        model.addAttribute("mensaje", "Servicio eliminado con éxito (Descripción: " + descripcion + ")");
         return "resultado-servicio";  
     }
 }

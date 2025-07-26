@@ -21,8 +21,6 @@ public class EmailServicio implements IEmailServicio {
     @Autowired
     private TemplateEngine templateEngine;
 
-
-
     public EmailServicio(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
@@ -69,7 +67,5 @@ public class EmailServicio implements IEmailServicio {
         } catch (Exception e){
             throw new MiExcepcionPersonalizada("No se pudo enviar el correo" + e.getMessage());
         }
-        }
-    
-
+    }
 }

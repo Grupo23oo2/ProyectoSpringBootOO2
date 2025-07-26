@@ -18,7 +18,9 @@ public interface IClienteRepositorio extends JpaRepository<Cliente, Long> {
 		""")
 	List<Cliente> findByRol(@Param("rol") String rol);
 
-	List<Cliente> findByCuit(String cuit);
+	List<Cliente> findAllByCuit(String cuit);
+	
+	Optional<Cliente> findByCuit(String cuit);
 	
 	boolean existsByCuit(String cuit); //para la excepcion de cuit duplicado
 	boolean existsByDni(String dni); //para la excepcion de dni duplicado

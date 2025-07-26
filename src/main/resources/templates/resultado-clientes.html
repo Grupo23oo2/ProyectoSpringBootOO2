@@ -92,16 +92,6 @@
 
 	        <label for="cuitMod">CUIT:</label>
 	        <input type="text" id="cuitMod" name="cuit" th:value="${clienteEditar.cuit}" />
-			
-			<h2>Modificar Contacto</h2>
-			<label for="emailMod">Email:</label>
-			<input type="text" id="emailMod" name="emailContacto" th:value="${contactoEditar.email}" />
-
-			<label for="telefonoMod">Teléfono:</label>
-			<input type="text" id="telefonoMod" name="telefonoContacto" th:value="${contactoEditar.telefono}" />
-
-			<label for="direccionMod">Dirección:</label>
-			<input type="text" id="direccionMod" name="direccionContacto" th:value="${contactoEditar.direccion}" />
 
 	        <button type="submit">Modificar</button>
 	    </form>
@@ -110,7 +100,6 @@
 
 	<div style="text-align: center; margin-top: 20px;">
         <a href="/" class="btn">← Volver</a>
-
     </div>
 
 </body>

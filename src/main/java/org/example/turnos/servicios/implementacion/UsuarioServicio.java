@@ -103,10 +103,10 @@ public class UsuarioServicio implements IUsuarioServicio {
     }
 
     @Override
-    public UsuarioDTO modificarUsuario(Long id, UsuarioDTO dto) {
+    public UsuarioDTO modificarUsuario(String email, UsuarioDTO dto) {
         try {
-            Usuario usuarioExistente = usuarioRepositorio.findById(id)
-                    .orElseThrow(() -> new MiExcepcionPersonalizada("Usuario no encontrado con ID: " + id));
+            Usuario usuarioExistente = usuarioRepositorio.findByEmail(email)
+                    .orElseThrow(() -> new MiExcepcionPersonalizada("Usuario no encontrado con email: " + email));
 
             if (dto.getIdPersona() != null) {
                 Persona persona = buscarPersonaPorId(dto.getIdPersona());
@@ -120,19 +120,18 @@ public class UsuarioServicio implements IUsuarioServicio {
             usuarioExistente.setRol(dto.getRol());
             usuarioExistente.setFechaCreacion(dto.getFechaCreacion());
 
-
             Usuario usuarioModificado = usuarioRepositorio.save(usuarioExistente);
             return toDTO(usuarioModificado);
         } catch (Exception e) {
-            throw new MiExcepcionPersonalizada("No se pudo modificar los usuarios: " + e.getMessage());
+            throw new MiExcepcionPersonalizada("No se pudo modificar el usuario: " + e.getMessage());
         }
     }
 
     @Override
-    public void eliminarUsuario(Long id) {
+    public void eliminarUsuario(String email) {
         try {
-            Usuario usuario = usuarioRepositorio.findById(id)
-                    .orElseThrow(() -> new MiExcepcionPersonalizada("No se encontró Usuario con ID: " + id));
+            Usuario usuario = usuarioRepositorio.findByEmail(email)
+                    .orElseThrow(() -> new MiExcepcionPersonalizada("No se encontró Usuario con email: " + email));
             usuarioRepositorio.delete(usuario);
         } catch (Exception e) {
             throw new MiExcepcionPersonalizada("No se pudo eliminar el usuario: " + e.getMessage());
@@ -176,4 +175,3 @@ public class UsuarioServicio implements IUsuarioServicio {
         return usuario;
     }   
 }
-

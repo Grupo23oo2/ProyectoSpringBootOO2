@@ -103,48 +103,7 @@ public class ClienteServicio implements IClienteServicio {
             throw new MiExcepcionPersonalizada("No se pudo modificar el cliente");
         }
     }
-   /* public Optional<ClienteDTO> modificarClienteYContactoPorDni(String dniOriginal, ClienteDTO clienteDTO, ContactoDTO contactoDTO) {
-        Optional<Cliente> clienteOpt = clienteRepositorio.findByDni(dniOriginal);
-
-        if (clienteOpt.isPresent()) {
-            Cliente cliente = clienteOpt.get();
-
-            // Modificar datos del cliente
-            cliente.setNombre(clienteDTO.getNombre());
-            cliente.setApellido(clienteDTO.getApellido());
-            cliente.setDni(clienteDTO.getDni());
-            cliente.setCuit(clienteDTO.getCuit());
-
-            // Modificar o crear datos de contacto
-            Contacto contacto = cliente.getContacto();
-            if (contacto == null) {
-                contacto = new Contacto();
-                contacto.setIdContacto(cliente.getIdPersona()); // muy importante!
-            }
-
-            contacto.setEmail(contactoDTO.getEmail());
-            contacto.setTelefono(contactoDTO.getTelefono());
-            contacto.setDireccion(contactoDTO.getDireccion());
-
-            cliente.setContacto(contacto); // asegura que esté vinculado
-
-            clienteRepositorio.save(cliente);
-
-            return Optional.of(new ClienteDTO(
-            	    cliente.getIdPersona(),
-            	    cliente.getNombre(),
-            	    cliente.getApellido(),
-            	    cliente.getDni(),
-            	    cliente.getUsuario() != null ? cliente.getUsuario().getIdUsuario() : null,
-            	    cliente.getCuit(),
-            	    cliente.getContacto() != null ? cliente.getContacto().getIdContacto() : null
-            	));
-        }
-
-        return Optional.empty();
-    }*/
-
-
+   
     public void eliminarClientePorDni(String dni) {
     	try {
     	Cliente cliente = clienteRepositorio.findByDni(dni)
@@ -197,9 +156,9 @@ public class ClienteServicio implements IClienteServicio {
     }
 
     @Override
-    public List<ClienteDTO> clientesPorCuit(String cuit) {
+    public List<ClienteDTO> findAllByCuit(String cuit) {
     	try {
-        return clienteRepositorio.findByCuit(cuit)
+        return clienteRepositorio.findAllByCuit(cuit)
                 .stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
@@ -207,6 +166,16 @@ public class ClienteServicio implements IClienteServicio {
             throw new MiExcepcionPersonalizada("No se traer los clientes por cuit" + e.getMessage());
         }
     }
+    
+    @Override
+    public ClienteDTO findByCuit(String cuit) {
+        Cliente cliente = clienteRepositorio.findByCuit(cuit)
+            .orElseThrow(() -> new MiExcepcionPersonalizada("Cliente no encontrado con CUIT: " + cuit));
+        
+        return toDTO(cliente);
+    }
+
+
     
     @Override
     public ContactoDTO buscarContactoPorCuit(String cuit) {
@@ -217,4 +186,5 @@ public class ClienteServicio implements IClienteServicio {
             throw new MiExcepcionPersonalizada("No se pudo traer el contacto por cuit" + e.getMessage());
         }
     }
+    
 }

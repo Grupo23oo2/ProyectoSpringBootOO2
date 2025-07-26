@@ -1,15 +1,16 @@
 package org.example.turnos.modelo;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity
-
 public class Contacto {
 
     @Id
     private Long idContacto; // Es igual al idPersona del Cliente
     private String direccion;
+    @Column (unique = true)
     private String email; 
     private String telefono;
     

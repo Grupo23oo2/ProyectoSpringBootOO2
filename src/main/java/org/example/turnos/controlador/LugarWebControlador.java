@@ -52,19 +52,17 @@ public class LugarWebControlador {
         return "resultado-lugar";
     }
 
-    // Modificar lugar
     @PostMapping("/modificar")
-    public String modificarLugar(@RequestParam Long id, @ModelAttribute LugarDTO dto, Model model) {
-        LugarDTO actualizado = lugarServicio.modificarLugar(id, dto);
+    public String modificarLugar(@RequestParam String direccion, @ModelAttribute LugarDTO dto, Model model) {
+        LugarDTO actualizado = lugarServicio.modificarLugar(direccion, dto);
         model.addAttribute("lugar", actualizado);
         return "resultado-lugar";
     }
 
-    // Eliminar lugar
     @PostMapping("/eliminar")
-    public String eliminarLugar(@RequestParam Long id, Model model) {
-        lugarServicio.eliminarLugar(id);
-        model.addAttribute("mensaje", "Lugar eliminado con éxito (ID: " + id + ")");
+    public String eliminarLugar(@RequestParam String direccion, Model model) {
+        lugarServicio.eliminarLugar(direccion);
+        model.addAttribute("mensaje", "Lugar eliminado con éxito (Dirección: " + direccion + ")");
         return "resultado-lugar";
     }
 }

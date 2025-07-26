@@ -20,7 +20,10 @@ public interface IClienteServicio {
     void eliminarClientePorDni(String dni);
 
     public List<ClienteDTO> clientesPorRol(String rol);
-    public List<ClienteDTO> clientesPorCuit(String cuit);
+    
+    public List<ClienteDTO> findAllByCuit(String cuit);
+    
+    public ClienteDTO findByCuit(String cuit);
 
     public ContactoDTO buscarContactoPorCuit(String cuit);
 }
