@@ -2,7 +2,6 @@ package org.example.turnos.controlador;
 
 import org.example.turnos.dtos.ClienteDTO;
 import org.example.turnos.dtos.ContactoDTO;
-import org.example.turnos.dtos.EmpleadoDTO;
 import org.example.turnos.servicios.IClienteServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

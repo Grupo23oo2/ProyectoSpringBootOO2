@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 import org.example.turnos.repositorios.IClienteRepositorio;
 import org.example.turnos.repositorios.IContactoRepositorio;
 import org.example.turnos.servicios.IContactoServicio;
-
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service

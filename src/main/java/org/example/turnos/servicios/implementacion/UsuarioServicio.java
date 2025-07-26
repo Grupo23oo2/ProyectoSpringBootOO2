@@ -1,12 +1,9 @@
 package org.example.turnos.servicios.implementacion;
 
-
 import java.time.LocalDateTime;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.example.turnos.dtos.UsuarioDTO;
 import org.example.turnos.excepciones.MiExcepcionPersonalizada;
 import org.example.turnos.modelo.Cliente;
@@ -15,15 +12,11 @@ import org.example.turnos.modelo.Persona;
 import org.example.turnos.modelo.Usuario;
 import org.example.turnos.repositorios.IClienteRepositorio;
 import org.example.turnos.repositorios.IEmpleadoRepositorio;
-
 import org.example.turnos.repositorios.IUsuarioRepositorio;
 import org.example.turnos.servicios.IEmailServicio;
 import org.example.turnos.servicios.IUsuarioServicio;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import org.springframework.stereotype.Service;
 
 @Service
@@ -43,9 +36,6 @@ public class UsuarioServicio implements IUsuarioServicio {
     
     @Autowired
     private IEmailServicio emailServicio;
-    
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public UsuarioDTO agregarUsuario(UsuarioDTO dto) {
