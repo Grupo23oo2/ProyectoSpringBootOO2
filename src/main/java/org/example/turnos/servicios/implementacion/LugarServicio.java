@@ -38,13 +38,15 @@ public class LugarServicio implements ILugarServicio {
     }
 
     @Override
-    public LugarDTO traerLugar(Long id) {
-    	try {
-        Lugar lugar = lugarRepositorio.findById(id)
-                .orElseThrow(() -> new MiExcepcionPersonalizada("Lugar no encontrado con id: " + id));
-        return modelMapper.map(lugar, LugarDTO.class);
-    	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo traer el lugar" + e.getMessage());
+
+    public LugarDTO traerLugarPorDireccion(String direccion) {
+        try {
+            Lugar lugar = lugarRepositorio.findByDireccion(direccion)
+                    .orElseThrow(() -> new MiExcepcionPersonalizada("Lugar no encontrado con dirección: " + direccion));
+            return modelMapper.map(lugar, LugarDTO.class);
+        } catch (Exception e) {
+            throw new MiExcepcionPersonalizada("No se pudo traer el lugar: " + e.getMessage());
+
         }
     }
 

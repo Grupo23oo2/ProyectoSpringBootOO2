@@ -26,19 +26,20 @@ Se debe crear en la base de datos el administrador :
 
 1_
 
-INSERT INTO persona (idPersona, apellido, dni, nombre) VALORES (1, 'admin', '12345678', 'admin');
+INSERT INTO persona (idPersona, apellido, dni, nombre) VALUES (1, 'admin', '12345678', 'admin');
 
 2_
 
-INSERT INTO empleado (fechaInicio, idPersona) VALORES ('21-06-2025', '1');
+INSERT INTO empleado (fechaInicio, idPersona) VALUES ('2025-06-21', 1);
 
 3_
 
-INSERT INTO usuario (idUsuario, contraseniaUsuario, estado, nombreUsuario, email) VALORES (1, 'admin', true, 'admin', 'magosh90@gmail.com');
+INSERT INTO usuario (idUsuario, contraseniaUsuario, estado, nombreUsuario, email) VALUES (1, '{noop}admin', true, 'admin', 'magosh90@gmail.com');
 
 4_
 
-INSERT INTO rolusuario (idRolUsuario, fechaCreacion, role, id_Usuario) VALORES (1, '2025-06-21', 'ADMIN', 1);
+INSERT INTO rolusuario (idRolUsuario, fechaCreacion, role, id_Usuario) VALUES (1, '2025-06-21', 'ADMIN', 1);
+
 
 Ya se puede ejecutar el proyecto.
 

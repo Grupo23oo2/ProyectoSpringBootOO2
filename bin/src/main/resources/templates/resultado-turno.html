@@ -3,25 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Detalle Turno</title>
+    <link rel="stylesheet" th:href="@{/css/resultado-rol.css}" />
 </head>
 <body>
-<h1>Detalle de Turno</h1>
 
-<div th:if="${turno != null}">
-    <p><strong>ID:</strong> <span th:text="${turno.idTurno}"></span></p>
-    <p><strong>Fecha y Hora Inicio:</strong> <span th:text="${turno.fechaHoraInicio}"></span></p>
-    <p><strong>Fecha y Hora Fin:</strong> <span th:text="${turno.fechaHoraFin}"></span></p>
-    <p><strong>Cliente:</strong> <span th:text="${turno.idCliente}"></span></p>
-    <p><strong>Empleado:</strong> <span th:text="${turno.idEmpleado}"></span></p>
-    <p><strong>Lugar:</strong> <span th:text="${turno.idLugarTurno}"></span></p>
-    <p><strong>Presencial:</strong> <span th:text="${turno.presencial} ? 'Sí' : 'No'"></span></p>
-    <p><strong>Servicio ID:</strong> <span th:text="${turno.idServicio}"></span></p>
-</div>
+    <h1>Detalle de Turno</h1>
+    <hr/>
 
-<div th:if="${mensaje != null}">
-    <p th:text="${mensaje}"></p>
-</div>
+    <!-- Detalle del turno -->
+    <section th:if="${turno != null}">
+        <p><strong>ID:</strong> <span th:text="${turno.idTurno}"></span></p>
+        <p><strong>Fecha y Hora Inicio:</strong> <span th:text="${turno.fechaHoraInicio}"></span></p>
+        <p><strong>Fecha y Hora Fin:</strong> <span th:text="${turno.fechaHoraFin}"></span></p>
+        <p><strong>Cliente:</strong> <span th:text="${turno.idCliente}"></span></p>
+        <p><strong>Empleado:</strong> <span th:text="${turno.idEmpleado}"></span></p>
+        <p><strong>Lugar:</strong> <span th:text="${turno.idLugarTurno}"></span></p>
+        <p><strong>Presencial:</strong> <span th:text="${turno.presencial} ? 'Sí' : 'No'"></span></p>
+        <p><strong>Servicio ID:</strong> <span th:text="${turno.idServicio}"></span></p>
+    </section>
 
-<a href="/turnos/formulario">Volver al formulario</a>
+    <!-- Mensaje informativo -->
+    <section th:if="${mensaje != null}">
+        <p class="mensaje" style="max-width:600px; margin: 0 auto; text-align:center; color:#666; font-style: italic;" th:text="${mensaje}"></p>
+    </section>
+
+    <!-- Botón volver -->
+    <div style="margin-top: 30px; text-align: center;">
+        <button onclick="window.history.back()" class="btn-volver">← Volver</button>
+    </div>
+
 </body>
 </html>

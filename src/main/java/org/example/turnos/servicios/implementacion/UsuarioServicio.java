@@ -1,5 +1,8 @@
 package org.example.turnos.servicios.implementacion;
 
+
+import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -12,12 +15,15 @@ import org.example.turnos.modelo.Persona;
 import org.example.turnos.modelo.Usuario;
 import org.example.turnos.repositorios.IClienteRepositorio;
 import org.example.turnos.repositorios.IEmpleadoRepositorio;
+
 import org.example.turnos.repositorios.IUsuarioRepositorio;
 import org.example.turnos.servicios.IEmailServicio;
 import org.example.turnos.servicios.IUsuarioServicio;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -48,26 +54,15 @@ public class UsuarioServicio implements IUsuarioServicio {
 
             Usuario usuario = toEntity(dto, persona);
             
-            String email = dto.getEmail();
-            String role;
-
-            if (email.toLowerCase().endsWith("@empresa.com")) {
-                role = "EMPLEADO";
-            } else {
-                role = "CLIENTE";
-            }
-
-            usuario.setRole(role);
-            
-            String passwordEncriptada = passwordEncoder.encode(usuario.getContraseniaUsuario());
-            usuario.setContraseniaUsuario(passwordEncriptada);
+            LocalDateTime hora = LocalDateTime.now();
+            dto.setFechaCreacion(hora);
             
             Usuario usuarioGuardado = usuarioRepositorio.save(usuario);
             String contenidoHtml = """
                     <html>
                     <body>
-                        <h1 style='color: blue;'>Hola desde Spring Boot!</h1>
-                        <p>Este es un correo <b>con formato HTML</b>.</p>
+                        <h1 style='color: blue;'>Sistema de Turnos!</h1>
+                        <p>Se registro <b>correctamente</b>.</p>
                     </body>
                     </html>
                     """;
@@ -105,13 +100,15 @@ public class UsuarioServicio implements IUsuarioServicio {
     }
 
     @Override
-    public UsuarioDTO traerUsuarioPorId(Long id) {
+
+    public UsuarioDTO traerUsuarioPorEmail(String email) {
         try {
-            Usuario usuario = usuarioRepositorio.findById(id)
-                    .orElseThrow(() -> new MiExcepcionPersonalizada("Usuario no encontrado con ID: " + id));
-            return toDTO(usuario);
+            Usuario usuario = usuarioRepositorio.findByEmail(email)
+                    .orElseThrow(() -> new MiExcepcionPersonalizada("Usuario no encontrado con email: " + email));
+            return modelMapper.map(usuario, UsuarioDTO.class);
         } catch (Exception e) {
-            throw new MiExcepcionPersonalizada("No se pudo traer los usuarios por id: " + e.getMessage());
+            throw new MiExcepcionPersonalizada("No se pudo traer el usuario: " + e.getMessage());
+
         }
     }
 
@@ -130,8 +127,9 @@ public class UsuarioServicio implements IUsuarioServicio {
             usuarioExistente.setContraseniaUsuario(dto.getContraseniaUsuario());
             usuarioExistente.setEstado(dto.isEstado());
             usuarioExistente.setEmail(dto.getEmail());
-            usuarioExistente.setRole(dto.getRole());
+            usuarioExistente.setRol(dto.getRol());
             usuarioExistente.setFechaCreacion(dto.getFechaCreacion());
+
 
             Usuario usuarioModificado = usuarioRepositorio.save(usuarioExistente);
             return toDTO(usuarioModificado);
@@ -158,7 +156,8 @@ public class UsuarioServicio implements IUsuarioServicio {
             dto.setIdPersona(usuario.getPersona().getIdPersona());
         }
 
-        dto.setRole(usuario.getRole());
+
+        dto.setRol(usuario.getRol());
         
         return dto;
     }
@@ -177,13 +176,14 @@ public class UsuarioServicio implements IUsuarioServicio {
         usuario.setEstado(dto.isEstado());
         usuario.setEmail(dto.getEmail());
 
+        usuario.setRol(dto.getRol());
+
         usuario.setPersona(persona);
         
-        usuario.setRole(dto.getRole());
+        usuario.setRol(dto.getRol());
         usuario.setFechaCreacion(dto.getFechaCreacion());
 
         return usuario;
-    }
-    
+    }   
 }
 

@@ -3,43 +3,68 @@
 <head>
     <meta charset="UTF-8" />
     <title>Resultado Clientes</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
 </head>
 <body>
-    <h1>Clientes Encontrados</h1>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>DNI</th>
-                <th>CUIT</th>
-                <th>Usuario</th>
-                <th>Ver</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="cliente : ${clientes}">
-                <td th:text="${cliente.idPersona}"></td>
-                <td th:text="${cliente.nombre}"></td>
-                <td th:text="${cliente.apellido}"></td>
-                <td th:text="${cliente.dni}"></td>
-                <td th:text="${cliente.cuit}"></td>
-                <td>
-                    <span th:if="${cliente.idUsuario != null}" th:text="${cliente.idUsuario}"></span>
-                    <span th:unless="${cliente.idUsuario != null}">Sin usuario</span>
-                </td>
-                <td>
-                    <a th:href="@{/clientes/buscar-por-id(id=${cliente.idPersona})}">Ver detalle</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <h1>Resultado de Búsqueda</h1>
+    <hr/>
 
-    <br />
-    <a href="/clientes/formulario">Volver</a>
+    <!-- Mensaje informativo -->
+    <p class="mensaje" th:if="${mensaje}" th:text="${mensaje}"></p>
+
+    <!-- Cliente individual -->
+    <section th:if="${cliente != null}">
+        <h2>Cliente Encontrado</h2>
+        <p><strong>ID:</strong> <span th:text="${cliente.idPersona}"></span></p>
+        <p><strong>Nombre:</strong> <span th:text="${cliente.nombre}"></span></p>
+        <p><strong>Apellido:</strong> <span th:text="${cliente.apellido}"></span></p>
+        <p><strong>DNI:</strong> <span th:text="${cliente.dni}"></span></p>
+        <p><strong>CUIT:</strong> <span th:text="${cliente.cuit}"></span></p>
+        <p><strong>ID Usuario:</strong> 
+            <span th:if="${cliente.idUsuario != null}" th:text="${cliente.idUsuario}"></span>
+            <span th:unless="${cliente.idUsuario != null}">Sin usuario</span>
+        </p>
+    </section>
+
+    <!-- Lista de clientes -->
+    <section th:if="${clientes != null}">
+        <h2>Clientes Encontrados</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>DNI</th>
+                    <th>CUIT</th>
+                    <th>Usuario</th>
+                    <th>Ver</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="cli : ${clientes}">
+                    <td th:text="${cli.idPersona}"></td>
+                    <td th:text="${cli.nombre}"></td>
+                    <td th:text="${cli.apellido}"></td>
+                    <td th:text="${cli.dni}"></td>
+                    <td th:text="${cli.cuit}"></td>
+                    <td>
+                        <span th:if="${cli.idUsuario != null}" th:text="${cli.idUsuario}"></span>
+                        <span th:unless="${cli.idUsuario != null}">Sin usuario</span>
+                    </td>
+                    <td>
+                        <a th:href="@{/clientes/buscar-por-id(id=${cli.idPersona})}">Ver detalle</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Botón volver -->
+    <div style="margin-top: 30px; text-align: center;">
+        <button onclick="window.history.back()" class="btn-volver">← Volver</button>
+    </div>
+
 </body>
 </html>
-
-

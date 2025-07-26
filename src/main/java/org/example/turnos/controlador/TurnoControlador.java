@@ -9,8 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 import java.time.*;
 import java.util.ArrayList;
+
 import java.util.List;
 
 @Controller
@@ -26,6 +29,7 @@ public class TurnoControlador {
         model.addAttribute("horasDisponibles", turnoServicio.obtenerHorasDisponiblesFijas());//agregado en nueva logica de turno
         model.addAttribute("diasDisponibles", turnoServicio.obtenerDiasProximos(7));
         return "buscar-turno";
+
     }
     
     
@@ -39,13 +43,6 @@ public class TurnoControlador {
         return "resultado-turnos";
     }
 
-    @GetMapping("/buscar-por-id")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
-    public String buscarPorId(@RequestParam("id") Long id, Model model) {
-        TurnoDTO turno = turnoServicio.traerTurno(id);
-        model.addAttribute("turno", turno);
-        return "resultado-turno";
-    }
 
     @PostMapping("/agregar")
     @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
@@ -85,36 +82,41 @@ public class TurnoControlador {
 
     @GetMapping("/buscar-por-cliente")
     @PreAuthorize("hasRole('CLIENTE') or hasRole('EMPLEADO')")
-    public String buscarPorClienteEntreFechas(@RequestParam("id") Long id,
+    public String buscarPorClienteEntreFechas(@RequestParam("cuit") String cuit,
                                               @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
                                               @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta,
                                               Model model) {
-        List<TurnoDTO> turnos = turnoServicio.traerTurnosDeClienteEntreFechas(id, desde, hasta);
+        List<TurnoDTO> turnos = turnoServicio.traerTurnosDeClientePorCuitEntreFechas(cuit, desde, hasta);
+
         model.addAttribute("turnos", turnos);
         return "resultado-turnos";
     }
+
+
 
     @GetMapping("/buscar-por-empleado")
     @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
-    public String buscarPorEmpleadoEntreFechas(@RequestParam("id") Long id,
+    public String buscarPorEmpleadoEntreFechas(@RequestParam("dni") String dni,
                                                @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
                                                @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta,
                                                Model model) {
-        List<TurnoDTO> turnos = turnoServicio.traerTurnosDeEmpleadoEntreFechas(id, desde, hasta);
+        List<TurnoDTO> turnos = turnoServicio.traerTurnosDeEmpleadoPorDniEntreFechas(dni, desde, hasta);
         model.addAttribute("turnos", turnos);
         return "resultado-turnos";
     }
 
+
     @GetMapping("/buscar-por-lugar")
     @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
-    public String buscarPorLugarEntreFechas(@RequestParam("id") Integer id,
+    public String buscarPorLugarEntreFechas(@RequestParam("direccion") String direccion,
                                             @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
                                             @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta,
                                             Model model) {
-        List<TurnoDTO> turnos = turnoServicio.traerTurnosPorLugarEntreFechas(id, desde, hasta);
+        List<TurnoDTO> turnos = turnoServicio.traerTurnosPorDireccionEntreFechas(direccion, desde, hasta);
         model.addAttribute("turnos", turnos);
         return "resultado-turnos";
     }
+
 
     // --- CONSULTAS AVANZADAS ---
 
@@ -140,16 +142,7 @@ public class TurnoControlador {
         return "resultado-turnos";
     }
 
- /*   @GetMapping("/buscar-por-rol-empleado")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
-    public String buscarPorRolEmpleado(@RequestParam("rol") String rol,
-                                       @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
-                                       @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta,
-                                       Model model) {
-        List<TurnoDTO> turnos = turnoServicio.traerTurnosPorRolEmpleadoYFechas(rol, desde, hasta);
-        model.addAttribute("turnos", turnos);
-        return "resultado-turnos";
-    }*/
+  
 
     @GetMapping("/buscar-por-direccion-lugar")
     @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
@@ -177,6 +170,7 @@ public class TurnoControlador {
         model.addAttribute("turnos", turnos);
         return "resultado-turnos";
     }
+
 
     @GetMapping("/nuevo")//nueva logica turno
     @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
@@ -226,5 +220,6 @@ public class TurnoControlador {
     }
     
     
+
     
 }

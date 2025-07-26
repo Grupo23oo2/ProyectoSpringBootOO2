@@ -4,10 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
+
 
 @Entity
 public class Usuario {
@@ -31,14 +30,15 @@ public class Usuario {
 
     private boolean estado;
 
-    @Column(name="role", nullable=false, length=100)
-    private String role;
+
+    @Column(name = "rol", nullable = false, length=100)
+    private String rol; // Ej: "ROLE_ADMIN", "ROLE_EMPLEADO", "ROLE_CLIENTE"
 
     @CreationTimestamp
     private LocalDateTime fechaCreacion;
     
-    public Usuario(long idUsuario, Persona persona, @Email String email, String nombreUsuario,
-			String contraseniaUsuario, boolean estado, String role, LocalDateTime fechaCreacion) {
+    public Usuario(long idUsuario, Persona persona, String email, String nombreUsuario, String contraseniaUsuario,
+			boolean estado, String rol, LocalDateTime fechaCreacion) {
 		super();
 		this.idUsuario = idUsuario;
 		this.persona = persona;
@@ -46,20 +46,19 @@ public class Usuario {
 		this.nombreUsuario = nombreUsuario;
 		this.contraseniaUsuario = contraseniaUsuario;
 		this.estado = estado;
-		this.role = role;
+		this.rol = rol;
 		this.fechaCreacion = fechaCreacion;
 	}
 
-
 	public Usuario(Persona persona, @Email String email, String nombreUsuario, String contraseniaUsuario,
-			boolean estado, String role, LocalDateTime fechaCreacion) {
+			boolean estado, String rol, LocalDateTime fechaCreacion) {
 		super();
 		this.persona = persona;
 		this.email = email;
 		this.nombreUsuario = nombreUsuario;
 		this.contraseniaUsuario = contraseniaUsuario;
 		this.estado = estado;
-		this.role = role;
+		this.rol = rol;
 		this.fechaCreacion = fechaCreacion;
 	}
     
@@ -110,7 +109,14 @@ public class Usuario {
 		this.estado = estado;
 	}
 
-	
+	public String getRol() {
+		return rol;
+	}
+
+	public void setRol(String rol) {
+		this.rol = rol;
+
+	}
 
 	public String getEmail() {
 		return email;
@@ -120,17 +126,6 @@ public class Usuario {
 		this.email = email;
 	}
 
-
-	public String getRole() {
-		return role;
-	}
-
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-
 	public LocalDateTime getFechaCreacion() {
 		return fechaCreacion;
 	}
@@ -139,13 +134,4 @@ public class Usuario {
 	public void setFechaCreacion(LocalDateTime fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
-
-
-
-
-
-	
-	
-	
-
 }

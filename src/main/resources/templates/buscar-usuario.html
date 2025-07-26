@@ -11,15 +11,7 @@
 
 <hr/>
 
-<!-- Buscar Roles por Usuario -->
-<section>
-    <h2>Buscar Roles por Usuario</h2>
-    <form th:action="@{/usuarios/roles-por-usuario}" method="get">
-        <label for="idUsuario">ID Usuario:</label>
-        <input type="number" id="idUsuario" name="idUsuario" required />
-        <button type="submit">Buscar Roles</button>
-    </form>
-</section>
+
 
 <!-- Agregar Usuario -->
 <section>
@@ -77,12 +69,13 @@
     </form>
 </section>
 
-<!-- Buscar Usuario por ID -->
+<!-- Buscar Usuario por Email -->
 <section>
-    <h2>Buscar Usuario por ID</h2>
-    <form th:action="@{/usuarios/buscar-por-id}" method="get">
-        <label for="idBuscar">ID Usuario:</label>
-        <input type="number" id="idBuscar" name="id" required />
+
+    <h2>Buscar Usuario por Email</h2>
+    <form th:action="@{/usuarios/buscar-por-email}" method="get">
+        <label for="emailBuscar">Email:</label>
+        <input type="email" id="emailBuscar" name="email" required />
         <button type="submit">Buscar</button>
     </form>
 </section>

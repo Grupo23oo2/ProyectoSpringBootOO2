@@ -25,13 +25,16 @@ public class Turno {
     private Cliente cliente;
 
     private LocalDateTime fechaHoraInicio;
+
     
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
     private Servicio servicio;
     
+
     @Column(nullable = false)
     private int duracionMinutos;
     
+
     public Turno() {
     	
     }
@@ -47,6 +50,7 @@ public class Turno {
    this.servicio = servicio;
    this.duracionMinutos = duracionMinutos;
 }
+
 
 	public Long getIdTurno() {
 		return idTurno;
@@ -103,6 +107,7 @@ public class Turno {
 	public void setServicio(Servicio servicio) {
 		this.servicio = servicio;
 	}
+
 	
 	public int getDuracionMinutos() {
 	    return duracionMinutos;
@@ -111,4 +116,5 @@ public class Turno {
 	public void setDuracionMinutos(int duracionMinutos) {
 	    this.duracionMinutos = duracionMinutos;
 	}
+
 }

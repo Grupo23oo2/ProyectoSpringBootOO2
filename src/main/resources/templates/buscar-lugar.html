@@ -11,12 +11,12 @@
 
 <hr/>
 
-<!-- Buscar Lugar por ID -->
+<!-- Buscar Lugar por Direccion -->
 <section>
-    <h2>Buscar Lugar por ID</h2>
-    <form th:action="@{/lugares/buscar-por-id}" method="get">
-        <label for="idBuscar">ID Lugar:</label>
-        <input type="number" id="idBuscar" name="id" required />
+    <h2>Buscar Lugar por Dirección</h2>
+    <form th:action="@{/lugares/buscar-por-direccion}" method="get">
+        <label for="direccionBuscar">Dirección:</label>
+        <input type="text" id="direccionBuscar" name="direccion" required />
         <button type="submit">Buscar</button>
     </form>
 </section>

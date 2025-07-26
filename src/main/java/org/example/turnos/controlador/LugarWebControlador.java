@@ -36,9 +36,10 @@ public class LugarWebControlador {
     }
 
     // Buscar lugar por ID
-    @GetMapping("/buscar-por-id")
-    public String buscarPorId(@RequestParam Long id, Model model) {
-        LugarDTO lugar = lugarServicio.traerLugar(id);
+
+    @GetMapping("/buscar-por-direccion")
+    public String buscarPorDireccion(@RequestParam String direccion, Model model) {
+        LugarDTO lugar = lugarServicio.traerLugarPorDireccion(direccion);
         model.addAttribute("lugar", lugar);
         return "resultado-lugar";
     }

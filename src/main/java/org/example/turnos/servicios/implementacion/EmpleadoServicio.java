@@ -8,6 +8,7 @@ import org.example.turnos.modelo.Usuario;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.example.turnos.repositorios.IEmpleadoRepositorio;
 import org.example.turnos.repositorios.IUsuarioRepositorio;
 import org.example.turnos.servicios.IEmpleadoServicio;
@@ -44,15 +45,17 @@ public class EmpleadoServicio implements IEmpleadoServicio {
     }
 
     @Override
-    public EmpleadoDTO traerEmpleadoPorId(Long id) {
-    	try {
-        Empleado empleado = empleadoRepositorio.findById(id)
-                .orElseThrow(() -> new MiExcepcionPersonalizada("Empleado no encontrado con ID: " + id));
-        return toDTO(empleado);
-    	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo traer el empleado" + e.getMessage());
+
+    public EmpleadoDTO traerEmpleadoPorDni(String dni) {
+        try {
+            Empleado empleado = empleadoRepositorio.findByDni(dni)
+                    .orElseThrow(() -> new MiExcepcionPersonalizada("Empleado no encontrado con DNI: " + dni));
+            return toDTO(empleado);
+        } catch (Exception e) {
+            throw new MiExcepcionPersonalizada("No se pudo traer el empleado: " + e.getMessage());
         }
     }
+
 
     @Override
     public List<EmpleadoDTO> traerEmpleados() {
@@ -100,6 +103,23 @@ public class EmpleadoServicio implements IEmpleadoServicio {
         }
     }
 
+    
+    @Transactional
+    @Override
+    public void eliminarEmpleadoPorDni(String dni) {
+        if (!empleadoRepositorio.existsByDni(dni)) {
+            throw new MiExcepcionPersonalizada("No se encontró un empleado con el DNI: " + dni);
+        }
+
+        try {
+            empleadoRepositorio.deleteByDni(dni);
+        } catch (Exception e) {
+            throw new MiExcepcionPersonalizada("Error al eliminar el empleado con DNI " + dni + ": " + e.getMessage());
+        }
+    }
+
+
+
     private EmpleadoDTO toDTO(Empleado empleado) {
         EmpleadoDTO dto = modelMapper.map(empleado, EmpleadoDTO.class);
 
@@ -122,13 +142,15 @@ public class EmpleadoServicio implements IEmpleadoServicio {
     
     @Override
     public List<EmpleadoDTO> empleadosPorRol(String rol) {
-        try {
-            return empleadoRepositorio.empleadosPorRol(rol)
+
+    	try {
+        return empleadoRepositorio.findByRol(rol)
                 .stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
-        } catch (Exception e) {
-            throw new MiExcepcionPersonalizada("No se pudo traer empleados por rol: " + e.getMessage());
+    	} catch (Exception e){
+            throw new MiExcepcionPersonalizada("No se pudo traer empleados por rol" + e.getMessage());
+
         }
     }
     

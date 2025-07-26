@@ -1,8 +1,10 @@
 package org.example.turnos.dtos;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.LocalTime;
+
 
 public class TurnoDTO {
 
@@ -14,12 +16,14 @@ public class TurnoDTO {
     private LocalDateTime fechaHoraInicio;
     private Long idServicio;
     private int duracionMinutos;
+
     
     public TurnoDTO() {
     }
 
 	public TurnoDTO(Long idTurno, boolean presencial, Long idLugarTurno, Long idEmpleado, Long idCliente,
 			LocalDateTime fechaHoraInicio, Long idServicio, int duracionMinutos) {
+
 		super();
 		this.idTurno = idTurno;
 		this.presencial = presencial;
@@ -29,6 +33,7 @@ public class TurnoDTO {
 		this.fechaHoraInicio = fechaHoraInicio;
 		this.idServicio = idServicio;
 	    this.duracionMinutos = duracionMinutos;
+
 	}
 
 	public Long getIdTurno() {
@@ -79,6 +84,8 @@ public class TurnoDTO {
 		this.fechaHoraInicio = fechaHoraInicio;
 	}
 
+
+
 	public Long getIdServicio() {
 		return idServicio;
 	}
@@ -86,7 +93,7 @@ public class TurnoDTO {
 	public void setIdServicio(Long idServicio) {
 		this.idServicio = idServicio;
 	}
-	
+
 	public int getDuracionMinutos() {
 	    return duracionMinutos;
 	}
@@ -102,5 +109,6 @@ public class TurnoDTO {
 	public LocalTime getHora() {
 	    return fechaHoraInicio != null ? fechaHoraInicio.toLocalTime() : null;
 	}
+
 }
 

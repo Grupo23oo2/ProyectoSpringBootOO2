@@ -13,10 +13,10 @@ public interface IClienteRepositorio extends JpaRepository<Cliente, Long> {
 
 	@Query("""
 		    SELECT c FROM Cliente c
-		    JOIN c.usuario u
-		    WHERE u.role = :role
+		    WHERE c.usuario.rol = :rol
 		""")
-		List<Cliente> clientesPorRol(@Param("role") String role);
+	List<Cliente> findByRol(@Param("rol") String rol);
+
 
 	List<Cliente> findByCuit(String cuit);
 	

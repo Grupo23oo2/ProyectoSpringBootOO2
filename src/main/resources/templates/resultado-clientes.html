@@ -39,7 +39,9 @@
                     <th>DNI</th>
                     <th>CUIT</th>
                     <th>Usuario</th>
-                    <th>Ver</th>
+
+                    <th>Acciones</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -53,17 +55,53 @@
                         <span th:if="${cli.idUsuario != null}" th:text="${cli.idUsuario}"></span>
                         <span th:unless="${cli.idUsuario != null}">Sin usuario</span>
                     </td>
-                    <td>
-                        <a th:href="@{/clientes/buscar-por-id(id=${cli.idPersona})}">Ver detalle</a>
-                    </td>
+
+					<td>
+						<div style="display: flex; align-items: center; gap: 10px;">
+					       	<a th:href="@{'/clientes/editar/' + ${cli.idPersona}}" title="Editar">
+					            <img th:src="@{/icons/pencil.svg}" alt="Editar" width="20" height="20" />
+					        </a>
+	
+					        <form th:action="@{/clientes/eliminar}" method="post">
+								<input type="hidden" name="id" th:value="${cli.idPersona}" />
+							    <button type="submit" title="Eliminar" style="background: none; border: none; padding: 0; cursor: pointer;">
+							        <img th:src="@{/icons/trash.svg}" alt="Eliminar" width="20" height="20" />
+							    </button>
+					        </form>
+					    </div>
+			        </td>
+
                 </tr>
             </tbody>
         </table>
     </section>
+	
+	<section th:if="${clienteEditar != null}">
+	    <h2>Modificar Cliente</h2>
+	    <form th:action="@{/clientes/modificar}" method="post">
+	        <label for="idMod">ID:</label>
+	        <input type="number" id="idMod" name="id" th:value="${clienteEditar.idPersona}" readonly />
 
-    <!-- Botón volver -->
-    <div style="margin-top: 30px; text-align: center;">
-        <button onclick="window.history.back()" class="btn-volver">← Volver</button>
+	        <label for="nombreMod">Nombre:</label>
+	        <input type="text" id="nombreMod" name="nombre" th:value="${clienteEditar.nombre}" />
+
+	        <label for="apellidoMod">Apellido:</label>
+	        <input type="text" id="apellidoMod" name="apellido" th:value="${clienteEditar.apellido}" />
+
+	        <label for="dniMod">DNI:</label>
+	        <input type="text" id="dniMod" name="dni" th:value="${clienteEditar.dni}" />
+
+	        <label for="cuitMod">CUIT:</label>
+	        <input type="text" id="cuitMod" name="cuit" th:value="${clienteEditar.cuit}" />
+
+	        <button type="submit">Modificar</button>
+	    </form>
+	</section>
+
+
+	<div style="text-align: center; margin-top: 20px;">
+        <a href="/" class="btn">← Volver</a>
+
     </div>
 
 </body>

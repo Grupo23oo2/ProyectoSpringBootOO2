@@ -143,14 +143,16 @@ public class ClienteServicio implements IClienteServicio {
     }
     
     @Override
-    public List<ClienteDTO> clientesPorRol(String role) {
-        try {
-            return clienteRepositorio.clientesPorRol(role)
-                    .stream()
-                    .map(this::toDTO)
-                    .collect(Collectors.toList());
-        } catch (Exception e) {
-            throw new MiExcepcionPersonalizada("No se pudo traer clientes por rol: " + e.getMessage());
+
+    public List<ClienteDTO> clientesPorRol(String rol) {
+    	try {
+        return clienteRepositorio.findByRol(rol)
+                .stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    	} catch (Exception e){
+            throw new MiExcepcionPersonalizada("No se pudo traer los clientes por rol" + e.getMessage());
+
         }
     }
 

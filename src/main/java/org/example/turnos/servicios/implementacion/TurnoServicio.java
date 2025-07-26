@@ -17,8 +17,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import java.time.LocalDateTime;
+
 import java.time.*;
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,8 +51,10 @@ public class TurnoServicio implements ITurnoServicio {
 	public TurnoDTO agregarTurno(TurnoDTO dto) {
 	    try {
 	        Turno turno = modelMapper.map(dto, Turno.class);
+
 	        
 	        turno.setDuracionMinutos(dto.getDuracionMinutos());
+
 
 	        Cliente cliente = clienteRepositorio.findById(dto.getIdCliente())
 	                .orElseThrow(() -> new MiExcepcionPersonalizada("Cliente no encontrado con id: " + dto.getIdCliente()));
@@ -65,7 +71,7 @@ public class TurnoServicio implements ITurnoServicio {
 	        if (dto.getIdServicio() != null) {
 	            Servicio servicio = servicioRepositorio.findById(dto.getIdServicio())
 	                .orElseThrow(() -> new MiExcepcionPersonalizada("Servicio no encontrado con id: " + dto.getIdServicio()));
-	            
+
 	            turno.setServicio(servicio);
 	        } else {
 	            turno.setServicio(null);
@@ -79,17 +85,7 @@ public class TurnoServicio implements ITurnoServicio {
 	    }
 	}
 
-	@Override
-	public TurnoDTO traerTurno(Long id) {
-		try {
-		Turno turno = turnoRepositorio.findById(id)
-				.orElseThrow(() -> new MiExcepcionPersonalizada("Turno no encontrado con id: " + id));
 
-		return modelMapper.map(turno, TurnoDTO.class);
-		} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo traer el turno" + e.getMessage());
-        }
-	}
 
 	@Override
 	public List<TurnoDTO> traerTurnos() {
@@ -109,6 +105,7 @@ public class TurnoServicio implements ITurnoServicio {
 
 		// Solo modificamos fechas según tu comentario
 		turno.setFechaHoraInicio(dto.getFechaHoraInicio());
+
 
 		Turno actualizado = turnoRepositorio.save(turno);
 		return modelMapper.map(actualizado, TurnoDTO.class);
@@ -140,37 +137,42 @@ public class TurnoServicio implements ITurnoServicio {
 	}
 
 	@Override
-	public List<TurnoDTO> traerTurnosDeClienteEntreFechas(Long idCliente, LocalDateTime desde,
-			LocalDateTime hasta) {
-		try {
-		return turnoRepositorio.buscarTurnosDeClienteEntreFechas(idCliente, desde, hasta).stream()
-				.map(s -> modelMapper.map(s, TurnoDTO.class)).collect(Collectors.toList());
-		} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo traer los turnos de clientes entre fechas" + e.getMessage());
-        }
+
+	public List<TurnoDTO> traerTurnosDeClientePorCuitEntreFechas(String cuit, LocalDateTime desde, LocalDateTime hasta) {
+	    try {
+	        return turnoRepositorio.buscarTurnosDeClientePorCuitEntreFechas(cuit, desde, hasta).stream()
+	                .map(t -> modelMapper.map(t, TurnoDTO.class))
+	                .collect(Collectors.toList());
+	    } catch (Exception e) {
+	        throw new MiExcepcionPersonalizada("No se pudo traer los turnos del cliente por CUIT entre fechas: " + e.getMessage());
+	    }
 	}
 
-	@Override
-	public List<TurnoDTO> traerTurnosDeEmpleadoEntreFechas(Long idEmpleado, LocalDateTime desde,
-			LocalDateTime hasta) {
-		try {
-		return turnoRepositorio.buscarTurnosDeEmpleadoEntreFechas(idEmpleado, desde, hasta).stream()
-				.map(s -> modelMapper.map(s, TurnoDTO.class)).collect(Collectors.toList());
-		} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo traer los turnos de empleados entre fechas" + e.getMessage());
-        }
-	}
 
 	@Override
-	public List<TurnoDTO> traerTurnosPorLugarEntreFechas(Integer idLugar, LocalDateTime desde,
-			LocalDateTime hasta) {
-		try {
-		return turnoRepositorio.buscarTurnosPorLugarYFechas(Long.valueOf(idLugar), desde, hasta).stream()
-				.map(s -> modelMapper.map(s, TurnoDTO.class)).collect(Collectors.toList());
-		} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo traer turno por lugar entre fechas" + e.getMessage());
-        }
+	public List<TurnoDTO> traerTurnosDeEmpleadoPorDniEntreFechas(String dni, LocalDateTime desde, LocalDateTime hasta) {
+	    try {
+	        return turnoRepositorio.buscarTurnosDeEmpleadoPorDniEntreFechas(dni, desde, hasta).stream()
+	                .map(t -> modelMapper.map(t, TurnoDTO.class))
+	                .collect(Collectors.toList());
+	    } catch (Exception e) {
+	        throw new MiExcepcionPersonalizada("No se pudo traer los turnos del empleado por DNI entre fechas: " + e.getMessage());
+	    }
 	}
+
+
+	@Override
+	public List<TurnoDTO> traerTurnosPorDireccionEntreFechas(String direccion, LocalDateTime desde, LocalDateTime hasta) {
+	    try {
+	        return turnoRepositorio.buscarTurnosPorDireccionYFechas(direccion, desde, hasta).stream()
+	                .map(t -> modelMapper.map(t, TurnoDTO.class))
+	                .collect(Collectors.toList());
+	    } catch (Exception e) {
+	        throw new MiExcepcionPersonalizada("No se pudo traer turnos por dirección entre fechas: " + e.getMessage());
+	    }
+	}
+
+
 
 	@Override
 	public List<TurnoDTO> traerTurnosPorPresencialYFechas(boolean presencial, LocalDateTime desde,
@@ -193,7 +195,7 @@ public class TurnoServicio implements ITurnoServicio {
             throw new MiExcepcionPersonalizada("No se pudo traer los turnos por nombre del cliente y fechas" + e.getMessage());
         }
 	}
-/*
+
 	@Override
 	public List<TurnoDTO> traerTurnosPorRolEmpleadoYFechas(String rolEmpleado, LocalDateTime desde,
 			LocalDateTime hasta) {
@@ -203,7 +205,8 @@ public class TurnoServicio implements ITurnoServicio {
 		} catch (Exception e){
             throw new MiExcepcionPersonalizada("No se pudo traer los turnos por el rol del empleado entre fechas" + e.getMessage());
         }
-	}*/
+
+	}
 
 	@Override
 	public List<TurnoDTO> traerTurnosPorDireccionLugarYFechas(String direccionLugar, LocalDateTime desde,
@@ -239,12 +242,14 @@ public class TurnoServicio implements ITurnoServicio {
 	            s.getFechaHoraInicio(),
 	            s.getServicio().getIdServicio(),
 	            s.getDuracionMinutos()	            
+
 	        ))
 	        .toList();
 		} catch (Exception e){
             throw new MiExcepcionPersonalizada("No se pudo traer los turnos por apellido del empleado" + e.getMessage());
         }
 	}
+
 	
 	@Override
 	public List<LocalDate> obtenerDiasProximos(int cantidadDias) {
@@ -271,4 +276,5 @@ public class TurnoServicio implements ITurnoServicio {
 	}
 	
 	
+
 }

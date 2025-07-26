@@ -3,19 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Contacto del Cliente</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}">
 </head>
 <body>
-    <h1>Contacto del Cliente</h1>
 
-    <div th:if="${contacto != null}">
+    <h1>Contacto del Cliente</h1>
+    <hr/>
+
+    <!-- Sección de información del contacto -->
+    <section th:if="${contacto != null}">
         <p><strong>Teléfono:</strong> <span th:text="${contacto.telefono}"></span></p>
         <p><strong>Email:</strong> <span th:text="${contacto.email}"></span></p>
         <p><strong>Dirección:</strong> <span th:text="${contacto.direccion}"></span></p>
+    </section>
+
+    <!-- Mensaje si no se encontró contacto -->
+    <p class="mensaje" th:if="${contacto == null}">
+        No se encontró contacto para el CUIT proporcionado.
+    </p>
+
+    <!-- Botón para volver -->
+    <div style="margin-top: 30px; text-align: center;">
+        <button onclick="window.history.back()" class="btn-volver">← Volver</button>
     </div>
 
-    <p th:if="${contacto == null}">No se encontró contacto para el CUIT proporcionado.</p>
-
-    <br />
-    <a href="/clientes/formulario">Volver</a>
 </body>
 </html>

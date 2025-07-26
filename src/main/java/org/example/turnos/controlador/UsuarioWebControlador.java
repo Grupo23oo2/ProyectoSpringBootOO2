@@ -23,6 +23,7 @@ public class UsuarioWebControlador {
         return "buscar-usuario";
     }
 
+
     // ABM USUARIOS
 
     // Mostrar todos los usuarios
@@ -33,10 +34,10 @@ public class UsuarioWebControlador {
         return "resultado-usuarios";
     }
 
-    // Buscar por ID
-    @GetMapping("/buscar-por-id")
-    public String buscarPorId(@RequestParam Long id, Model model) {
-        UsuarioDTO usuario = usuarioServicio.traerUsuarioPorId(id);
+    // Buscar por email
+    @GetMapping("/buscar-por-email")
+    public String buscarPorEmail(@RequestParam String email, Model model) {
+        UsuarioDTO usuario = usuarioServicio.traerUsuarioPorEmail(email);
         model.addAttribute("usuario", usuario);
         return "resultado-usuario";
     }

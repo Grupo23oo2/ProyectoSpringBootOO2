@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Registro Empleado</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}">
+</head>
+<body>
+    <h1>Registro de Empleado</h1>
+
+    <section>
+        <div th:if="${error}" style="color: red; text-align: center; margin-bottom: 20px;">
+            <p th:text="${error}"></p>
+        </div>
+
+        <form th:action="@{/registro/alta-empleado-usuario}" method="post">
+
+            <h2>Datos del Empleado</h2>
+            <label for="nombre">Nombre:</label>
+            <input id="nombre" type="text" name="nombre" required />
+
+            <label for="apellido">Apellido:</label>
+            <input id="apellido" type="text" name="apellido" required />
+
+            <label for="dni">DNI:</label>
+            <input id="dni" type="text" name="dni" required />
+
+            <label for="fechaInicio">Fecha de Inicio:</label>
+            <input id="fechaInicio" type="date" name="fechaInicio" required />
+
+            <h2>Datos del Usuario</h2>
+            <label for="nombreUsuario">Usuario:</label>
+            <input id="nombreUsuario" type="text" name="nombreUsuario" required />
+
+            <label for="email">Email:</label>
+            <input id="email" type="email" name="email" required />
+
+            <label for="contraseniaUsuario">Contraseña:</label>
+            <input id="contraseniaUsuario" type="password" name="contraseniaUsuario" required />
+
+            <label for="estado">Activo:</label>
+            <input id="estado" type="checkbox" name="estado" checked />
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button type="submit">Registrar Empleado</button>
+            </div>
+        </form>
+    </section>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/login" class="btn">← Volver al Login</a>
+    </div>
+</body>
+</html>
