@@ -2,6 +2,7 @@ package org.example.turnos.controlador;
 
 import org.example.turnos.dtos.ClienteDTO;
 import org.example.turnos.dtos.ContactoDTO;
+import org.example.turnos.excepciones.MiExcepcionPersonalizada;
 import org.example.turnos.servicios.IClienteServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,11 +25,25 @@ public class ClienteWebControlador {
     }
 
     @GetMapping("/buscar")
-    public String buscarPorCuit(@RequestParam("cuit") String cuit, Model model) {
-        List<ClienteDTO> clientes = clienteServicio.clientesPorCuit(cuit);
+    public String findAllByCuit(@RequestParam("cuit") String cuit, Model model) {
+        List<ClienteDTO> clientes = clienteServicio.findAllByCuit(cuit);
         model.addAttribute("clientes", clientes);
         return "resultado-clientes";
     }
+    
+    @GetMapping("/buscar-por-cuit")
+    public String findByCuit(@RequestParam("cuit") String cuit, Model model) {
+        try {
+            ClienteDTO cliente = clienteServicio.findByCuit(cuit);
+            model.addAttribute("cliente", cliente);
+            return "resultado-cliente"; 
+        } catch (MiExcepcionPersonalizada e) {
+            model.addAttribute("error", e.getMessage());
+            return "error-cliente"; 
+        }
+    }
+
+   
 
     @GetMapping("/buscar-por-role")
     public String buscarPorRole(@RequestParam("role") String role, Model model) {

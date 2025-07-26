@@ -4,6 +4,7 @@ import org.example.turnos.modelo.Cliente;
 import org.example.turnos.modelo.Contacto;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,7 +19,9 @@ public interface IClienteRepositorio extends JpaRepository<Cliente, Long> {
 	List<Cliente> findByRol(@Param("rol") String rol);
 
 
-	List<Cliente> findByCuit(String cuit);
+	List<Cliente> findAllByCuit(String cuit);
+	
+	Optional<Cliente> findByCuit(String cuit);
 	
 	boolean existsByCuit(String cuit); //para la excepcion de cuit duplicado
 	boolean existsByDni(String dni); //para la excepcion de dni duplicado
@@ -28,5 +31,9 @@ public interface IClienteRepositorio extends JpaRepository<Cliente, Long> {
 			    WHERE c.cuit = :cuit
 			""")
 	Contacto findContactoByCuit(@Param("cuit") String cuit);
+	
+	
+	
+
 
 }

@@ -157,9 +157,9 @@ public class ClienteServicio implements IClienteServicio {
     }
 
     @Override
-    public List<ClienteDTO> clientesPorCuit(String cuit) {
+    public List<ClienteDTO> findAllByCuit(String cuit) {
     	try {
-        return clienteRepositorio.findByCuit(cuit)
+        return clienteRepositorio.findAllByCuit(cuit)
                 .stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
@@ -167,6 +167,16 @@ public class ClienteServicio implements IClienteServicio {
             throw new MiExcepcionPersonalizada("No se traer los clientes por cuit" + e.getMessage());
         }
     }
+    
+    @Override
+    public ClienteDTO findByCuit(String cuit) {
+        Cliente cliente = clienteRepositorio.findByCuit(cuit)
+            .orElseThrow(() -> new MiExcepcionPersonalizada("Cliente no encontrado con CUIT: " + cuit));
+        
+        return toDTO(cliente);
+    }
+
+
     
     @Override
     public ContactoDTO buscarContactoPorCuit(String cuit) {
@@ -177,4 +187,5 @@ public class ClienteServicio implements IClienteServicio {
             throw new MiExcepcionPersonalizada("No se pudo traer el contacto por cuit" + e.getMessage());
         }
     }
+    
 }

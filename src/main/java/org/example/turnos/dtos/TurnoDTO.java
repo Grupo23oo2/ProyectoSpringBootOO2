@@ -10,31 +10,33 @@ public class TurnoDTO {
 
     private Long idTurno;
     private boolean presencial;
-    private Long idLugarTurno;
-    private Long idEmpleado;
-    private Long idCliente;
+    private String direccionLugar;
+    private String dniEmpleado;
+    private String cuitCliente;
     private LocalDateTime fechaHoraInicio;
-    private Long idServicio;
+    private String descripcionServicio;
     private int duracionMinutos;
 
     
     public TurnoDTO() {
     }
 
-	public TurnoDTO(Long idTurno, boolean presencial, Long idLugarTurno, Long idEmpleado, Long idCliente,
-			LocalDateTime fechaHoraInicio, Long idServicio, int duracionMinutos) {
+	
 
+	public TurnoDTO(Long idTurno, boolean presencial, String direccionLugar, String dniEmpleado, String cuitCliente,
+			LocalDateTime fechaHoraInicio, String descripcionServicio, int duracionMinutos) {
 		super();
 		this.idTurno = idTurno;
 		this.presencial = presencial;
-		this.idLugarTurno = idLugarTurno;
-		this.idEmpleado = idEmpleado;
-		this.idCliente = idCliente;
+		this.direccionLugar = direccionLugar;
+		this.dniEmpleado = dniEmpleado;
+		this.cuitCliente = cuitCliente;
 		this.fechaHoraInicio = fechaHoraInicio;
-		this.idServicio = idServicio;
-	    this.duracionMinutos = duracionMinutos;
-
+		this.descripcionServicio = descripcionServicio;
+		this.duracionMinutos = duracionMinutos;
 	}
+
+
 
 	public Long getIdTurno() {
 		return idTurno;
@@ -52,29 +54,55 @@ public class TurnoDTO {
 		this.presencial = presencial;
 	}
 
-	public Long getIdLugarTurno() {
-		return idLugarTurno;
+	
+
+	public String getDireccionLugar() {
+		return direccionLugar;
 	}
 
-	public void setIdLugarTurno(Long idLugarTurno) {
-		this.idLugarTurno = idLugarTurno;
+
+
+	public void setDireccionLugar(String direccionLugar) {
+		this.direccionLugar = direccionLugar;
 	}
 
-	public Long getIdEmpleado() {
-		return idEmpleado;
+
+
+	public String getDniEmpleado() {
+		return dniEmpleado;
 	}
 
-	public void setIdEmpleado(Long idEmpleado) {
-		this.idEmpleado = idEmpleado;
+
+
+	public void setDniEmpleado(String dniEmpleado) {
+		this.dniEmpleado = dniEmpleado;
 	}
 
-	public Long getIdCliente() {
-		return idCliente;
+
+
+	public String getCuitCliente() {
+		return cuitCliente;
 	}
 
-	public void setIdCliente(Long idCliente) {
-		this.idCliente = idCliente;
+
+
+	public void setCuitCliente(String cuitCliente) {
+		this.cuitCliente = cuitCliente;
 	}
+
+
+
+	public String getDescripcionServicio() {
+		return descripcionServicio;
+	}
+
+
+
+	public void setDescripcionServicio(String descripcionServicio) {
+		this.descripcionServicio = descripcionServicio;
+	}
+
+
 
 	public LocalDateTime getFechaHoraInicio() {
 		return fechaHoraInicio;
@@ -85,14 +113,6 @@ public class TurnoDTO {
 	}
 
 
-
-	public Long getIdServicio() {
-		return idServicio;
-	}
-
-	public void setIdServicio(Long idServicio) {
-		this.idServicio = idServicio;
-	}
 
 	public int getDuracionMinutos() {
 	    return duracionMinutos;

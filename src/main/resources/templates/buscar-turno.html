@@ -14,7 +14,7 @@
 
 
 
-<!--Agregar Turno-->
+<!-- Agregar Turno -->
 <section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">
     <h2>Agregar Nuevo Turno</h2>
     <form th:action="@{/turnos/guardarNuevo}" method="post">
@@ -25,23 +25,37 @@
             <option value="false">No</option>
         </select>
 
-        <label for="idLugarTurno">ID Lugar:</label>
-        <input type="number" id="idLugarTurno" name="idLugarTurno" required />
+        <label for="direccionLugar">Dirección del Lugar:</label>
+        <input type="text" id="direccionLugar" name="direccionLugar" required />
 
-        <label for="idEmpleado">ID Empleado:</label>
-        <input type="number" id="idEmpleado" name="idEmpleado" required />
+        <label for="dniEmpleado">DNI del Empleado:</label>
+        <input type="text" id="dniEmpleado" name="dniEmpleado" required />
 
-        <label for="idCliente">ID Cliente:</label>
-        <input type="number" id="idCliente" name="idCliente" required />
+        <label for="cuitCliente">CUIT del Cliente:</label>
+        <input type="text" id="cuitCliente" name="cuitCliente" required />
 
-        <label for="idServicio">ID Servicio:</label>
-        <input type="number" id="idServicio" name="idServicio" />
+        <label for="descripcionServicio">Descripción del Servicio:</label>
+        <input type="text" id="descripcionServicio" name="descripcionServicio" />
 
-        <!--Día-->
-        <label for="fecha">Día:</label><!--parte de la nueva logica-->
+        <!-- Día -->
+        <label for="fecha">Día:</label>
         <select id="fecha" name="fecha" required>
             <option th:each="dia : ${diasDisponibles}" th:value="${dia}" th:text="${dia}"></option>
         </select>
+
+        <!-- Hora -->
+        <label for="hora">Hora:</label>
+        <input type="time" id="hora" name="hora" required />
+
+        <!-- Duración -->
+        <label for="duracion">Duración (minutos):</label>
+        <input type="number" id="duracion" name="duracion" required />
+
+        <!-- Botón -->
+        <button type="submit">Guardar Turno</button>
+    </form>
+</section>
+
 
         <!--Hora-->
         <label for="hora">Hora:</label><!--parte de la nueva logica-->
@@ -70,29 +84,28 @@
             <option value="false">No</option>
         </select>
 
-        <label for="idLugarTurnoMod">ID Lugar:</label>
-        <input type="number" id="idLugarTurnoMod" name="idLugarTurno" required />
+        <label for="direccionLugarMod">Dirección Lugar:</label>
+        <input type="text" id="direccionLugarMod" name="direccionLugar" required />
 
-        <label for="idEmpleadoMod">ID Empleado:</label>
-        <input type="number" id="idEmpleadoMod" name="idEmpleado" required />
+        <label for="dniEmpleadoMod">DNI Empleado:</label>
+        <input type="text" id="dniEmpleadoMod" name="dniEmpleado" required />
 
-        <label for="idClienteMod">ID Cliente:</label>
-        <input type="number" id="idClienteMod" name="idCliente" required />
+        <label for="cuitClienteMod">CUIT Cliente:</label>
+        <input type="text" id="cuitClienteMod" name="cuitCliente" required />
 
-        <label for="idServicioMod">ID Servicio:</label>
-        <input type="number" id="idServicioMod" name="idServicio" />
+        <label for="descripcionServicioMod">Descripción Servicio:</label>
+        <input type="text" id="descripcionServicioMod" name="descripcionServicio" required />
 
         <label for="fechaInicioMod">Fecha y Hora Inicio:</label>
         <input type="datetime-local" id="fechaInicioMod" name="fechaHoraInicio" required />
 
-
-		<label for="duracionMinutosMod">Duración (minutos):</label>
-		<input type="number" id="duracionMinutosMod" name="duracionMinutos" required />
-
+        <label for="duracionMinutosMod">Duración (minutos):</label>
+        <input type="number" id="duracionMinutosMod" name="duracionMinutos" required />
 
         <button type="submit">Modificar Turno</button>
     </form>
 </section>
+
 
 <!-- Eliminar Turno -->
 <section sec:authorize="hasAnyRole('ADMIN','EMPLEADO')">

@@ -196,10 +196,10 @@ public class TurnoControlador {
             @RequestParam("fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
             @RequestParam("hora") String hora,
             @RequestParam("duracion") int duracion,
-            @RequestParam("idCliente") Long idCliente,
-            @RequestParam("idEmpleado") Long idEmpleado,
-            @RequestParam("idLugarTurno") Long idLugar,
-            @RequestParam(value = "idServicio", required = false) Long idServicio,
+            @RequestParam("cuitCliente") String cuitCliente,
+            @RequestParam("dniEmpleado") String dniEmpleado,
+            @RequestParam("direccionLugar") String direccionLugar,
+            @RequestParam(value = "descripcionServicio", required = false) String descripcionServicio,
             @RequestParam("presencial") boolean presencial,
             Model model
     ) {
@@ -208,16 +208,17 @@ public class TurnoControlador {
         TurnoDTO turnoDTO = new TurnoDTO();
         turnoDTO.setFechaHoraInicio(fechaHoraInicio);
         turnoDTO.setDuracionMinutos(duracion);
-        turnoDTO.setIdCliente(idCliente);
-        turnoDTO.setIdEmpleado(idEmpleado);
-        turnoDTO.setIdLugarTurno(idLugar);
-        turnoDTO.setIdServicio(idServicio);
+        turnoDTO.setCuitCliente(cuitCliente);
+        turnoDTO.setDniEmpleado(dniEmpleado);
+        turnoDTO.setDireccionLugar(direccionLugar);
+        turnoDTO.setDescripcionServicio(descripcionServicio);
         turnoDTO.setPresencial(presencial);
 
         TurnoDTO guardado = turnoServicio.agregarTurno(turnoDTO);
         model.addAttribute("turno", guardado);
         return "resultado-turno";
     }
+
     
     
 
