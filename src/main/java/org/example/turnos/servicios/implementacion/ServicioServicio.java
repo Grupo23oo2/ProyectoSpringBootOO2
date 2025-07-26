@@ -2,10 +2,7 @@ package org.example.turnos.servicios.implementacion;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.example.turnos.dtos.ServicioDTO;
-import org.example.turnos.dtos.TurnoDTO;
-import org.example.turnos.excepciones.MiExcepcionPersonalizada;
 import org.example.turnos.modelo.Servicio;
 import org.example.turnos.repositorios.IServicioRepositorio;
 import org.example.turnos.servicios.IServicioServicio;

@@ -1,8 +1,6 @@
 package org.example.turnos.servicios.implementacion;
 
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-
 import org.example.turnos.excepciones.MiExcepcionPersonalizada;
 import org.example.turnos.servicios.IEmailServicio;
 import org.springframework.beans.factory.annotation.Autowired;
