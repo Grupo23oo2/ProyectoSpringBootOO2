@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Resultado Contactos</title>
+</head>
+<body>
+    <h1>Lista de Contactos</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Dirección</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="contacto : ${contactos}">
+                <td th:text="${contacto.idContacto}">ID</td>
+                <td th:text="${contacto.direccion}">Dirección</td>
+                <td th:text="${contacto.email}">Email</td>
+                <td th:text="${contacto.telefono}">Teléfono</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/buscar-contacto.html}">Volver</a>
+</body>
+</html>

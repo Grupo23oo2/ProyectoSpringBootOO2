@@ -9,8 +9,8 @@ public interface IServicioServicio {
 
     ServicioDTO traerServicioPorDescripcion(String descripcion);
 
-    void eliminarServicio(Long id);
-    ServicioDTO modificarServicio(Long id, ServicioDTO servicioDTO);
+    void eliminarServicio(String descripcion);
+    ServicioDTO modificarServicio(String descripcion, ServicioDTO servicioDTO);
     List<ServicioDTO> traerServicios();
 }
 

@@ -1,31 +1,21 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <title>Detalle Servicio</title>
-    <link rel="stylesheet" th:href="@{/css/general.css}" />
+    <title>Resultado Servicio</title>
 </head>
 <body>
+    <h1>Resultado del Servicio</h1>
 
-    <h1>Detalle del Servicio</h1>
-    <hr/>
-
-    <!-- Detalle del servicio -->
-    <section th:if="${servicio != null}">
-        <p><strong>ID:</strong> <span th:text="${servicio.idServicio}"></span></p>
+    <div th:if="${servicio != null}">
         <p><strong>Descripción:</strong> <span th:text="${servicio.descripcion}"></span></p>
-        <p><strong>Duración (minutos):</strong> <span th:text="${servicio.duracion}"></span></p>
+        <p><strong>Duración:</strong> <span th:text="${servicio.duracion}"></span> minutos</p>
         <p><strong>Activo:</strong> <span th:text="${servicio.activo} ? 'Sí' : 'No'"></span></p>
-    </section>
+    </div>
 
-    <!-- Mensaje informativo -->
-    <section th:if="${mensaje != null}">
-        <p class="mensaje" th:text="${mensaje}"></p>
-    </section>
+    <div th:if="${mensaje != null}">
+        <p th:text="${mensaje}"></p>
+    </div>
 
-	<div style="margin-top: 30px; text-align: center;">
-	        <button onclick="window.history.back()" class="btn-volver">← Volver</button>
-	    </div>
-
+    <a th:href="@{/servicios/formulario}">Volver al formulario</a>
 </body>
 </html>

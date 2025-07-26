@@ -1,7 +1,5 @@
 package org.example.turnos.repositorios;
 
-
-
 import java.util.Optional;
 
 import org.example.turnos.modelo.Usuario;
@@ -13,8 +11,4 @@ public interface IUsuarioRepositorio extends JpaRepository<Usuario, Long> {
 	Optional<Usuario> findByNombreUsuario(String nombreUsuario);
 	
 	Optional<Usuario> findByEmail(String email);
-
-
-
-
 }

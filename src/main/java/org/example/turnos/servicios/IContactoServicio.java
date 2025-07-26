@@ -8,11 +8,11 @@ public interface IContactoServicio {
 
     public ContactoDTO agregarContacto(ContactoDTO dto);
 
-    public ContactoDTO traerContacto(Long id);
+    public ContactoDTO traerContacto(String email);
 
     public List<ContactoDTO> traerContactos();
 
-    public ContactoDTO modificarContacto(Long id, ContactoDTO dto);
+    public ContactoDTO modificarContacto(String email, ContactoDTO dto);
 
-    public void eliminarContacto(Long id);
+    public void eliminarContacto(String email);
 }

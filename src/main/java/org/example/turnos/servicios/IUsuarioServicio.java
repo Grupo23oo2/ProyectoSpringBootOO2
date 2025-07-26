@@ -9,8 +9,8 @@ public interface IUsuarioServicio {
     List<UsuarioDTO> traerUsuarios();
 
     UsuarioDTO traerUsuarioPorEmail(String email);
-    UsuarioDTO modificarUsuario(Long id, UsuarioDTO usuarioDTO);
-    void eliminarUsuario(Long id);
+    UsuarioDTO modificarUsuario(String email, UsuarioDTO dto);
+    void eliminarUsuario(String email);
     
    
 

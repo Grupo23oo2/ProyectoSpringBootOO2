@@ -10,6 +10,6 @@ public interface ILugarServicio {
     LugarDTO traerLugarPorDireccion(String direccion);
 
     List<LugarDTO> traerLugares();
-    LugarDTO modificarLugar(Long id, LugarDTO dto);
-    void eliminarLugar(Long id);
+    LugarDTO modificarLugar(String direccion, LugarDTO dto);
+    void eliminarLugar(String direccion);
 }
