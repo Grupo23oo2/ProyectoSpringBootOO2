@@ -6,6 +6,7 @@ import org.example.turnos.modelo.Contacto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.example.turnos.repositorios.IClienteRepositorio;
 import org.example.turnos.repositorios.IContactoRepositorio;
 import org.example.turnos.servicios.IContactoServicio;
@@ -84,6 +85,7 @@ public class ContactoServicio implements IContactoServicio {
     }
 
     @Override
+    @Transactional
     public void eliminarContacto(String email) {
         try {
             if (!contactoRepositorio.existsByEmail(email)) {

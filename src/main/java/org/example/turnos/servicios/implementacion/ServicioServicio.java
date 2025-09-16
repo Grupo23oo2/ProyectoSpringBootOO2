@@ -22,6 +22,9 @@ public class ServicioServicio implements IServicioServicio {
     @Override
     public ServicioDTO agregarServicio(ServicioDTO servicioDTO) {
         Servicio servicio = modelMapper.map(servicioDTO, Servicio.class);
+        
+        servicio.setActivo(true);
+        
         Servicio guardado = servicioRepositorio.save(servicio);
         return modelMapper.map(guardado, ServicioDTO.class);
     }

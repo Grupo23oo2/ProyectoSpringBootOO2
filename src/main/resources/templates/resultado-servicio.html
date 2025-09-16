@@ -1,23 +1,31 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Resultado Servicio</title>
+    <meta charset="UTF-8">
+    <title>Resultado del Servicio</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
 </head>
 <body>
-    <h1>Resultado del Servicio</h1>
 
-    <div th:if="${servicio != null}">
-        <p><strong>Descripción:</strong> <span th:text="${servicio.descripcion}"></span></p>
-        <p><strong>Duración:</strong> <span th:text="${servicio.duracion}"></span> minutos</p>
-        <p><strong>Activo:</strong> <span th:text="${servicio.activo} ? 'Sí' : 'No'"></span></p>
-    </div>
+<h1>Resultado de Búsqueda</h1>
 
-    <div th:if="${mensaje != null}">
-        <p th:text="${mensaje}"></p>
-    </div>
+<hr/>
 
-	<div style="text-align: center; margin-top: 20px;">
-        <a href="/" class="btn">← Volver</a>
-    </div>
+<!-- Mensaje de éxito -->
+<p class="mensaje" th:if="${mensaje}" th:text="${mensaje}"></p>
+
+<!-- Detalles del servicio -->
+<section th:if="${servicio != null}">
+    <h2>Servicio Encontrado</h2>
+    <p><strong>Descripción:</strong> <span th:text="${servicio.descripcion}"></span></p>
+    <p><strong>Duración:</strong> <span th:text="${servicio.duracion}"></span> minutos</p>
+    <p><strong>Activo:</strong> <span th:text="${servicio.activo} ? 'Sí' : 'No'"></span></p>
+</section>
+
+<!-- Botón volver -->
+<div style="text-align: center; margin-top: 20px;">
+    <a href="/" class="btn">← Volver</a>
+</div>
+
 </body>
 </html>

@@ -78,7 +78,7 @@ public class RegistroWebControlador {
             usuarioDTO.setNombreUsuario(nombreUsuario);
             usuarioDTO.setEmail(email);
             usuarioDTO.setContraseniaUsuario(passwordEncoder.encode(contraseniaUsuario));
-            usuarioDTO.setEstado(estado);
+            usuarioDTO.setEstado(true); //ponemos directamente que va a estar activo, antes se podia cambiar en el formulario de registro
             usuarioDTO.setRol("ROLE_EMPLEADO"); //como esta en la pagina de empleado, no hace falta que lo reciba del formulario, lo ponemos directamente
 
             usuarioServicio.agregarUsuario(usuarioDTO);
@@ -132,7 +132,7 @@ public class RegistroWebControlador {
             usuario.setNombreUsuario(nombreUsuario);
             usuario.setEmail(emailUsuario);
             usuario.setContraseniaUsuario(passwordEncoder.encode(contraseniaUsuario));
-            usuario.setEstado(estado);
+            usuario.setEstado(true); //ponemos directamente que va a estar activo, antes se podia cambiar en el formulario de registro
             usuario.setRol("ROLE_CLIENTE"); //como esta en la pagina de empleado, no hace falta que lo reciba del formulario, lo ponemos directamente
 
             usuarioServicio.agregarUsuario(usuario);
