@@ -62,9 +62,15 @@ public class LugarWebControlador {
 
     // Eliminar lugar
     @PostMapping("/eliminar")
-    public String eliminarLugar(@RequestParam Long id, Model model) {
-        lugarServicio.eliminarLugar(id);
-        model.addAttribute("mensaje", "Lugar eliminado con éxito (ID: " + id + ")");
+    public String eliminarLugar(@RequestParam String direccion, Model model) {
+        try {
+            lugarServicio.eliminarLugarPorDireccion(direccion);
+            model.addAttribute("mensaje", "Lugar eliminado con éxito (Dirección: " + direccion + ")");
+        } catch (Exception e) {
+            model.addAttribute("error", "No se pudo eliminar el lugar: " + e.getMessage());
+        }
         return "resultado-lugar";
     }
+
+
 }

@@ -12,6 +12,9 @@ public interface ILugarRepositorio extends JpaRepository<Lugar, Long> {
 
 	
 	Optional<Lugar> findByDireccion(String direccion);
+	
+	
+
 
 
 }

@@ -79,14 +79,15 @@ public class LugarServicio implements ILugarServicio {
     }
 
     @Override
-    public void eliminarLugar(Long id) {
-    	try {
-        if (!lugarRepositorio.existsById(id)) {
-            throw new MiExcepcionPersonalizada("Lugar no encontrado con id: " + id);
-        }
-        lugarRepositorio.deleteById(id);
-    	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo eliminar el lugar" + e.getMessage());
+    public void eliminarLugarPorDireccion(String direccion) {
+        try {
+            Lugar lugar = lugarRepositorio.findByDireccion(direccion)
+                .orElseThrow(() -> new MiExcepcionPersonalizada("No se encontró lugar con dirección: " + direccion));
+
+            lugarRepositorio.delete(lugar);
+        } catch (Exception e) {
+            throw new MiExcepcionPersonalizada("No se pudo eliminar el lugar: " + e.getMessage());
         }
     }
-}
+
+    }
