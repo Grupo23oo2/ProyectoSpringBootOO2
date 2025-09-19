@@ -45,7 +45,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
-			<version>3.5.0</version>
 		</dependency>
 
 		<!-- JPA API (Jakarta) -->
@@ -89,7 +88,6 @@
 		<dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-security</artifactId>
-    <version>3.5.0</version>
 </dependency>
 
 	<dependency>

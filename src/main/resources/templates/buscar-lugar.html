@@ -35,8 +35,8 @@
 <section>
     <h2>Modificar Lugar Existente</h2>
     <form th:action="@{/lugares/modificar}" method="post">
-        <label for="idModificar">Dirección del Lugar a modificar:</label>
-		<input type="text" id="idModificar" name="id" required />
+        <label for="direccion">Dirección del Lugar a modificar:</label>
+		<input type="text" id="direccion" name="direccionVieja" required />
 
         <label for="direccionModificar">Nueva Dirección:</label>
         <input type="text" id="direccionModificar" name="direccion" required />
@@ -45,12 +45,13 @@
     </form>
 </section>
 
-<!-- Eliminar Lugar -->
+<!-- Eliminar Lugar por Dirección -->
 <section>
-    <h2>Eliminar Lugar</h2>
+    <h2>Eliminar Lugar por Dirección</h2>
     <form th:action="@{/lugares/eliminar}" method="post">
-        <label for="idEliminar">ID Lugar a eliminar:</label>
-        <input type="text" id="idEliminar" name="id" required />
+        <label for="direccionEliminar">Dirección del Lugar a eliminar:</label>
+        <input type="text" id="direccionEliminar" name="direccion" required />
+		
         <button type="submit">Eliminar</button>
     </form>
 </section>
@@ -58,6 +59,5 @@
 	<div style="text-align: center; margin-top: 20px;">
         <a href="/" class="btn">← Volver</a>
     </div>
-
 </body>
 </html>
