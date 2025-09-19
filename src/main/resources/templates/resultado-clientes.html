@@ -11,7 +11,8 @@
     <hr/>
 
     <!-- Mensaje informativo -->
-    <p class="mensaje" th:if="${mensaje}" th:text="${mensaje}"></p>
+	<p class="mensaje" th:if="${mensaje}" th:text="${mensaje}"></p>
+	<p class="error" th:if="${error}" th:text="${error}"></p>
 
     <!-- Cliente individual -->
     <section th:if="${cliente != null}">
@@ -21,10 +22,6 @@
         <p><strong>Apellido:</strong> <span th:text="${cliente.apellido}"></span></p>
         <p><strong>DNI:</strong> <span th:text="${cliente.dni}"></span></p>
         <p><strong>CUIT:</strong> <span th:text="${cliente.cuit}"></span></p>
-        <p><strong>ID Usuario:</strong> 
-            <span th:if="${cliente.idUsuario != null}" th:text="${cliente.idUsuario}"></span>
-            <span th:unless="${cliente.idUsuario != null}">Sin usuario</span>
-        </p>
     </section>
 
     <!-- Lista de clientes -->
@@ -38,10 +35,7 @@
                     <th>Apellido</th>
                     <th>DNI</th>
                     <th>CUIT</th>
-                    <th>Usuario</th>
-
                     <th>Acciones</th>
-
                 </tr>
             </thead>
             <tbody>
@@ -51,10 +45,6 @@
                     <td th:text="${cli.apellido}"></td>
                     <td th:text="${cli.dni}"></td>
                     <td th:text="${cli.cuit}"></td>
-                    <td>
-                        <span th:if="${cli.idUsuario != null}" th:text="${cli.idUsuario}"></span>
-                        <span th:unless="${cli.idUsuario != null}">Sin usuario</span>
-                    </td>
 
 					<td>
 						<div style="display: flex; align-items: center; gap: 10px;">

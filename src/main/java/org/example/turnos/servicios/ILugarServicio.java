@@ -8,8 +8,10 @@ public interface ILugarServicio {
     LugarDTO agregarLugar(LugarDTO dto);
 
     LugarDTO traerLugarPorDireccion(String direccion);
+    
+    void eliminarLugarPorDireccion(String direccion);
 
     List<LugarDTO> traerLugares();
+
     LugarDTO modificarLugar(String direccion, LugarDTO dto);
-    void eliminarLugar(String direccion);
 }

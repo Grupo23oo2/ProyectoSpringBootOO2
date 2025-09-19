@@ -84,8 +84,12 @@ public class EmpleadoWebControlador {
 
     @PostMapping("/eliminar")
     public String eliminarEmpleado(@RequestParam String dni, Model model) {
-        empleadoServicio.eliminarEmpleadoPorDni(dni);
-        model.addAttribute("mensaje", "Empleado eliminado con éxito (DNI: " + dni + ")");
+        try {
+        	empleadoServicio.eliminarEmpleadoPorDni(dni);
+        	model.addAttribute("mensaje", "Empleado eliminado con éxito (DNI: " + dni + ")");
+        } catch (MiExcepcionPersonalizada e) {
+            model.addAttribute("error", e.getMessage());
+        }
         return "resultado-empleados";
     }
 }

@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Detalle Turno</title>
-    <link rel="stylesheet" th:href="@{/css/resultado-rol.css}" />
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
 </head>
 <body>
-
     <h1>Detalle de Turno</h1>
     <hr/>
 
@@ -16,12 +15,11 @@
         <p><strong>Fecha:</strong> <span th:text="${turno.fecha}"></span></p>
         <p><strong>Hora:</strong> <span th:text="${turno.hora}"></span></p>
         <p><strong>Duración:</strong> <span th:text="${turno.duracionMinutos} + ' minutos'"></span></p>
-
         <p><strong>Cliente CUIT:</strong> <span th:text="${turno.cuitCliente}"></span></p>
-		<p><strong>Empleado:</strong> <span th:text="${turno.dniEmpleado}"></span></p>
-		<p><strong>Lugar:</strong> <span th:text="${turno.direccionLugar}"></span></p>
-		<p><strong>Presencial:</strong> <span th:text="${turno.presencial} ? 'Sí' : 'No'"></span></p>
-		<p><strong>Servicio:</strong> <span th:text="${turno.descripcionServicio}"></span></p>
+        <p><strong>Empleado:</strong> <span th:text="${turno.dniEmpleado}"></span></p>
+        <p><strong>Lugar:</strong> <span th:text="${turno.direccionLugar}"></span></p>
+        <p><strong>Presencial:</strong> <span th:text="${turno.presencial} ? 'Sí' : 'No'"></span></p>
+        <p><strong>Servicio:</strong> <span th:text="${turno.descripcionServicio}"></span></p>
     </section>
 
     <!-- Mensaje informativo -->
@@ -29,10 +27,8 @@
         <p class="mensaje" style="max-width:600px; margin: 0 auto; text-align:center; color:#666; font-style: italic;" th:text="${mensaje}"></p>
     </section>
 
-	<div style="text-align: center; margin-top: 20px;">
+    <div style="text-align: center; margin-top: 20px;">
         <a href="/" class="btn">← Volver</a>
     </div>
 </body>
-
 </html>
-

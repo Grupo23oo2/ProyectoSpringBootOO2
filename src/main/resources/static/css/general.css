@@ -44,7 +44,8 @@ input[type="number"],
 input[type="datetime-local"],
 input[type="email"],
 input[type="password"],
-input[type="date"] {
+input[type="date"],
+input[type="time"] {
 
     width: 100%;
     padding: 8px 10px;
@@ -61,7 +62,8 @@ input[type="number"]:focus,
 input[type="datetime-local"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus,
-input[type="date"]:focus {
+input[type="date"]:focus,
+input[type="time"]:focus {
 
     border-color: #007bff;
     outline: none;
@@ -143,3 +145,52 @@ p {
     background-color: #0056b3;
 }
 
+.mensaje {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px auto;
+    text-align: center;
+    font-weight: bold;
+    max-width: 600px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px auto;
+    text-align: center;
+    font-weight: bold;
+    max-width: 600px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.titulo-centrado {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #495057;
+}
+
+.select-estilo {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+    appearance: none;
+}
+
+.select-estilo:focus {
+    border-color: #007bff;
+    outline: none;
+}

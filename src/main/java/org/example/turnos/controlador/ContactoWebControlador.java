@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,5 +66,15 @@ public class ContactoWebControlador {
         contactoServicio.eliminarContacto(email);
         model.addAttribute("mensaje", "Contacto eliminado con éxito (Email: " + email + ")");
         return "resultado-contacto";
+    }
+    
+    @GetMapping("/editar/{email}")
+    public String editarContacto(@PathVariable("email") String email, Model model) {
+        ContactoDTO contacto = contactoServicio.traerContacto(email);
+        List<ContactoDTO> contactos = contactoServicio.traerContactos();
+
+        model.addAttribute("contactoEditar", contacto);
+        model.addAttribute("contactos", contactos);
+        return "resultado-contactos";
     }
 }

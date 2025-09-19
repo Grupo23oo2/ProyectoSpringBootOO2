@@ -7,10 +7,11 @@
 </head>
 <body>
 
-    <h1>Lista de Servicios</h1>
+    <h1>Resultado de Búsqueda</h1>
     <hr/>
 
     <section th:if="${servicios != null and !servicios.isEmpty()}">
+		<h2>Servicios Encontrados</h2>
         <table>
             <thead>
                 <tr>
@@ -18,6 +19,7 @@
                     <th>Descripción</th>
                     <th>Duración (min)</th>
                     <th>Activo</th>
+					<th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,14 +28,50 @@
                     <td th:text="${servicio.descripcion}">Descripción</td>
                     <td th:text="${servicio.duracion}">Duración</td>
                     <td th:text="${servicio.activo} ? 'Sí' : 'No'">Activo</td>
+					<td>
+					    <div style="display: flex; align-items: center; gap: 10px;">
+					        <a th:href="@{'/servicios/editar/' + ${servicio.descripcion}}" title="Editar">
+					            <img th:src="@{/icons/pencil.svg}" alt="Editar" width="20" height="20" />
+					        </a>
+
+					        <form th:action="@{/servicios/eliminar}" method="post">
+					            <input type="hidden" name="descripcion" th:value="${servicio.descripcion}" />
+					            <button type="submit" title="Eliminar" style="background: none; border: none; padding: 0; cursor: pointer;">
+					                <img th:src="@{/icons/trash.svg}" alt="Eliminar" width="20" height="20" />
+					            </button>
+					        </form>
+					    </div>
+					</td>
                 </tr>
             </tbody>
         </table>
     </section>
 
-    <section th:if="${servicios == null or servicios.isEmpty()}">
-        <p>No hay servicios disponibles.</p>
-    </section>
+    <section th:if="${servicioEditar != null}">
+	    <h2>Modificar Servicio</h2>
+	    <form th:action="@{/servicios/modificar}" method="post">
+	        <input type="hidden" name="descripcionOriginal" th:value="${servicioEditar.descripcion}" />
+			
+			<div>
+	        	<label for="descripcionMod">Nueva Descripción:</label>
+	        	<input type="text" id="descripcionMod" name="descripcion" th:value="${servicioEditar.descripcion}" required />
+			</div>
+			
+			<div>
+	        	<label for="duracionMod">Nueva Duración:</label>
+	        	<input type="number" id="duracionMod" name="duracion" th:value="${servicioEditar.duracion}" required />
+			</div>
+				
+			<div>
+	        	<label for="activoMod">¿Está Activo?</label>
+	        	<input type="checkbox" id="activoMod" name="activo" th:checked="${servicioEditar.activo}" />
+			</div>
+			
+			<div>
+	        	<button type="submit">Modificar</button>
+			</div>
+	    </form>
+	</section>
 
 	<div style="text-align: center; margin-top: 20px;">
         <a href="/" class="btn">← Volver</a>

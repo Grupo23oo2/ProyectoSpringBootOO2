@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,8 +54,8 @@ public class ServicioWebControlador {
     }
 
     @PostMapping("/modificar")
-    public String modificarServicio(@RequestParam String descripcion, @ModelAttribute ServicioDTO servicioDTO, Model model) {
-        ServicioDTO actualizado = servicioServicio.modificarServicio(descripcion, servicioDTO);
+    public String modificarServicio(@RequestParam("descripcionOriginal") String descripcionOriginal, @ModelAttribute ServicioDTO servicioDTO, Model model) {
+        ServicioDTO actualizado = servicioServicio.modificarServicio(descripcionOriginal, servicioDTO);
         model.addAttribute("servicio", actualizado);
         return "resultado-servicio"; 
     }
@@ -66,4 +67,12 @@ public class ServicioWebControlador {
         model.addAttribute("mensaje", "Servicio eliminado con éxito (Descripción: " + descripcion + ")");
         return "resultado-servicio";  
     }
+    
+    @GetMapping("/editar/{descripcion}")
+    public String editarServicio(@PathVariable("descripcion") String descripcion, Model model) {
+        ServicioDTO servicioDTO = servicioServicio.traerServicioPorDescripcion(descripcion);
+        model.addAttribute("servicioEditar", servicioDTO);
+        return "resultado-servicios";
+    }
+
 }

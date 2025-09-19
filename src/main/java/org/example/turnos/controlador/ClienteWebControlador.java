@@ -115,8 +115,12 @@ public class ClienteWebControlador {
 
     @PostMapping("/eliminar")
     public String eliminarCliente(@RequestParam String dni, Model model) {
-        clienteServicio.eliminarClientePorDni(dni);
-        model.addAttribute("mensaje", "Cliente eliminado correctamente (DNI: " + dni + ")");
+        try {
+            clienteServicio.eliminarClientePorDni(dni);
+            model.addAttribute("mensaje", "Cliente eliminado correctamente (DNI: " + dni + ")");
+        } catch (MiExcepcionPersonalizada e) {
+            model.addAttribute("error", e.getMessage());
+        }
         return "resultado-clientes";
     }
 }

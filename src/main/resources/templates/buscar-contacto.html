@@ -1,55 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8" />
     <title>Gestión de Contactos</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
 </head>
 <body>
-    <h1>Buscar Contacto</h1>
+    <h1>Gestión de Contactos</h1>
+    <hr/>
 
-    <form th:action="@{/contactos/buscar-por-email}" method="get">
-        <label>Email:</label>
-        <input type="text" name="email" required>
-        <button type="submit">Buscar</button>
-    </form>
+    <!-- Buscar Contacto -->
+    <section>
+        <h2>Buscar Contacto</h2>
+        <form th:action="@{/contactos/buscar-por-email}" method="get">
+            <label for="emailBuscar">Email:</label>
+            <input type="text" id="emailBuscar" name="email" required>
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
 
-    <h2>Agregar Contacto</h2>
-    <form th:action="@{/contactos/agregar}" method="post">
-        <label>ID Contacto:</label>
-        <input type="number" name="idContacto" required><br>
-        <label>Dirección:</label>
-        <input type="text" name="direccion" required><br>
-        <label>Email:</label>
-        <input type="email" name="email" required><br>
-        <label>Teléfono:</label>
-        <input type="text" name="telefono" required><br>
-        <button type="submit">Agregar</button>
-    </form>
+    <!-- Ver Todos los Contactos -->
+    <section>
+        <h2>Ver Todos los Contactos</h2>
+        <form th:action="@{/contactos/todos}" method="get">
+            <button type="submit">Ver Todos</button>
+        </form>
+    </section>
 
-    <h2>Modificar Contacto</h2>
-    <form th:action="@{/contactos/modificar}" method="post">
-        <label>Email del contacto a modificar:</label>
-        <input type="email" name="email" required><br>
-        <label>Nueva Dirección:</label>
-        <input type="text" name="direccion"><br>
-        <label>Nuevo Teléfono:</label>
-        <input type="text" name="telefono"><br>
-        <button type="submit">Modificar</button>
-    </form>
-
-    <h2>Eliminar Contacto</h2>
-    <form th:action="@{/contactos/eliminar}" method="post">
-        <label>Email:</label>
-        <input type="email" name="email" required>
-        <button type="submit">Eliminar</button>
-    </form>
-
-    <h2>Ver Todos los Contactos</h2>
-    <form th:action="@{/contactos/todos}" method="get">
-        <button type="submit">Ver Todos</button>
-    </form>
-	
-	<div style="text-align: center; margin-top: 20px;">
+    <!-- Botón Volver -->
+    <div style="text-align: center; margin-top: 20px;">
         <a href="/" class="btn">← Volver</a>
     </div>
+
 </body>
 </html>
