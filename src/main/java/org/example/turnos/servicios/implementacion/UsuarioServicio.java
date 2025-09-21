@@ -40,12 +40,22 @@ public class UsuarioServicio implements IUsuarioServicio {
     @Override
     public UsuarioDTO agregarUsuario(UsuarioDTO dto) {
         try {
-            Persona persona = buscarPersonaPorId(dto.getIdPersona());
+            Persona persona = buscarPersonaPorId(dto.idPersona());
 
             Usuario usuario = toEntity(dto, persona);
             
             LocalDateTime hora = LocalDateTime.now();
-            dto.setFechaCreacion(hora);
+           // dto.fechaCreacion(hora); //no se puede usar por los record. Cada vez que aparece esto, aunque sea un solo atributo, hay que poner el constructor completo de la record
+            dto = new UsuarioDTO(
+                    dto.idUsuario(),
+                    dto.nombreUsuario(),
+                    dto.contraseniaUsuario(),
+                    dto.estado(),
+                    dto.idPersona(),
+                    dto.email(),
+                    dto.rol(),
+                    hora//fechaCreacion actualizado como en la linea 48
+                );
             
             Usuario usuarioGuardado = usuarioRepositorio.save(usuario);
             String contenidoHtml = """
@@ -56,7 +66,7 @@ public class UsuarioServicio implements IUsuarioServicio {
                     </body>
                     </html>
                     """;
-            emailServicio.enviarCorreoHtml(dto.getEmail(), "alta de usuario", contenidoHtml);//envio automatico del mail
+            emailServicio.enviarCorreoHtml(dto.email(), "alta de usuario", contenidoHtml);//envio automatico del mail
             return toDTO(usuarioGuardado);
         } catch (Exception e) {
             throw new MiExcepcionPersonalizada("No se pudo agregar el usuario: " + e.getMessage());
@@ -108,17 +118,17 @@ public class UsuarioServicio implements IUsuarioServicio {
             Usuario usuarioExistente = usuarioRepositorio.findByEmail(email)
                     .orElseThrow(() -> new MiExcepcionPersonalizada("Usuario no encontrado con email: " + email));
 
-            if (dto.getIdPersona() != null) {
-                Persona persona = buscarPersonaPorId(dto.getIdPersona());
+            if (dto.idPersona() != null) {
+                Persona persona = buscarPersonaPorId(dto.idPersona());
                 usuarioExistente.setPersona(persona);
             }
 
-            usuarioExistente.setNombreUsuario(dto.getNombreUsuario());
-            usuarioExistente.setContraseniaUsuario(dto.getContraseniaUsuario());
-            usuarioExistente.setEstado(dto.isEstado());
-            usuarioExistente.setEmail(dto.getEmail());
-            usuarioExistente.setRol(dto.getRol());
-            usuarioExistente.setFechaCreacion(dto.getFechaCreacion());
+            usuarioExistente.setNombreUsuario(dto.nombreUsuario());
+            usuarioExistente.setContraseniaUsuario(dto.contraseniaUsuario());
+            usuarioExistente.setEstado(dto.estado());
+            usuarioExistente.setEmail(dto.email());
+            usuarioExistente.setRol(dto.rol());
+            usuarioExistente.setFechaCreacion(dto.fechaCreacion());
 
             Usuario usuarioModificado = usuarioRepositorio.save(usuarioExistente);
             return toDTO(usuarioModificado);
@@ -142,11 +152,29 @@ public class UsuarioServicio implements IUsuarioServicio {
         UsuarioDTO dto = modelMapper.map(usuario, UsuarioDTO.class);
 
         if (usuario.getPersona() != null) {
-            dto.setIdPersona(usuario.getPersona().getIdPersona());
+          //  dto.idPersona(usuario.getPersona().getIdPersona()); pasa lo mismo que en la linea 48            
+            dto = new UsuarioDTO(
+                    dto.idUsuario(),
+                    dto.nombreUsuario(),
+                    dto.contraseniaUsuario(),
+                    dto.estado(),
+                    dto.idPersona(),//idPersona actualizado linea 155
+                    dto.email(),
+                    dto.rol(),
+                    dto.fechaCreacion()
+                );
         }
-
-
-        dto.setRol(usuario.getRol());
+        //dto.rol(usuario.getRol());      
+        dto = new UsuarioDTO(
+        	    dto.idUsuario(),
+        	    dto.nombreUsuario(),
+        	    dto.contraseniaUsuario(),
+        	    dto.estado(),
+        	    dto.idPersona(),
+        	    dto.email(),
+        	    usuario.getRol(),//rol actualizado linea 167
+        	    dto.fechaCreacion()
+        	);
         
         return dto;
     }
@@ -157,20 +185,20 @@ public class UsuarioServicio implements IUsuarioServicio {
     private Usuario toEntity(UsuarioDTO dto, Persona persona) {
         Usuario usuario = new Usuario();
 
-        if (dto.getIdUsuario() != null) {
-            usuario.setIdUsuario(dto.getIdUsuario());
+        if (dto.idUsuario() != null) {
+            usuario.setIdUsuario(dto.idUsuario());
         }
-        usuario.setNombreUsuario(dto.getNombreUsuario());
-        usuario.setContraseniaUsuario(dto.getContraseniaUsuario());
-        usuario.setEstado(dto.isEstado());
-        usuario.setEmail(dto.getEmail());
+        usuario.setNombreUsuario(dto.nombreUsuario());
+        usuario.setContraseniaUsuario(dto.contraseniaUsuario());
+        usuario.setEstado(dto.estado());
+        usuario.setEmail(dto.email());
 
-        usuario.setRol(dto.getRol());
+        usuario.setRol(dto.rol());
 
         usuario.setPersona(persona);
         
-        usuario.setRol(dto.getRol());
-        usuario.setFechaCreacion(dto.getFechaCreacion());
+        usuario.setRol(dto.rol());
+        usuario.setFechaCreacion(dto.fechaCreacion());
 
         return usuario;
     }   

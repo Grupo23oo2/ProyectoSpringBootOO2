@@ -23,10 +23,12 @@ public class LugarWebControlador {
     
     @GetMapping("/formulario")
     public String mostrarFormularioBusqueda(Model model) {
-    	model.addAttribute("lugarDTO", new LugarDTO());
+        model.addAttribute("lugarDTO", new LugarDTO(
+            null,// idLugar
+            null// direccion
+        ));
         return "buscar-lugar";
     }
-
     // Traer todos los lugares
     @GetMapping("/todos")
     public String traerTodos(Model model) {

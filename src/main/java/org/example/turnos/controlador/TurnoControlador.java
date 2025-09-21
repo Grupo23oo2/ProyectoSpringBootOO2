@@ -202,14 +202,16 @@ public class TurnoControlador {
     ) {
         LocalDateTime fechaHoraInicio = LocalDateTime.of(fecha, LocalTime.parse(hora));
 
-        TurnoDTO turnoDTO = new TurnoDTO();
-        turnoDTO.setFechaHoraInicio(fechaHoraInicio);
-        turnoDTO.setDuracionMinutos(duracion);
-        turnoDTO.setCuitCliente(cuitCliente);
-        turnoDTO.setDniEmpleado(dniEmpleado);
-        turnoDTO.setDireccionLugar(direccionLugar);
-        turnoDTO.setDescripcionServicio(descripcionServicio);
-        turnoDTO.setPresencial(presencial);
+        TurnoDTO turnoDTO = new TurnoDTO(//constructor de la RecordClass
+        	    null,//idTurno(aún no asignado)
+        	    presencial,//presencial
+        	    direccionLugar,//direccionLugar
+        	    dniEmpleado,//dniEmpleado
+        	    cuitCliente,//cuitCliente
+        	    fechaHoraInicio,//fechaHoraInicio
+        	    descripcionServicio,//descripcionServicio
+        	    duracion//duracionMinutos
+        	);
 
         TurnoDTO guardado = turnoServicio.agregarTurno(turnoDTO);
         model.addAttribute("turno", guardado);

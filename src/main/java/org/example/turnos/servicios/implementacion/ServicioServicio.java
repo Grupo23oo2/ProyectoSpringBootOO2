@@ -52,9 +52,9 @@ public class ServicioServicio implements IServicioServicio {
             .orElseThrow(() -> new RuntimeException("Servicio no encontrado con descripción: " + descripcion));
         
         // Actualizar campos
-        existente.setDescripcion(servicioDTO.getDescripcion());
-        existente.setDuracion(servicioDTO.getDuracion());
-        existente.setActivo(servicioDTO.isActivo());
+        existente.setDescripcion(servicioDTO.descripcion());
+        existente.setDuracion(servicioDTO.duracion());
+        existente.setActivo(servicioDTO.activo());
 
         Servicio actualizado = servicioRepositorio.save(existente);
         return modelMapper.map(actualizado, ServicioDTO.class);

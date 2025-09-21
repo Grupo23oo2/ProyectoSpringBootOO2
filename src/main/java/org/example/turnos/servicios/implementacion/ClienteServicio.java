@@ -38,12 +38,12 @@ public class ClienteServicio implements IClienteServicio {
     private ModelMapper modelMapper;
 
     public ClienteDTO agregarCliente(ClienteDTO dto) {
-        if (clienteRepositorio.existsByCuit(dto.getCuit())) {
-            throw new CuitClienteDuplicadoException("Ya existe un cliente con el CUIT: " + dto.getCuit());
+        if (clienteRepositorio.existsByCuit(dto.cuit())) {
+            throw new CuitClienteDuplicadoException("Ya existe un cliente con el CUIT: " + dto.cuit());
         }
 
-        if (clienteRepositorio.existsByDni(dto.getDni())) {
-            throw new DniClienteDuplicadoException("Ya existe un cliente con el DNI: " + dto.getDni());
+        if (clienteRepositorio.existsByDni(dto.dni())) {
+            throw new DniClienteDuplicadoException("Ya existe un cliente con el DNI: " + dto.dni());
         }
 
         try {
@@ -77,20 +77,20 @@ public class ClienteServicio implements IClienteServicio {
     public Optional<ClienteDTO> modificarClientePorDni(String dniOriginal, ClienteDTO dto) {
     	try {
     	return clienteRepositorio.findByDni(dniOriginal).map(clienteExistente -> {
-            clienteExistente.setNombre(dto.getNombre());
-            clienteExistente.setApellido(dto.getApellido());
-            clienteExistente.setDni(dto.getDni());
-            clienteExistente.setCuit(dto.getCuit());
+            clienteExistente.setNombre(dto.nombre());
+            clienteExistente.setApellido(dto.apellido());
+            clienteExistente.setDni(dto.dni());
+            clienteExistente.setCuit(dto.cuit());
 
-            if (dto.getIdUsuario() != null) {
-                Usuario usuario = usuarioRepositorio.findById(dto.getIdUsuario()).orElse(null);
+            if (dto.idUsuario() != null) {
+                Usuario usuario = usuarioRepositorio.findById(dto.idUsuario()).orElse(null);
                 clienteExistente.setUsuario(usuario);
             } else {
                 clienteExistente.setUsuario(null);
             }
 
-            if (dto.getIdContacto() != null) {
-                Contacto contacto = contactoRepositorio.findById(dto.getIdContacto()).orElse(null);
+            if (dto.idContacto() != null) {
+                Contacto contacto = contactoRepositorio.findById(dto.idContacto()).orElse(null);
                 clienteExistente.setContacto(contacto);
             } else {
                 clienteExistente.setContacto(null);
@@ -114,28 +114,42 @@ public class ClienteServicio implements IClienteServicio {
         }
     }
 
-    private ClienteDTO toDTO(Cliente cliente) {
+     /* private ClienteDTO toDTO(Cliente cliente) {
         ClienteDTO dto = modelMapper.map(cliente, ClienteDTO.class);
 
         // Ajustamos los campos relacionados que no mapea automáticamente ModelMapper
-        dto.setIdUsuario(cliente.getUsuario() != null ? cliente.getUsuario().getIdUsuario() : null);
-        dto.setIdContacto(cliente.getContacto() != null ? cliente.getContacto().getIdContacto() : null);
+        dto.idUsuario(cliente.getUsuario() != null ? cliente.getUsuario().getIdUsuario() : null);
+        dto.idContacto(cliente.getContacto() != null ? cliente.getContacto().getIdContacto() : null);
 
         return dto;
     
+    }*/  
+    
+    private ClienteDTO toDTO(Cliente cliente) {//nuevo para record
+        return new ClienteDTO(
+            cliente.getIdPersona(),
+            cliente.getNombre(),
+            cliente.getApellido(),
+            cliente.getDni(),
+            cliente.getUsuario() != null ? cliente.getUsuario().getIdUsuario() : null,
+            cliente.getCuit(),
+            cliente.getContacto() != null ? cliente.getContacto().getIdContacto() : null
+        );
     }
+    
+
 
     private Cliente toEntity(ClienteDTO dto) {
         Cliente cliente = modelMapper.map(dto, Cliente.class);
 
         // Asignamos manualmente las relaciones
-        if (dto.getIdUsuario() != null) {
-            Usuario usuario = usuarioRepositorio.findById(dto.getIdUsuario()).orElse(null);
+        if (dto.idUsuario() != null) {
+            Usuario usuario = usuarioRepositorio.findById(dto.idUsuario()).orElse(null);
             cliente.setUsuario(usuario);
         }
 
-        if (dto.getIdContacto() != null) {
-            Contacto contacto = contactoRepositorio.findById(dto.getIdContacto()).orElse(null);
+        if (dto.idContacto() != null) {
+            Contacto contacto = contactoRepositorio.findById(dto.idContacto()).orElse(null);
             cliente.setContacto(contacto);
         }
 

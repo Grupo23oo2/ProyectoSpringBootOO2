@@ -28,11 +28,11 @@ public class ContactoServicio implements IContactoServicio {
     @Override
     public ContactoDTO agregarContacto(ContactoDTO dto) {
     	try {
-        if (!clienteRepositorio.existsById(dto.getIdContacto())) {
-            throw new MiExcepcionPersonalizada("No existe un cliente con ID " + dto.getIdContacto());
+        if (!clienteRepositorio.existsById(dto.idContacto())) {
+            throw new MiExcepcionPersonalizada("No existe un cliente con ID " + dto.idContacto());
         }
 
-        if (contactoRepositorio.existsById(dto.getIdContacto())) {
+        if (contactoRepositorio.existsById(dto.idContacto())) {
             throw new MiExcepcionPersonalizada("Ya existe un contacto con ese ID");
         }
 
@@ -75,7 +75,15 @@ public class ContactoServicio implements IContactoServicio {
             }
 
             Contacto existente = contactoRepositorio.findByEmail(email).get();
-            dto.setIdContacto(existente.getIdContacto()); // mantener ID original
+            
+            //dto.idContacto(existente.getIdContacto());//mantener ID original
+            dto = new ContactoDTO(
+            	    existente.getIdContacto(),//mantener el ID original
+            	    dto.direccion(),
+            	    dto.email(),
+            	    dto.telefono()
+            	);
+            
             Contacto contacto = modelMapper.map(dto, Contacto.class);
             contacto = contactoRepositorio.save(contacto);
             return modelMapper.map(contacto, ContactoDTO.class);

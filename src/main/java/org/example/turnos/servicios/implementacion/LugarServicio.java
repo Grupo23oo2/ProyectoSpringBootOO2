@@ -24,8 +24,8 @@ public class LugarServicio implements ILugarServicio {
 
     @Override
     public LugarDTO agregarLugar(LugarDTO dto) {
-        if (lugarRepositorio.existsByDireccion(dto.getDireccion())) {
-            throw new DireccionLugarDuplicadaException("Ya existe un lugar con la dirección: " + dto.getDireccion());
+        if (lugarRepositorio.existsByDireccion(dto.direccion())) {
+            throw new DireccionLugarDuplicadaException("Ya existe un lugar con la dirección: " + dto.direccion());
         }
 
         try {
@@ -68,7 +68,7 @@ public class LugarServicio implements ILugarServicio {
             Lugar lugarExistente = lugarRepositorio.findByDireccion(direccion)
                     .orElseThrow(() -> new MiExcepcionPersonalizada("Lugar no encontrado con dirección: " + direccion));
 
-            lugarExistente.setDireccion(dto.getDireccion());
+            lugarExistente.setDireccion(dto.direccion());
 
             Lugar actualizado = lugarRepositorio.save(lugarExistente);
             return modelMapper.map(actualizado, LugarDTO.class);

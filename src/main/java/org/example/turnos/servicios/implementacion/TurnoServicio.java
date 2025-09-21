@@ -51,29 +51,29 @@ public class TurnoServicio implements ITurnoServicio {
 	public TurnoDTO agregarTurno(TurnoDTO dto) {
 	    try {
 	        Turno turno = new Turno();
-	        turno.setPresencial(dto.isPresencial());
-	        turno.setFechaHoraInicio(dto.getFechaHoraInicio());
-	        turno.setDuracionMinutos(dto.getDuracionMinutos());
+	        turno.setPresencial(dto.presencial());
+	        turno.setFechaHoraInicio(dto.fechaHoraInicio());
+	        turno.setDuracionMinutos(dto.duracionMinutos());
 
 	        // Buscar cliente por CUIT
-	        Cliente cliente = clienteRepositorio.findByCuit(dto.getCuitCliente())
-	            .orElseThrow(() -> new MiExcepcionPersonalizada("Cliente no encontrado con CUIT: " + dto.getCuitCliente()));
+	        Cliente cliente = clienteRepositorio.findByCuit(dto.cuitCliente())
+	            .orElseThrow(() -> new MiExcepcionPersonalizada("Cliente no encontrado con CUIT: " + dto.cuitCliente()));
 	        turno.setCliente(cliente);
 
 	        // Buscar empleado por DNI
-	        Empleado empleado = empleadoRepositorio.findByDni(dto.getDniEmpleado())
-	            .orElseThrow(() -> new MiExcepcionPersonalizada("Empleado no encontrado con DNI: " + dto.getDniEmpleado()));
+	        Empleado empleado = empleadoRepositorio.findByDni(dto.dniEmpleado())
+	            .orElseThrow(() -> new MiExcepcionPersonalizada("Empleado no encontrado con DNI: " + dto.dniEmpleado()));
 	        turno.setEmpleado(empleado);
 
 	        // Buscar lugar por dirección
-	        Lugar lugar = lugarRepositorio.findByDireccion(dto.getDireccionLugar())
-	            .orElseThrow(() -> new MiExcepcionPersonalizada("Lugar no encontrado con dirección: " + dto.getDireccionLugar()));
+	        Lugar lugar = lugarRepositorio.findByDireccion(dto.direccionLugar())
+	            .orElseThrow(() -> new MiExcepcionPersonalizada("Lugar no encontrado con dirección: " + dto.direccionLugar()));
 	        turno.setLugarTurno(lugar);
 
 	        // Buscar servicio por descripción (opcional)
-	        if (dto.getDescripcionServicio() != null && !dto.getDescripcionServicio().isBlank()) {
-	            Servicio servicio = servicioRepositorio.findByDescripcion(dto.getDescripcionServicio())
-	                .orElseThrow(() -> new MiExcepcionPersonalizada("Servicio no encontrado con descripción: " + dto.getDescripcionServicio()));
+	        if (dto.descripcionServicio() != null && !dto.descripcionServicio().isBlank()) {
+	            Servicio servicio = servicioRepositorio.findByDescripcion(dto.descripcionServicio())
+	                .orElseThrow(() -> new MiExcepcionPersonalizada("Servicio no encontrado con descripción: " + dto.descripcionServicio()));
 	            turno.setServicio(servicio);
 	        } else {
 	            turno.setServicio(null);
@@ -118,32 +118,32 @@ public class TurnoServicio implements ITurnoServicio {
 	            .orElseThrow(() -> new MiExcepcionPersonalizada("Turno no encontrado con id: " + id));
 	        
 	        // Actualizar campo presencial
-	        turno.setPresencial(dto.isPresencial());
+	        turno.setPresencial(dto.presencial());
 
 	        // Actualizar fecha y hora inicio
-	        turno.setFechaHoraInicio(dto.getFechaHoraInicio());
+	        turno.setFechaHoraInicio(dto.fechaHoraInicio());
 
 	        // Actualizar duración (suponiendo que Turno tenga un campo duración en minutos)
-	        turno.setDuracionMinutos(dto.getDuracionMinutos());
+	        turno.setDuracionMinutos(dto.duracionMinutos());
 
 	        // Buscar y setear Lugar por dirección
-	        Lugar lugar = lugarRepositorio.findByDireccion(dto.getDireccionLugar())
-	            .orElseThrow(() -> new MiExcepcionPersonalizada("Lugar no encontrado con dirección: " + dto.getDireccionLugar()));
+	        Lugar lugar = lugarRepositorio.findByDireccion(dto.direccionLugar())
+	            .orElseThrow(() -> new MiExcepcionPersonalizada("Lugar no encontrado con dirección: " + dto.direccionLugar()));
 	        turno.setLugarTurno(lugar);
 
 	        // Buscar y setear Empleado por DNI
-	        Empleado empleado = empleadoRepositorio.findByDni(dto.getDniEmpleado())
-	            .orElseThrow(() -> new MiExcepcionPersonalizada("Empleado no encontrado con DNI: " + dto.getDniEmpleado()));
+	        Empleado empleado = empleadoRepositorio.findByDni(dto.dniEmpleado())
+	            .orElseThrow(() -> new MiExcepcionPersonalizada("Empleado no encontrado con DNI: " + dto.dniEmpleado()));
 	        turno.setEmpleado(empleado);
 
 	        // Buscar y setear Cliente por CUIT
-	        Cliente cliente = clienteRepositorio.findByCuit(dto.getCuitCliente())
-	            .orElseThrow(() -> new MiExcepcionPersonalizada("Cliente no encontrado con CUIT: " + dto.getCuitCliente()));
+	        Cliente cliente = clienteRepositorio.findByCuit(dto.cuitCliente())
+	            .orElseThrow(() -> new MiExcepcionPersonalizada("Cliente no encontrado con CUIT: " + dto.cuitCliente()));
 	        turno.setCliente(cliente);
 
 	        // Buscar y setear Servicio por descripción
-	        Servicio servicio = servicioRepositorio.findByDescripcion(dto.getDescripcionServicio())
-	            .orElseThrow(() -> new MiExcepcionPersonalizada("Servicio no encontrado con descripción: " + dto.getDescripcionServicio()));
+	        Servicio servicio = servicioRepositorio.findByDescripcion(dto.descripcionServicio())
+	            .orElseThrow(() -> new MiExcepcionPersonalizada("Servicio no encontrado con descripción: " + dto.descripcionServicio()));
 	        turno.setServicio(servicio);
 
 	        Turno actualizado = turnoRepositorio.save(turno);
@@ -269,7 +269,29 @@ public class TurnoServicio implements ITurnoServicio {
 	}
 	
 	@Override
-	public List<TurnoDTO> traerTurnosPorApellidoEmpleado(String apellido) {
+	
+	public List<TurnoDTO> traerTurnosPorApellidoEmpleado(String apellido) {//nuevo para RecordClass
+	    try {
+	        List<Turno> turnos = turnoRepositorio.findTurnosByApellidoEmpleado(apellido);
+	        return turnos.stream()
+	            .map(s -> new TurnoDTO(
+	                s.getIdTurno(),
+	                s.isPresencial(),
+	                s.getLugarTurno() != null ? s.getLugarTurno().getDireccion() : null,
+	                s.getEmpleado() != null ? s.getEmpleado().getDni() : null,
+	                s.getCliente() != null ? s.getCliente().getCuit() : null,
+	                s.getFechaHoraInicio(),
+	                s.getServicio() != null ? s.getServicio().getDescripcion() : null,
+	                s.getDuracionMinutos()
+	            ))
+	            .toList();
+	    } catch (Exception e) {
+	        throw new MiExcepcionPersonalizada(
+	            "No se pudo traer los turnos por apellido del empleado: " + e.getMessage()
+	        );
+	    }
+	}
+/*	public List<TurnoDTO> traerTurnosPorApellidoEmpleado(String apellido) {
 	    try {
 	        List<Turno> turnos = turnoRepositorio.findTurnosByApellidoEmpleado(apellido);
 	        return turnos.stream()
@@ -289,7 +311,7 @@ public class TurnoServicio implements ITurnoServicio {
 	    } catch (Exception e) {
 	        throw new MiExcepcionPersonalizada("No se pudo traer los turnos por apellido del empleado: " + e.getMessage());
 	    }
-	}
+	}*/
 	
 	@Override
 	public List<LocalDate> obtenerDiasProximos(int cantidadDias) {

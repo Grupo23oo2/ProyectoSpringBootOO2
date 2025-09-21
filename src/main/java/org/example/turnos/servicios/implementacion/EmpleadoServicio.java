@@ -31,8 +31,8 @@ public class EmpleadoServicio implements IEmpleadoServicio {
 
     @Override
     public EmpleadoDTO agregarEmpleado(EmpleadoDTO dto) {
-        if (empleadoRepositorio.existsByDni(dto.getDni())) {
-            throw new DniEmpleadoDuplicadoException("Ya existe un empleado con el DNI: " + dto.getDni());
+        if (empleadoRepositorio.existsByDni(dto.dni())) {
+            throw new DniEmpleadoDuplicadoException("Ya existe un empleado con el DNI: " + dto.dni());
         }
 
         try {
@@ -75,13 +75,13 @@ public class EmpleadoServicio implements IEmpleadoServicio {
         Empleado existente = empleadoRepositorio.findByDni(dniOriginal)
                 .orElseThrow(() -> new MiExcepcionPersonalizada("Empleado no encontrado con DNI: " + dniOriginal));
 
-        existente.setNombre(dto.getNombre());
-        existente.setApellido(dto.getApellido());
-        existente.setDni(dto.getDni());
-        existente.setFechaInicio(dto.getFechaInicio());
+        existente.setNombre(dto.nombre());
+        existente.setApellido(dto.apellido());
+        existente.setDni(dto.dni());
+        existente.setFechaInicio(dto.fechaInicio());
 
-        if (dto.getIdUsuario() != null) {
-            Usuario usuario = usuarioRepositorio.findById(dto.getIdUsuario()).orElse(null);
+        if (dto.idUsuario() != null) {
+            Usuario usuario = usuarioRepositorio.findById(dto.idUsuario()).orElse(null);
             existente.setUsuario(usuario);
         } else {
             existente.setUsuario(null);
@@ -113,20 +113,33 @@ public class EmpleadoServicio implements IEmpleadoServicio {
         }
     }
 
-    private EmpleadoDTO toDTO(Empleado empleado) {
+    /*private EmpleadoDTO toDTO(Empleado empleado) {
         EmpleadoDTO dto = modelMapper.map(empleado, EmpleadoDTO.class);
 
         // Asignamos manualmente el idUsuario
-        dto.setIdUsuario(empleado.getUsuario() != null ? empleado.getUsuario().getIdUsuario() : null);
+        dto.idUsuario(empleado.getUsuario() != null ? empleado.getUsuario().getIdUsuario() : null);
 
         return dto;
-    }
+    }*/
+    
+    //MODIFICADO PARA RECORD
 
+    private EmpleadoDTO toDTO(Empleado empleado) {
+        return new EmpleadoDTO(
+            empleado.getIdPersona(),
+            empleado.getNombre(),
+            empleado.getApellido(),
+            empleado.getDni(),
+            empleado.getUsuario() != null ? empleado.getUsuario().getIdUsuario() : null,
+            empleado.getFechaInicio()
+        );
+    }
+    
     private Empleado toEntity(EmpleadoDTO dto) {
         Empleado empleado = modelMapper.map(dto, Empleado.class);
 
-        if (dto.getIdUsuario() != null) {
-            Usuario usuario = usuarioRepositorio.findById(dto.getIdUsuario()).orElse(null);
+        if (dto.idUsuario() != null) {
+            Usuario usuario = usuarioRepositorio.findById(dto.idUsuario()).orElse(null);
             empleado.setUsuario(usuario);
         }
 

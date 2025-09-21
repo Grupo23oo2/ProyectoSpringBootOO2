@@ -94,7 +94,7 @@ public class ClienteWebControlador {
             model.addAttribute("clienteEditar", cliente);
 
             // Obtener contacto por idPersona o dni
-            ContactoDTO contacto = contactoServicio.traerContacto(cliente.getDni());
+            ContactoDTO contacto = contactoServicio.traerContacto(cliente.dni());
             model.addAttribute("contactoEditar", contacto); // <- nuevo atributo
         } else {
             model.addAttribute("mensaje", "Cliente no encontrado con DNI: " + dni);

@@ -24,7 +24,16 @@ public class ContactoWebControlador {
  // Formulario inicial para gestionar contactos
     @GetMapping("/formulario")
     public String mostrarFormularioContacto(Model model) {
-        model.addAttribute("contacto", new ContactoDTO()); // Por si querés usarlo en algún form
+    	
+      //  model.addAttribute("contacto", new ContactoDTO()); // Por si querés usarlo en algún form
+    	
+    	model.addAttribute("contacto", new ContactoDTO(
+    		    null,   // idContacto
+    		    null,   // direccion
+    		    null,   // email
+    		    null    // telefono
+    		));
+    	
         return "buscar-contacto";
     }
 

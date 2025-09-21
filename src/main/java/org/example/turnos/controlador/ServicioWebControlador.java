@@ -24,7 +24,12 @@ public class ServicioWebControlador {
     // Mostrar formulario 
     @GetMapping("/formulario")
     public String mostrarFormulario(Model model) {
-        model.addAttribute("servicioDTO", new ServicioDTO());
+        model.addAttribute("servicioDTO", new ServicioDTO(
+            null,    // idServicio
+            null,    // descripcion
+            null,    // duracion
+            true     // activo (valor por defecto)
+        ));
         return "buscar-servicio";  
     }
 
