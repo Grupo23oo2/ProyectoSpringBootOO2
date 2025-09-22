@@ -75,7 +75,7 @@ public class RegistroWebControlador {
     		);
 
     		EmpleadoDTO nuevoEmpleado = empleadoServicio.agregarEmpleado(empleadoDTO);
-    	
+
 /*        EmpleadoDTO empleadoDTO = new EmpleadoDTO();
         empleadoDTO.setNombre(nombre);
         empleadoDTO.setApellido(apellido);
@@ -84,7 +84,7 @@ public class RegistroWebControlador {
 
         EmpleadoDTO nuevoEmpleado = empleadoServicio.agregarEmpleado(empleadoDTO);
 */
-        // 2. Crear y guardar el usuario si el empleado se creó bien
+       // 2. Crear y guardar el usuario si el empleado se creó bien
         if (nuevoEmpleado != null && nuevoEmpleado.idPersona()!= null) {
         	
           /*  UsuarioDTO usuarioDTO = new UsuarioDTO();
