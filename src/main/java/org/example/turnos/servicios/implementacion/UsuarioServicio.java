@@ -99,7 +99,7 @@ public class UsuarioServicio implements IUsuarioServicio {
         }
     }
 
-    @Override
+  /*  @Override
 
     public UsuarioDTO traerUsuarioPorEmail(String email) {
         try {
@@ -109,6 +109,29 @@ public class UsuarioServicio implements IUsuarioServicio {
         } catch (Exception e) {
             throw new MiExcepcionPersonalizada("No se pudo traer el usuario: " + e.getMessage());
 
+        }
+    }*/
+    
+    @Override
+    public UsuarioDTO traerUsuarioPorEmail(String email) {//modificado para record. no se puede usar modelmapper porque no se puede setear, es inmutable
+        try {
+            Usuario usuario = usuarioRepositorio.findByEmail(email)
+                    .orElseThrow(() -> new MiExcepcionPersonalizada("Usuario no encontrado con email: " + email));
+
+            Long idPersona = usuario.getPersona() != null ? usuario.getPersona().getIdPersona() : null;
+
+            return new UsuarioDTO(
+                usuario.getIdUsuario(),
+                usuario.getNombreUsuario(),
+                usuario.getContraseniaUsuario(),
+                usuario.isEstado(),
+                idPersona,
+                usuario.getEmail(),
+                usuario.getRol(),
+                usuario.getFechaCreacion()
+            );
+        } catch (Exception e) {
+            throw new MiExcepcionPersonalizada("No se pudo traer el usuario: " + e.getMessage());
         }
     }
 
@@ -148,35 +171,21 @@ public class UsuarioServicio implements IUsuarioServicio {
         }
     }
 
-    private UsuarioDTO toDTO(Usuario usuario) {
-        UsuarioDTO dto = modelMapper.map(usuario, UsuarioDTO.class);
+    private UsuarioDTO toDTO(Usuario usuario) {//modificado para record
+        // Obtenemos el idPersona si existe
+        Long idPersona = usuario.getPersona() != null ? usuario.getPersona().getIdPersona() : null;
 
-        if (usuario.getPersona() != null) {
-          //  dto.idPersona(usuario.getPersona().getIdPersona()); pasa lo mismo que en la linea 48            
-            dto = new UsuarioDTO(
-                    dto.idUsuario(),
-                    dto.nombreUsuario(),
-                    dto.contraseniaUsuario(),
-                    dto.estado(),
-                    dto.idPersona(),//idPersona actualizado linea 155
-                    dto.email(),
-                    dto.rol(),
-                    dto.fechaCreacion()
-                );
-        }
-        //dto.rol(usuario.getRol());      
-        dto = new UsuarioDTO(
-        	    dto.idUsuario(),
-        	    dto.nombreUsuario(),
-        	    dto.contraseniaUsuario(),
-        	    dto.estado(),
-        	    dto.idPersona(),
-        	    dto.email(),
-        	    usuario.getRol(),//rol actualizado linea 167
-        	    dto.fechaCreacion()
-        	);
-        
-        return dto;
+        // Construimos directamente el record
+        return new UsuarioDTO(
+            usuario.getIdUsuario(),
+            usuario.getNombreUsuario(),
+            usuario.getContraseniaUsuario(),
+            usuario.isEstado(),
+            idPersona,
+            usuario.getEmail(),
+            usuario.getRol(),
+            usuario.getFechaCreacion()
+        );
     }
 
     /**
