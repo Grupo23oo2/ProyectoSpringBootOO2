@@ -41,7 +41,7 @@ public class LoginRestController {
             return ResponseEntity.status(403).body("Usuario inactivo");
         }
 
-        // Login exitoso: devolvemos un OK con info básica (podés agregar JWT aquí si querés)
+        // Login exitoso: devolvemos un OK con info básica
         return ResponseEntity.ok(
                 String.format("Login exitoso! Usuario: %s, Rol: %s", 
                               usuarioDTO.nombreUsuario(), 
