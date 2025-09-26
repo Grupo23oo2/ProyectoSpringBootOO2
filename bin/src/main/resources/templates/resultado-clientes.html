@@ -11,7 +11,8 @@
     <hr/>
 
     <!-- Mensaje informativo -->
-    <p class="mensaje" th:if="${mensaje}" th:text="${mensaje}"></p>
+	<p class="mensaje" th:if="${mensaje}" th:text="${mensaje}"></p>
+	<p class="error" th:if="${error}" th:text="${error}"></p>
 
     <!-- Cliente individual -->
     <section th:if="${cliente != null}">
@@ -21,10 +22,6 @@
         <p><strong>Apellido:</strong> <span th:text="${cliente.apellido}"></span></p>
         <p><strong>DNI:</strong> <span th:text="${cliente.dni}"></span></p>
         <p><strong>CUIT:</strong> <span th:text="${cliente.cuit}"></span></p>
-        <p><strong>ID Usuario:</strong> 
-            <span th:if="${cliente.idUsuario != null}" th:text="${cliente.idUsuario}"></span>
-            <span th:unless="${cliente.idUsuario != null}">Sin usuario</span>
-        </p>
     </section>
 
     <!-- Lista de clientes -->
@@ -38,8 +35,7 @@
                     <th>Apellido</th>
                     <th>DNI</th>
                     <th>CUIT</th>
-                    <th>Usuario</th>
-                    <th>Ver</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -49,21 +45,51 @@
                     <td th:text="${cli.apellido}"></td>
                     <td th:text="${cli.dni}"></td>
                     <td th:text="${cli.cuit}"></td>
-                    <td>
-                        <span th:if="${cli.idUsuario != null}" th:text="${cli.idUsuario}"></span>
-                        <span th:unless="${cli.idUsuario != null}">Sin usuario</span>
-                    </td>
-                    <td>
-                        <a th:href="@{/clientes/buscar-por-id(id=${cli.idPersona})}">Ver detalle</a>
-                    </td>
+
+					<td>
+						<div style="display: flex; align-items: center; gap: 10px;">
+					       	<a th:href="@{'/clientes/editar/' + ${cli.dni}}" title="Editar">
+					            <img th:src="@{/icons/pencil.svg}" alt="Editar" width="20" height="20" />
+					        </a>
+	
+					        <form th:action="@{/clientes/eliminar}" method="post">
+								<input type="hidden" name="dni" th:value="${cli.dni}" />
+							    <button type="submit" title="Eliminar" style="background: none; border: none; padding: 0; cursor: pointer;">
+							        <img th:src="@{/icons/trash.svg}" alt="Eliminar" width="20" height="20" />
+							    </button>
+					        </form>
+					    </div>
+			        </td>
+
                 </tr>
             </tbody>
         </table>
     </section>
+	
+	<section th:if="${clienteEditar != null}">
+	    <form th:action="@{/clientes/modificar}" method="post">
+			<h2>Modificar Cliente</h2>
+	        <input type="hidden" name="dniOriginal" th:value="${clienteEditar.dni}" />
 
-    <!-- Botón volver -->
-    <div style="margin-top: 30px; text-align: center;">
-        <button onclick="window.history.back()" class="btn-volver">← Volver</button>
+	        <label for="nombreMod">Nombre:</label>
+	        <input type="text" id="nombreMod" name="nombre" th:value="${clienteEditar.nombre}" />
+
+	        <label for="apellidoMod">Apellido:</label>
+	        <input type="text" id="apellidoMod" name="apellido" th:value="${clienteEditar.apellido}" />
+
+	        <label for="dniMod">DNI:</label>
+	        <input type="text" id="dniMod" name="dni" th:value="${clienteEditar.dni}" />
+
+	        <label for="cuitMod">CUIT:</label>
+	        <input type="text" id="cuitMod" name="cuit" th:value="${clienteEditar.cuit}" />
+
+	        <button type="submit">Modificar</button>
+	    </form>
+	</section>
+
+
+	<div style="text-align: center; margin-top: 20px;">
+        <a href="/" class="btn">← Volver</a>
     </div>
 
 </body>

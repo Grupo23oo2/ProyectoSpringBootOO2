@@ -10,6 +10,9 @@
     <h1>Resultado de la operación sobre Lugar</h1>
     <hr/>
 
+	<!-- Mensaje de éxito -->
+	<p class="mensaje" th:if="${mensaje}" th:text="${mensaje}"></p>
+	
     <!-- Mostrar un solo lugar -->
     <section th:if="${lugar != null}">
         <h2>Lugar Encontrado</h2>
@@ -17,9 +20,8 @@
         <p><strong>Dirección:</strong> <span th:text="${lugar.direccion}"></span></p>
     </section>
 
-    <div style="margin-top: 30px; text-align: center;">
-        <button onclick="window.history.back()" class="btn-volver">← Volver</button>
+	<div style="text-align: center; margin-top: 20px;">
+        <a href="/" class="btn">← Volver</a>
     </div>
-
 </body>
 </html>

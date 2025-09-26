@@ -31,19 +31,40 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
+
+            // Configuración de rutas
             .authorizeHttpRequests(auth -> auth
-                // Rutas públicas para HTML
+
+                // Swagger público
+                .requestMatchers(
+                        "/swagger-ui/**",
+                        "/swagger-ui.html",
+                        "/v3/api-docs/**",
+                        "/swagger-resources/**",
+                        "/webjars/**"
+                ).permitAll()
+
+                // Rutas públicas (HTML y auth)
                 .requestMatchers(
                         "/login",
                         "/css/**",
                         "/registro/**",
-                        "/swagger-ui/**",
-                        "/v3/api-docs/**",
-                        "/swagger-resources/**",
-                        "/swagger-ui.html"
+                        "/api/auth/**",
+                        "/api/empleados/alta-completa"
                 ).permitAll()
+
+                // Rutas API protegidas por rol
+                .requestMatchers("/api/empleados/**").hasRole("EMPLEADO")
+                .requestMatchers("/api/clientes/**").hasAnyRole("EMPLEADO", "ADMIN", "CLIENTE")
+                .requestMatchers("/api/contactos/**").hasAnyRole("EMPLEADO", "ADMIN")
+                .requestMatchers("/api/email/**").hasAnyRole("EMPLEADO", "ADMIN")
+                .requestMatchers("/api/lugares/**").hasAnyRole("EMPLEADO", "ADMIN")
+                .requestMatchers("/api/servicios/**").hasAnyRole("EMPLEADO", "ADMIN")
+                .requestMatchers("/api/usuarios/**").hasAnyRole("EMPLEADO", "ADMIN")
+                .requestMatchers("/api/turnos/**").hasAnyRole("EMPLEADO", "ADMIN", "CLIENTE")
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 
-                // Rutas HTML protegidas
+             // Rutas HTML protegidas
                 .requestMatchers("/clientes/**").hasAnyRole("EMPLEADO", "ADMIN")
                 .requestMatchers("/contactos/**").hasAnyRole("EMPLEADO", "ADMIN")
                 .requestMatchers("/email/**").hasAnyRole("EMPLEADO", "ADMIN")
@@ -53,22 +74,14 @@ public class SecurityConfig {
                 .requestMatchers("/usuarios/**").hasAnyRole("EMPLEADO", "ADMIN")
                 .requestMatchers("/turnos/**").hasAnyRole("EMPLEADO", "ADMIN", "CLIENTE")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
-
-                // Rutas API públicas
-                .requestMatchers(
-                        "/api/auth/**",
-                        "/api/empleados/alta-completa"
-                ).permitAll()
-
-                // Rutas API protegidas
-                .requestMatchers("/api/empleados/**").hasRole("EMPLEADO")
-                .requestMatchers("/api/clientes/**").hasAnyRole("EMPLEADO", "ADMIN", "CLIENTE")
-
-                // Todo lo demás requiere autenticación
+                
+                
+                // Todo lo demás requiere autenticación HTML normal
                 .anyRequest().authenticated()
+                
             )
 
-            // HTML login
+            // Login HTML (vistas)
             .formLogin(form -> form
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
@@ -77,11 +90,11 @@ public class SecurityConfig {
                 .permitAll()
             )
 
-            // API login básico
-            .httpBasic(httpBasic -> httpBasic
-                .realmName("API REST")
-            )
+            // HTTP Basic solo para API (/api/**)
+            .securityMatcher("/api/**") // Aplica httpBasic solo a /api
+            .httpBasic(httpBasic -> httpBasic.realmName("API REST"))
 
+            // Logout
             .logout(logout -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout=true")
