@@ -100,7 +100,6 @@ public class UsuarioServicio implements IUsuarioServicio {
     }
 
     @Override
-
     public UsuarioDTO traerUsuarioPorEmail(String email) {
         try {
             Usuario usuario = usuarioRepositorio.findByEmail(email)
@@ -110,6 +109,12 @@ public class UsuarioServicio implements IUsuarioServicio {
             throw new MiExcepcionPersonalizada("No se pudo traer el usuario: " + e.getMessage());
 
         }
+    }
+    
+    @Override
+    public Optional<UsuarioDTO> traerUsuarioPorNombreUsuario(String nombreUsuario) {
+        return usuarioRepositorio.findByNombreUsuario(nombreUsuario)
+                .map(this::toDTO); // mapeamos a DTO directamente
     }
 
     @Override
@@ -147,8 +152,8 @@ public class UsuarioServicio implements IUsuarioServicio {
             throw new MiExcepcionPersonalizada("No se pudo eliminar el usuario: " + e.getMessage());
         }
     }
-
-    private UsuarioDTO toDTO(Usuario usuario) {
+/*
+    public UsuarioDTO toDTO(Usuario usuario) {
         UsuarioDTO dto = modelMapper.map(usuario, UsuarioDTO.class);
 
         if (usuario.getPersona() != null) {
@@ -177,7 +182,28 @@ public class UsuarioServicio implements IUsuarioServicio {
         	);
         
         return dto;
+    }*/
+    
+    
+    
+    
+    public UsuarioDTO toDTO(Usuario usuario) {
+        return new UsuarioDTO(
+            usuario.getIdUsuario(),
+            usuario.getNombreUsuario(),
+            usuario.getContraseniaUsuario(),
+            usuario.isEstado(),
+            usuario.getPersona() != null ? usuario.getPersona().getIdPersona() : null,
+            usuario.getEmail(),
+            usuario.getRol(), // si lo guardás como String ("ROLE_EMPLEADO", etc.)
+            usuario.getFechaCreacion()
+        );
     }
+    
+    
+    
+    
+    
 
     /**
      * Mapeo manual de DTO a entidad para evitar problemas con Persona abstracta
