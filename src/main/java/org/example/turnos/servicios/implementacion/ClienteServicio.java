@@ -14,6 +14,7 @@ import org.example.turnos.modelo.Contacto;
 import org.example.turnos.modelo.Usuario;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.example.turnos.repositorios.IClienteRepositorio;
@@ -39,6 +40,9 @@ public class ClienteServicio implements IClienteServicio {
 
     @Autowired
     private ModelMapper modelMapper;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // -------------------------------
     // MÉTODOS PARA HTML
@@ -219,6 +223,7 @@ public class ClienteServicio implements IClienteServicio {
     // MÉTODOS API JSON
     // -------------------------------
 
+    @Transactional
     public ClienteDTO agregarClienteAPI(ClienteCreateDTO dto) {
         try {
             if (clienteRepositorio.existsByDni(dto.dni())) {
@@ -228,42 +233,41 @@ public class ClienteServicio implements IClienteServicio {
                 throw new MiExcepcionPersonalizada("Ya existe un cliente con CUIT: " + dto.cuit());
             }
 
-            //Creamos primero el Cliente sin relaciones
+            // Crear Cliente
             Cliente cliente = new Cliente();
             cliente.setNombre(dto.nombre());
             cliente.setApellido(dto.apellido());
             cliente.setDni(dto.dni());
             cliente.setCuit(dto.cuit());
 
-            //Guardamos el cliente primero para que genere idPersona
-            Cliente guardadoCliente = clienteRepositorio.save(cliente);
-
-            //Creamos el Contacto y asignamos el mismo id que Cliente
+            // Crear Contacto
             if (dto.contacto() != null) {
                 Contacto contacto = new Contacto();
-                contacto.setIdContacto(guardadoCliente.getIdPersona());
                 contacto.setDireccion(dto.contacto().direccion());
                 contacto.setEmail(dto.contacto().email());
                 contacto.setTelefono(dto.contacto().telefono());
-                guardadoCliente.setContacto(contacto);
+                // relación
+                contacto.setCliente(cliente);
+                cliente.setContacto(contacto);
             }
 
-            //Creamos el Usuario y asignamos la relación
+            // Crear Usuario
             if (dto.usuario() != null) {
                 Usuario usuario = new Usuario();
                 usuario.setEmail(dto.usuario().email());
                 usuario.setNombreUsuario(dto.usuario().nombreUsuario());
-                usuario.setContraseniaUsuario(dto.usuario().contraseniaUsuario());
+                usuario.setContraseniaUsuario(passwordEncoder.encode(dto.usuario().contraseniaUsuario()));
                 usuario.setRol(dto.usuario().rol());
                 usuario.setEstado(true);
-                usuario.setPersona(guardadoCliente);
-                guardadoCliente.setUsuario(usuario);
+                // relación
+                usuario.setPersona(cliente);
+                cliente.setUsuario(usuario);
             }
 
-            //Guardamos nuevamente el cliente con contacto y usuario
-            guardadoCliente = clienteRepositorio.save(guardadoCliente);
+            // Guardar de una sola vez (gracias a CascadeType.ALL)
+            Cliente guardado = clienteRepositorio.save(cliente);
 
-            return toDTO(guardadoCliente);
+            return toDTO(guardado);
 
         } catch (Exception e) {
             throw new MiExcepcionPersonalizada("No se pudo crear el cliente: " + e.getMessage());

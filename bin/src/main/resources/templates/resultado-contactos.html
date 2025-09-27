@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Resultado Contactos</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
+</head>
+<body>
+    <h1>Resultado de Búsqueda</h1>
+    <hr/>
+	
+	<section th:if="${contactos != null and !contactos.isEmpty()}">
+		<h2>Contactos Encontrados</h2>
+	    <table>
+	        <thead>
+	            <tr>
+	                <th>ID</th>
+	                <th>Dirección</th>
+	                <th>Email</th>
+	                <th>Teléfono</th>
+					<th>Acciones</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr th:each="contacto : ${contactos}">
+	                <td th:text="${contacto.idContacto}">ID</td>
+	                <td th:text="${contacto.direccion}">Dirección</td>
+	                <td th:text="${contacto.email}">Email</td>
+	                <td th:text="${contacto.telefono}">Teléfono</td>
+					<td>
+		            	<div style="display: flex; align-items: center; gap: 10px;">
+		                    <a th:href="@{'/contactos/editar/' + ${contacto.email}}" title="Editar">
+		                        <img th:src="@{/icons/pencil.svg}" alt="Editar" width="20" height="20" />
+		                    </a>
+	
+		                    <!--<form th:action="@{/contactos/eliminar}" method="post">
+		                        <input type="hidden" name="email" th:value="${contacto.email}" />
+		                        <button type="submit" title="Eliminar" style="background: none; border: none; padding: 0; cursor: pointer;">
+		                            <img th:src="@{/icons/trash.svg}" alt="Eliminar" width="20" height="20" />
+		                        </button>
+		                    </form>-->
+		                </div>
+		            </td>
+	            </tr>
+	        </tbody>
+	    </table>
+	</section>
+	
+	<section th:if="${contactoEditar != null}">
+	    <h2>Modificar Contacto</h2>
+	    <form th:action="@{/contactos/modificar}" method="post">
+	        <input type="hidden" name="email" th:value="${contactoEditar.email}" />
+
+	        <label for="direccionMod">Dirección:</label>
+	        <input type="text" id="direccionMod" name="direccion" th:value="${contactoEditar.direccion}" required />
+
+	        <label for="telefonoMod">Teléfono:</label>
+	        <input type="text" id="telefonoMod" name="telefono" th:value="${contactoEditar.telefono}" required />
+
+	        <button type="submit">Modificar</button>
+	    </form>
+	</section>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/" class="btn">← Volver</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Registro Cliente</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}">
+</head>
+<body>
+    <h1>Registro de Cliente</h1>
+
+    <section>
+        <div th:if="${mensaje}" style="color: green; text-align: center; margin-bottom: 20px;">
+            <p th:text="${mensaje}"></p>
+        </div>
+
+        <form th:action="@{/registro/alta-cliente-usuario}" method="post">
+
+            <h2>Datos del Cliente</h2>
+            <label for="nombre">Nombre:</label>
+            <input id="nombre" type="text" name="nombre" required />
+
+            <label for="apellido">Apellido:</label>
+            <input id="apellido" type="text" name="apellido" required />
+
+            <label for="dni">DNI:</label>
+            <input id="dni" type="text" name="dni" required />
+
+            <label for="cuit">CUIT:</label>
+            <input id="cuit" type="text" name="cuit" required />
+
+            <h2>Datos de Contacto</h2>
+            <label for="telefono">Teléfono:</label>
+            <input id="telefono" type="text" name="telefono" required />
+
+            <label for="emailContacto">Email:</label>
+            <input id="emailContacto" type="email" name="emailContacto" required />
+
+            <label for="direccion">Dirección:</label>
+            <input id="direccion" type="text" name="direccion" required />
+
+            <h2>Datos de Usuario</h2>
+            <label for="nombreUsuario">Usuario:</label>
+            <input id="nombreUsuario" type="text" name="nombreUsuario" required />
+
+            <label for="emailUsuario">Email:</label>
+            <input id="emailUsuario" type="email" name="emailUsuario" required />
+
+            <label for="contraseniaUsuario">Contraseña:</label>
+            <input id="contraseniaUsuario" type="password" name="contraseniaUsuario" required />
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button type="submit">Registrar Cliente</button>
+            </div>
+        </form>
+    </section>
+	
+	<div style="text-align: center; margin-top: 20px;">
+        <a href="/login" class="btn">← Volver al Login</a>
+    </div>
+</body>
+</html>

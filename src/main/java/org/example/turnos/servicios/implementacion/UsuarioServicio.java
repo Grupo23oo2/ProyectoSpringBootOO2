@@ -17,6 +17,7 @@ import org.example.turnos.servicios.IEmailServicio;
 import org.example.turnos.servicios.IUsuarioServicio;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,6 +37,9 @@ public class UsuarioServicio implements IUsuarioServicio {
     
     @Autowired
     private IEmailServicio emailServicio;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UsuarioDTO agregarUsuario(UsuarioDTO dto) {
@@ -140,7 +144,7 @@ public class UsuarioServicio implements IUsuarioServicio {
             }
 
             usuarioExistente.setNombreUsuario(dto.nombreUsuario());
-            usuarioExistente.setContraseniaUsuario(dto.contraseniaUsuario());
+            usuarioExistente.setContraseniaUsuario(passwordEncoder.encode(dto.contraseniaUsuario()));
             usuarioExistente.setEstado(dto.estado());
             usuarioExistente.setEmail(dto.email());
             //usuarioExistente.setRol(dto.rol()); //al modificar NO queremos que pueda modificar el rol del usuario

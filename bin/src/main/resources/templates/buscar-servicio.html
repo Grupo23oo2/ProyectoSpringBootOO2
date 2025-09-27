@@ -28,15 +28,15 @@
 <!-- Agregar Servicio -->
 <section>
     <h2>Agregar Nuevo Servicio</h2>
-    <form th:action="@{/servicios/agregar}" method="post" th:object="${servicioDTO}">
-        <label for="descripcionAgregar">Descripción:</label>
-        <input type="text" id="descripcionAgregar" th:field="*{descripcion}" required />
+	<form th:action="@{/servicios/agregar}" method="post">
+	    <label for="descripcionAgregar">Descripción:</label>
+	    <input type="text" id="descripcionAgregar" name="descripcion" required />
 
-        <label for="duracionAgregar">Duración:</label>
-        <input type="number" id="duracionAgregar" th:field="*{duracion}" required />
+	    <label for="duracionAgregar">Duración:</label>
+	    <input type="number" id="duracionAgregar" name="duracion" required />
 
-        <button type="submit">Agregar</button>
-    </form>
+	    <button type="submit">Agregar</button>
+	</form>
 </section>
 
 <section>
