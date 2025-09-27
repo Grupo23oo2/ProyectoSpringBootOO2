@@ -257,7 +257,7 @@ public class ClienteServicio implements IClienteServicio {
                 usuario.setEmail(dto.usuario().email());
                 usuario.setNombreUsuario(dto.usuario().nombreUsuario());
                 usuario.setContraseniaUsuario(passwordEncoder.encode(dto.usuario().contraseniaUsuario()));
-                usuario.setRol(dto.usuario().rol());
+                usuario.setRol("ROLE_CLIENTE"); //dto.usuario().rol()
                 usuario.setEstado(true);
                 // relación
                 usuario.setPersona(cliente);
@@ -318,7 +318,7 @@ public class ClienteServicio implements IClienteServicio {
                 usuario.setEmail(dto.usuario().email());
                 usuario.setNombreUsuario(dto.usuario().nombreUsuario());
                 usuario.setContraseniaUsuario(dto.usuario().contraseniaUsuario());
-                usuario.setRol(dto.usuario().rol());
+                usuario.setRol("ROLE_CLIENTE");
                 usuario.setEstado(true);
             }
 
@@ -387,7 +387,7 @@ public class ClienteServicio implements IClienteServicio {
             usuario.setEmail(dto.usuario().email());
             usuario.setNombreUsuario(dto.usuario().nombreUsuario());
             usuario.setContraseniaUsuario(dto.usuario().contraseniaUsuario());
-            usuario.setRol(dto.usuario().rol());
+            usuario.setRol("ROLE_CLIENTE");
             usuario.setEstado(true);
             usuario.setPersona(cliente);
             cliente.setUsuario(usuario);
