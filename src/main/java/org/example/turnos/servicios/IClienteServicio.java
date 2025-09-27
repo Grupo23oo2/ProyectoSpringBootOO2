@@ -1,13 +1,15 @@
 package org.example.turnos.servicios;
 
+import org.example.turnos.dtos.ClienteCreateDTO;
 import org.example.turnos.dtos.ClienteDTO;
+import org.example.turnos.dtos.ContactoCreateDTO;
 import org.example.turnos.dtos.ContactoDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IClienteServicio {
-
+	//MÉTODOS HTML
     public ClienteDTO agregarCliente(ClienteDTO dto);
 
     public Optional<ClienteDTO> traerClientePorDni(String dni);
@@ -15,7 +17,6 @@ public interface IClienteServicio {
     public List<ClienteDTO> traerClientes();
     
     public Optional<ClienteDTO> modificarClientePorDni(String dniOriginal, ClienteDTO dto);
-    //public Optional<ClienteDTO> modificarClienteYContactoPorDni(String dniOriginal, ClienteDTO clienteDTO, ContactoDTO contactoDTO);
     
     void eliminarClientePorDni(String dni);
 
@@ -26,4 +27,15 @@ public interface IClienteServicio {
     public ClienteDTO findByCuit(String cuit);
 
     public ContactoDTO buscarContactoPorCuit(String cuit);
+    
+    //MÉTODOS API (nuevos)
+    ClienteDTO agregarClienteAPI(ClienteCreateDTO dto);
+    Optional<ClienteDTO> traerClientePorDniAPI(String dni);
+    List<ClienteDTO> traerClientesAPI();
+    Optional<ClienteDTO> modificarClientePorDniAPI(String dniOriginal, ClienteCreateDTO dto);
+    void eliminarClientePorDniAPI(String dni);
+    List<ClienteDTO> clientesPorRolAPI(String rol);
+    List<ClienteDTO> findAllByCuitAPI(String cuit);
+    ClienteDTO findByCuitAPI(String cuit);
+    ContactoCreateDTO buscarContactoPorCuitAPI(String cuit);
 }
