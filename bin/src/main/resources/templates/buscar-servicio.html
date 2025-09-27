@@ -2,60 +2,53 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Gestión de Servicio</title>
-    <link rel="stylesheet" th:href="@{/css/general.css}">
+    <title>Gestión de Servicios</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
 </head>
 <body>
 
-<h1>Gestión de Servicio</h1>
+<h1>Gestión de Servicios</h1>
+
 <hr/>
 
-<!-- Agregar o Modificar Servicio -->
-<section>
-    <h2 th:text="${servicioDTO.idServicio} != null ? 'Modificar Servicio' : 'Agregar Nuevo Servicio'">Agregar Nuevo Servicio</h2>
-    <form th:action="@{${servicioDTO.idServicio} != null ? '/servicios/modificar?id=' + ${servicioDTO.idServicio} : '/servicios/agregar'}"
-          th:object="${servicioDTO}" method="post">
-
-        <div th:if="${servicioDTO.idServicio} != null">
-            <label for="idServicio">ID Servicio:</label>
-            <input type="text" id="idServicio" th:field="*{idServicio}" readonly />
-        </div>
-
-        <label for="descripcion">Descripción:</label>
-        <input type="text" id="descripcion" th:field="*{descripcion}" required />
-
-        <label for="duracion">Duración (minutos):</label>
-        <input type="number" id="duracion" th:field="*{duracion}" min="1" required />
-
-        <label for="activo">Activo:</label>
-        <input type="checkbox" id="activo" th:field="*{activo}" />
-
-        <button type="submit" th:text="${servicioDTO.idServicio} != null ? 'Modificar' : 'Agregar'">Agregar</button>
-    </form>
-</section>
+<!-- Mensajes -->
+<p class="mensaje" th:if="${mensaje}" th:text="${mensaje}"></p>
+<p class="error" th:if="${error}" th:text="${error}"></p>
 
 <!-- Buscar Servicio -->
 <section>
-    <h2>Buscar Servicio por ID</h2>
-    <form th:action="@{/servicios/buscar-por-id}" method="get">
-        <label for="buscarId">ID Servicio:</label>
-        <input type="number" id="buscarId" name="id" required />
+    <h2>Buscar Servicio por Descripción</h2>
+    <form th:action="@{/servicios/buscar-por-descripcion}" method="get">
+        <label for="descripcionBuscar">Descripción:</label>
+        <input type="text" id="descripcionBuscar" name="descripcion" required />
         <button type="submit">Buscar</button>
     </form>
 </section>
 
-<!-- Eliminar Servicio -->
+<!-- Agregar Servicio -->
 <section>
-    <h2>Eliminar Servicio por ID</h2>
-    <form th:action="@{/servicios/eliminar}" method="post">
-        <label for="eliminarId">ID Servicio:</label>
-        <input type="number" id="eliminarId" name="id" required />
-        <button type="submit">Eliminar</button>
+    <h2>Agregar Nuevo Servicio</h2>
+    <form th:action="@{/servicios/agregar}" method="post" th:object="${servicioDTO}">
+        <label for="descripcionAgregar">Descripción:</label>
+        <input type="text" id="descripcionAgregar" th:field="*{descripcion}" required />
+
+        <label for="duracionAgregar">Duración:</label>
+        <input type="number" id="duracionAgregar" th:field="*{duracion}" required />
+
+        <button type="submit">Agregar</button>
     </form>
 </section>
 
-<div style="max-width: 600px; margin-top: 40px; text-align: center;">
-    <button onclick="window.history.back()" class="btn-volver">← Volver</button>
+<section>
+    <h2>Ver Todos los Servicios</h2>
+    <form th:action="@{/servicios/todos}" method="get">
+        <button type="submit">Mostrar Todos</button>
+    </form>
+</section>
+
+<!-- Volver -->
+<div style="text-align: center; margin-top: 20px;">
+    <a href="/" class="btn">← Volver</a>
 </div>
 
 </body>

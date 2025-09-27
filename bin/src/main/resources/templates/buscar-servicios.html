@@ -1,92 +1,145 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Buscar Servicios</title>
+    <meta charset="UTF-8" />
+    <title>Formulario de Búsqueda de Servicios</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
 </head>
 <body>
+
     <h1>Formulario de Búsqueda de Servicios</h1>
+    <hr/>
 
-    <form action="/servicios/buscar-entre-fechas" method="get">
-        <h3>Búsqueda entre fechas</h3>
-        Desde: <input type="datetime-local" name="desde" required>
-        Hasta: <input type="datetime-local" name="hasta" required>
-        <button type="submit">Buscar</button>
-    </form>
+    <section>
+        <h2>Búsqueda entre fechas</h2>
+        <form action="/servicios/buscar-entre-fechas" method="get">
+            <label>Desde:</label>
+            <input type="datetime-local" name="desde" required>
+            <label>Hasta:</label>
+            <input type="datetime-local" name="hasta" required>
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
 
-    <form action="/servicios/buscar-por-cliente" method="get">
-        <h3>Por Cliente</h3>
-        ID Cliente: <input type="number" name="id" required>
-        Desde: <input type="datetime-local" name="desde" required>
-        Hasta: <input type="datetime-local" name="hasta" required>
-        <button type="submit">Buscar</button>
-    </form>
+    <section>
+        <h2>Por Cliente</h2>
+        <form action="/servicios/buscar-por-cliente" method="get">
+            <label>ID Cliente:</label>
+            <input type="number" name="id" required>
+            <label>Desde:</label>
+            <input type="datetime-local" name="desde" required>
+            <label>Hasta:</label>
+            <input type="datetime-local" name="hasta" required>
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
 
-    <form action="/servicios/buscar-por-empleado" method="get">
-        <h3>Por Empleado</h3>
-        ID Empleado: <input type="number" name="id" required>
-        Desde: <input type="datetime-local" name="desde" required>
-        Hasta: <input type="datetime-local" name="hasta" required>
-        <button type="submit">Buscar</button>
-    </form>
+    <section>
+        <h2>Por Empleado</h2>
+        <form action="/servicios/buscar-por-empleado" method="get">
+            <label>ID Empleado:</label>
+            <input type="number" name="id" required>
+            <label>Desde:</label>
+            <input type="datetime-local" name="desde" required>
+            <label>Hasta:</label>
+            <input type="datetime-local" name="hasta" required>
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
 
-    <form action="/servicios/buscar-por-lugar" method="get">
-        <h3>Por Lugar</h3>
-        ID Lugar: <input type="number" name="id" required>
-        Desde: <input type="datetime-local" name="desde" required>
-        Hasta: <input type="datetime-local" name="hasta" required>
-        <button type="submit">Buscar</button>
-    </form>
+    <section>
+        <h2>Por Lugar</h2>
+        <form action="/servicios/buscar-por-lugar" method="get">
+            <label>ID Lugar:</label>
+            <input type="number" name="id" required>
+            <label>Desde:</label>
+            <input type="datetime-local" name="desde" required>
+            <label>Hasta:</label>
+            <input type="datetime-local" name="hasta" required>
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
 
-    <form action="/servicios/buscar-por-presencial" method="get">
-        <h3>Por Presencialidad</h3>
-        ¿Presencial?:
-        <select name="presencial">
-            <option value="true">Sí</option>
-            <option value="false">No</option>
-        </select>
-        Desde: <input type="datetime-local" name="desde" required>
-        Hasta: <input type="datetime-local" name="hasta" required>
-        <button type="submit">Buscar</button>
-    </form>
+    <section>
+        <h2>Por Presencialidad (con rango)</h2>
+        <form action="/servicios/buscar-por-presencial" method="get">
+            <label>¿Presencial?</label>
+            <select name="presencial">
+                <option value="true">Sí</option>
+                <option value="false">No</option>
+            </select>
+            <label>Desde:</label>
+            <input type="datetime-local" name="desde" required>
+            <label>Hasta:</label>
+            <input type="datetime-local" name="hasta" required>
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
 
-    <form action="/servicios/buscar-por-nombre-cliente" method="get">
-        <h3>Por Nombre del Cliente</h3>
-        Nombre: <input type="text" name="nombre" required>
-        Desde: <input type="datetime-local" name="desde" required>
-        Hasta: <input type="datetime-local" name="hasta" required>
-        <button type="submit">Buscar</button>
-    </form>
+    <section>
+        <h2>Por Nombre del Cliente</h2>
+        <form action="/servicios/buscar-por-nombre-cliente" method="get">
+            <label>Nombre:</label>
+            <input type="text" name="nombre" required>
+            <label>Desde:</label>
+            <input type="datetime-local" name="desde" required>
+            <label>Hasta:</label>
+            <input type="datetime-local" name="hasta" required>
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
 
-    <form action="/servicios/buscar-por-rol-empleado" method="get">
-        <h3>Por Rol del Empleado</h3>
-        Rol: <input type="text" name="rol" required>
-        Desde: <input type="datetime-local" name="desde" required>
-        Hasta: <input type="datetime-local" name="hasta" required>
-        <button type="submit">Buscar</button>
-    </form>
-	
-    <form action="/servicios/buscar-por-direccion-lugar" method="get">
-        <h3>Por Dirección del Lugar</h3>
-        Dirección: <input type="text" name="direccion" required>
-        Desde: <input type="datetime-local" name="desde" required>
-        Hasta: <input type="datetime-local" name="hasta" required>
-        <button type="submit">Buscar</button>
-    </form>
-	
-	<form action="/servicios/servicios-presenciales" method="get">
-		<h3>Por Presencialidad</h3>
-		¿Presencial?:
-       <select name="presencial">
-           <option value="true">Sí</option>
-           <option value="false">No</option>
-       </select>
-		<button type="submit">Buscar</button>
-	 </form>
-	 
-	 <form action="/servicios/buscar-por-apellido-empleado" method="get">
-	     <h3>Por Apellido del Empleado</h3>
-	     Apellido: <input type="text" name="apellido" required>
-	     <button type="submit">Buscar</button>
-	 </form>
+    <section>
+        <h2>Por Rol del Empleado</h2>
+        <form action="/servicios/buscar-por-rol-empleado" method="get">
+            <label>Rol:</label>
+            <input type="text" name="rol" required>
+            <label>Desde:</label>
+            <input type="datetime-local" name="desde" required>
+            <label>Hasta:</label>
+            <input type="datetime-local" name="hasta" required>
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Por Dirección del Lugar</h2>
+        <form action="/servicios/buscar-por-direccion-lugar" method="get">
+            <label>Dirección:</label>
+            <input type="text" name="direccion" required>
+            <label>Desde:</label>
+            <input type="datetime-local" name="desde" required>
+            <label>Hasta:</label>
+            <input type="datetime-local" name="hasta" required>
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Por Presencialidad (directa)</h2>
+        <form action="/servicios/servicios-presenciales" method="get">
+            <label>¿Presencial?</label>
+            <select name="presencial">
+                <option value="true">Sí</option>
+                <option value="false">No</option>
+            </select>
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Por Apellido del Empleado</h2>
+        <form action="/servicios/buscar-por-apellido-empleado" method="get">
+            <label>Apellido:</label>
+            <input type="text" name="apellido" required>
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
+
+    <!-- Volver -->
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/" class="btn">← Volver</a>
+    </div>
+
 </body>
 </html>

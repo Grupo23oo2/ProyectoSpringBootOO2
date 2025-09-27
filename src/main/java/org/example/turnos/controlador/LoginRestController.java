@@ -26,12 +26,13 @@ public class LoginRestController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
-    	UsuarioDTO usuarioDTO = usuarioServicio.traerUsuarioPorEmail(loginDTO.nombreUsuario());
+    public ResponseEntity<?> loginRestController(@RequestBody LoginDTO loginDTO) {
 
-        if (usuarioDTO == null) {
-            return ResponseEntity.status(401).body("Usuario no encontrado");
-        }
+        UsuarioDTO usuarioDTO = usuarioServicio
+                .traerUsuarioPorNombreUsuario(loginDTO.nombreUsuario())
+                .orElseThrow(() -> new RuntimeException(
+                    "Usuario no encontrado con nombre de usuario: " + loginDTO.nombreUsuario()
+                ));
 
         if (!passwordEncoder.matches(loginDTO.contraseniaUsuario(), usuarioDTO.contraseniaUsuario())) {
             return ResponseEntity.status(401).body("Contraseña incorrecta");
@@ -42,9 +43,9 @@ public class LoginRestController {
         }
 
         // Login exitoso: devolvemos un OK con info básica
-        return ResponseEntity.ok(
-                String.format("Login exitoso! Usuario: %s, Rol: %s", 
-                              usuarioDTO.nombreUsuario(), 
+		return ResponseEntity.ok(
+                String.format("Login exitoso! Usuario: %s, Rol: %s",
+                              usuarioDTO.nombreUsuario(),
                               usuarioDTO.rol())
         );
     }

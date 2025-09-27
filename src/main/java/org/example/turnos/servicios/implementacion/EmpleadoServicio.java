@@ -1,6 +1,7 @@
 package org.example.turnos.servicios.implementacion;
 
 import org.example.turnos.dtos.EmpleadoDTO;
+import org.example.turnos.dtos.EmpleadoUsuarioDTO;
 import org.example.turnos.excepciones.DniEmpleadoDuplicadoException;
 import org.example.turnos.excepciones.MiExcepcionPersonalizada;
 import org.example.turnos.modelo.Empleado;
@@ -12,9 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.example.turnos.repositorios.IEmpleadoRepositorio;
 import org.example.turnos.repositorios.IUsuarioRepositorio;
 import org.example.turnos.servicios.IEmpleadoServicio;
+import org.example.turnos.servicios.IUsuarioServicio;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,9 +30,18 @@ public class EmpleadoServicio implements IEmpleadoServicio {
 
     @Autowired
     private IUsuarioRepositorio usuarioRepositorio;
+    
+    @Autowired
+    private UsuarioServicio usuarioServicio;
 
     @Autowired
     private ModelMapper modelMapper;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;  
+
+    @Autowired
+    private EmailServicio emailServicio;
 
     @Override
     public EmpleadoDTO agregarEmpleado(EmpleadoDTO dto) {
@@ -43,9 +57,45 @@ public class EmpleadoServicio implements IEmpleadoServicio {
             throw new MiExcepcionPersonalizada("No se pudo agregar el empleado: " + e.getMessage());
         }
     }
+    
+    @Transactional
+    public Map<String, Object> altaEmpleadoYUsuario(EmpleadoUsuarioDTO dto) {
+
+        // 1. Crear el empleado
+        Empleado empleado = new Empleado();
+        empleado.setNombre(dto.nombre());
+        empleado.setApellido(dto.apellido());
+        empleado.setDni(dto.dni());
+        empleado.setFechaInicio(dto.fechaInicio());
+
+        // 2. Crear el usuario y vincularlo al empleado
+        Usuario usuario = new Usuario();
+        usuario.setNombreUsuario(dto.nombreUsuario());
+        usuario.setContraseniaUsuario(passwordEncoder.encode(dto.contraseniaUsuario()));
+        usuario.setEmail(dto.email());
+        usuario.setEstado(true);
+        usuario.setRol("ROLE_EMPLEADO");
+        usuario.setPersona(empleado);       // vínculo
+        empleado.setUsuario(usuario);       // vínculo inverso
+
+        // 3. Persistir el empleado (cascade guarda al usuario automáticamente)
+        Empleado guardado = empleadoRepositorio.save(empleado);
+        Usuario usuarioGuardado = guardado.getUsuario(); // <-- usuario guardado con id generado
+
+        // 4. Opcional: enviar correo
+        String contenidoHtml = "<html><body><h1>Alta Exitosa</h1></body></html>";
+        emailServicio.enviarCorreoHtml(usuarioGuardado.getEmail(), "Alta de usuario", contenidoHtml);
+
+        // 5. Retornar datos usando los DTO mapeados
+        Map<String, Object> response = new HashMap<>();
+        response.put("empleado", toDTO(guardado));
+        response.put("usuario", usuarioServicio.mapToDTO(usuarioGuardado)); // <-- usamos el usuario guardado
+
+        return response;
+    }
+    
 
     @Override
-
     public EmpleadoDTO traerEmpleadoPorDni(String dni) {
         try {
             Empleado empleado = empleadoRepositorio.findByDni(dni)
@@ -69,6 +119,7 @@ public class EmpleadoServicio implements IEmpleadoServicio {
         }
     }
 
+    @Transactional
     @Override
     public EmpleadoDTO modificarEmpleadoPorDni(String dniOriginal, EmpleadoDTO dto) {
     	try {
@@ -87,8 +138,8 @@ public class EmpleadoServicio implements IEmpleadoServicio {
             existente.setUsuario(null);
         }
 
-        Empleado actualizado = empleadoRepositorio.save(existente);
-        return toDTO(actualizado);
+  //      Empleado actualizado = empleadoRepositorio.save(existente);
+        return toDTO(existente); //antes estaba (actualizado)
     	} catch (Exception e){
             throw new MiExcepcionPersonalizada("No se pudo modificar los empleados" + e.getMessage());
         }
@@ -135,6 +186,29 @@ public class EmpleadoServicio implements IEmpleadoServicio {
         );
     }
     
+    
+    private Empleado toEntity(EmpleadoDTO dto) {
+        Empleado empleado = new Empleado();
+        empleado.setIdPersona(dto.idPersona());
+        empleado.setNombre(dto.nombre());
+        empleado.setApellido(dto.apellido());
+        empleado.setDni(dto.dni());
+        empleado.setFechaInicio(dto.fechaInicio());
+
+        if (dto.idUsuario() != null) {
+            Usuario usuario = usuarioRepositorio.findById(dto.idUsuario()).orElse(null);
+            empleado.setUsuario(usuario);
+        }
+
+        return empleado;
+    }
+    
+    
+    
+    
+    
+    /*
+    
     private Empleado toEntity(EmpleadoDTO dto) {
         Empleado empleado = modelMapper.map(dto, Empleado.class);
 
@@ -144,7 +218,7 @@ public class EmpleadoServicio implements IEmpleadoServicio {
         }
 
         return empleado;
-    }
+    }*/
     
     @Override
     public List<EmpleadoDTO> empleadosPorRol(String rol) {

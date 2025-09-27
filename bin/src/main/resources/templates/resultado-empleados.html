@@ -12,6 +12,7 @@
 
     <!-- Mensaje informativo -->
     <p class="mensaje" th:if="${mensaje}" th:text="${mensaje}"></p>
+	<p class="error" th:if="${error}" th:text="${error}"></p>
 
     <!-- Empleado individual -->
     <section th:if="${empleado != null}">
@@ -20,10 +21,6 @@
         <p><strong>Nombre:</strong> <span th:text="${empleado.nombre}"></span></p>
         <p><strong>Apellido:</strong> <span th:text="${empleado.apellido}"></span></p>
         <p><strong>DNI:</strong> <span th:text="${empleado.dni}"></span></p>
-        <p><strong>ID Usuario:</strong> 
-            <span th:if="${empleado.idUsuario != null}" th:text="${empleado.idUsuario}"></span>
-            <span th:unless="${empleado.idUsuario != null}">Sin usuario</span>
-        </p>
         <p><strong>Fecha de inicio:</strong> <span th:text="${empleado.fechaInicio}"></span></p>
     </section>
 
@@ -37,8 +34,9 @@
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>DNI</th>
-                    <th>Usuario</th>
                     <th>Fecha de Inicio</th>
+					<th>Acciones</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -47,19 +45,51 @@
                     <td th:text="${emp.nombre}"></td>
                     <td th:text="${emp.apellido}"></td>
                     <td th:text="${emp.dni}"></td>
-                    <td>
-                        <span th:if="${emp.idUsuario != null}" th:text="${emp.idUsuario}"></span>
-                        <span th:unless="${emp.idUsuario != null}">Sin usuario</span>
-                    </td>
                     <td th:text="${emp.fechaInicio}"></td>
+
+					<td>
+						<div style="display: flex; align-items: center; gap: 10px;">
+					        <a th:href="@{'/empleados/editar/' + ${emp.dni}}" title="Editar">
+					            <img th:src="@{/icons/pencil.svg}" alt="Editar" width="20" height="20" />
+					        </a>
+
+					        <form th:action="@{/empleados/eliminar}" method="post">
+								<input type="hidden" name="dni" th:value="${emp.dni}" />
+							    <button type="submit" title="Eliminar" style="background: none; border: none; padding: 0; cursor: pointer;">
+							        <img th:src="@{/icons/trash.svg}" alt="Eliminar" width="20" height="20" />
+							    </button>
+					        </form>
+					    </div>
+			        </td>
+
                 </tr>
             </tbody>
         </table>
     </section>
 
-    <!-- Botón volver -->
-    <div style="margin-top: 30px; text-align: center;">
-        <button onclick="window.history.back()" class="btn-volver">← Volver</button>
+	<section th:if="${empleadoEditar != null}">
+	    <h2>Modificar Empleado</h2>
+		<form th:action="@{/empleados/modificar}" method="post">
+		    <input type="hidden" name="dniOriginal" th:value="${empleadoEditar.dni}" />
+
+		    <label for="nombreMod">Nombre:</label>
+		    <input type="text" id="nombreMod" name="nombre" th:value="${empleadoEditar.nombre}" />
+
+		    <label for="apellidoMod">Apellido:</label>
+		    <input type="text" id="apellidoMod" name="apellido" th:value="${empleadoEditar.apellido}" />
+
+		    <label for="dniMod">DNI:</label>
+		    <input type="text" id="dniMod" name="dni" th:value="${empleadoEditar.dni}" />
+
+		    <label for="fechaInicioMod">Fecha de Inicio:</label>
+		    <input type="date" id="fechaInicioMod" name="fechaInicio" th:value="${empleadoEditar.fechaInicio}" />
+
+		    <button type="submit">Modificar</button>
+		</form>
+	</section>
+
+	<div style="text-align: center; margin-top: 20px;">
+        <a href="/" class="btn">← Volver</a>
     </div>
 
 </body>

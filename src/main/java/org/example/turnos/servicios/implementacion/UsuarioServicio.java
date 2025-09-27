@@ -98,19 +98,6 @@ public class UsuarioServicio implements IUsuarioServicio {
             throw new MiExcepcionPersonalizada("No se pudo traer los usuarios: " + e.getMessage());
         }
     }
-
-  /*  @Override
-
-    public UsuarioDTO traerUsuarioPorEmail(String email) {
-        try {
-            Usuario usuario = usuarioRepositorio.findByEmail(email)
-                    .orElseThrow(() -> new MiExcepcionPersonalizada("Usuario no encontrado con email: " + email));
-            return modelMapper.map(usuario, UsuarioDTO.class);
-        } catch (Exception e) {
-            throw new MiExcepcionPersonalizada("No se pudo traer el usuario: " + e.getMessage());
-
-        }
-    }*/
     
     @Override
     public UsuarioDTO traerUsuarioPorEmail(String email) {//modificado para record. no se puede usar modelmapper porque no se puede setear, es inmutable
@@ -133,6 +120,12 @@ public class UsuarioServicio implements IUsuarioServicio {
         } catch (Exception e) {
             throw new MiExcepcionPersonalizada("No se pudo traer el usuario: " + e.getMessage());
         }
+    }
+    
+    @Override
+    public Optional<UsuarioDTO> traerUsuarioPorNombreUsuario(String nombreUsuario) {
+        return usuarioRepositorio.findByNombreUsuario(nombreUsuario)
+                .map(this::toDTO); // mapeamos a DTO directamente
     }
 
     @Override
@@ -171,11 +164,12 @@ public class UsuarioServicio implements IUsuarioServicio {
         }
     }
 
+    //metodo para HTML
     private UsuarioDTO toDTO(Usuario usuario) {//modificado para record
-        // Obtenemos el idPersona si existe
+        //Obtenemos el idPersona si existe
         Long idPersona = usuario.getPersona() != null ? usuario.getPersona().getIdPersona() : null;
 
-        // Construimos directamente el record
+        //Construimos directamente el record
         return new UsuarioDTO(
             usuario.getIdUsuario(),
             usuario.getNombreUsuario(),
@@ -187,10 +181,13 @@ public class UsuarioServicio implements IUsuarioServicio {
             usuario.getFechaCreacion()
         );
     }
-
-    /**
-     * Mapeo manual de DTO a entidad para evitar problemas con Persona abstracta
-     */
+    
+    //metodo para la API
+    public UsuarioDTO mapToDTO(Usuario usuario) {
+        return toDTO(usuario); // llama internamente al private
+    }
+    
+    //Mapeo manual de DTO a entidad para evitar problemas con Persona abstracta
     private Usuario toEntity(UsuarioDTO dto, Persona persona) {
         Usuario usuario = new Usuario();
 

@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <title>Detalle Servicio</title>
+    <meta charset="UTF-8">
+    <title>Resultado del Servicio</title>
     <link rel="stylesheet" th:href="@{/css/general.css}" />
 </head>
 <body>
 
-    <h1>Detalle del Servicio</h1>
-    <hr/>
+<h1>Resultado de Búsqueda</h1>
 
-    <!-- Detalle del servicio -->
-    <section th:if="${servicio != null}">
-        <p><strong>ID:</strong> <span th:text="${servicio.idServicio}"></span></p>
-        <p><strong>Descripción:</strong> <span th:text="${servicio.descripcion}"></span></p>
-        <p><strong>Duración (minutos):</strong> <span th:text="${servicio.duracion}"></span></p>
-        <p><strong>Activo:</strong> <span th:text="${servicio.activo} ? 'Sí' : 'No'"></span></p>
-    </section>
+<hr/>
 
-    <!-- Mensaje informativo -->
-    <section th:if="${mensaje != null}">
-        <p class="mensaje" th:text="${mensaje}"></p>
-    </section>
+<!-- Mensaje de éxito -->
+<p class="mensaje" th:if="${mensaje}" th:text="${mensaje}"></p>
 
-	<div style="margin-top: 30px; text-align: center;">
-	        <button onclick="window.history.back()" class="btn-volver">← Volver</button>
-	    </div>
+<!-- Detalles del servicio -->
+<section th:if="${servicio != null}">
+    <h2>Servicio Encontrado</h2>
+    <p><strong>Descripción:</strong> <span th:text="${servicio.descripcion}"></span></p>
+    <p><strong>Duración:</strong> <span th:text="${servicio.duracion}"></span> minutos</p>
+    <p><strong>Activo:</strong> <span th:text="${servicio.activo} ? 'Sí' : 'No'"></span></p>
+</section>
+
+<!-- Botón volver -->
+<div style="text-align: center; margin-top: 20px;">
+    <a href="/" class="btn">← Volver</a>
+</div>
 
 </body>
 </html>

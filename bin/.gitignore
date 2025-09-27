@@ -36,3 +36,11 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+logs/app.loglogs/app.log
+/.gitignore
+/.idea/
+/README.md
+/logs/
+/pom.xml
+/src/
