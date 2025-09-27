@@ -22,34 +22,52 @@ public class ContactoServicio implements IContactoServicio {
     @Autowired
     private IClienteRepositorio clienteRepositorio;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
     @Override
     public ContactoDTO agregarContacto(ContactoDTO dto) {
-    	try {
-        if (!clienteRepositorio.existsById(dto.idContacto())) {
-            throw new MiExcepcionPersonalizada("No existe un cliente con ID " + dto.idContacto());
-        }
+        try {
+            //Buscamos el cliente correspondiente
+            var cliente = clienteRepositorio.findById(dto.idContacto())
+                    .orElseThrow(() -> new MiExcepcionPersonalizada("No existe un cliente con ID " + dto.idContacto()));
 
-        if (contactoRepositorio.existsById(dto.idContacto())) {
-            throw new MiExcepcionPersonalizada("Ya existe un contacto con ese ID");
-        }
+            //Verificamos si ya existe un contacto para ese cliente
+            if (contactoRepositorio.existsById(dto.idContacto())) {
+                throw new MiExcepcionPersonalizada("Ya existe un contacto para este cliente");
+            }
 
-        Contacto contacto = modelMapper.map(dto, Contacto.class);
-        contacto = contactoRepositorio.save(contacto);
-        return modelMapper.map(contacto, ContactoDTO.class);
-    	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo agregar el Contacto" + e.getMessage());
+            //Creamos el contacto y asignamos el cliente
+            Contacto contacto = new Contacto();
+            contacto.setDireccion(dto.direccion());
+            contacto.setEmail(dto.email());
+            contacto.setTelefono(dto.telefono());
+            contacto.setCliente(cliente); //importante, asignamos el cliente
+
+            //Guardamos el contacto; Hibernate asigna automáticamente el ID igual al idPersona del cliente
+            Contacto guardado = contactoRepositorio.save(contacto);
+
+            //Retornamos el DTO
+            return new ContactoDTO(
+                    guardado.getIdContacto(),
+                    guardado.getDireccion(),
+                    guardado.getEmail(),
+                    guardado.getTelefono()
+            );
+
+        } catch (Exception e) {
+            throw new MiExcepcionPersonalizada("No se pudo agregar el Contacto: " + e.getMessage());
         }
     }
 
     @Override
     public ContactoDTO traerContacto(String email) {
         try {
-            return contactoRepositorio.findByEmail(email)
-                    .map(contacto -> modelMapper.map(contacto, ContactoDTO.class))
-                    .orElse(null);
+            Contacto contacto = contactoRepositorio.findByEmail(email)
+                    .orElseThrow(() -> new MiExcepcionPersonalizada("Contacto no encontrado: " + email));
+            return new ContactoDTO(
+                    contacto.getIdContacto(),
+                    contacto.getDireccion(),
+                    contacto.getEmail(),
+                    contacto.getTelefono()
+            );
         } catch (Exception e) {
             throw new MiExcepcionPersonalizada("No se pudo traer el contacto: " + e.getMessage());
         }
@@ -57,36 +75,40 @@ public class ContactoServicio implements IContactoServicio {
 
     @Override
     public List<ContactoDTO> traerContactos() {
-    	try {
-        return contactoRepositorio.findAll()
-                .stream()
-                .map(contacto -> modelMapper.map(contacto, ContactoDTO.class))
-                .collect(Collectors.toList());
-    	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo traer los contactos" + e.getMessage());
+        try {
+            return contactoRepositorio.findAll()
+                    .stream()
+                    .map(c -> new ContactoDTO(
+                            c.getIdContacto(),
+                            c.getDireccion(),
+                            c.getEmail(),
+                            c.getTelefono()
+                    ))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new MiExcepcionPersonalizada("No se pudo traer los contactos: " + e.getMessage());
         }
     }
 
     @Override
     public ContactoDTO modificarContacto(String email, ContactoDTO dto) {
         try {
-            if (!contactoRepositorio.existsByEmail(email)) {
-                throw new MiExcepcionPersonalizada("No existe un contacto con email: " + email);
-            }
+            Contacto existente = contactoRepositorio.findByEmail(email)
+                    .orElseThrow(() -> new MiExcepcionPersonalizada("No existe un contacto con email: " + email));
 
-            Contacto existente = contactoRepositorio.findByEmail(email).get();
-            
-            //dto.idContacto(existente.getIdContacto());//mantener ID original
-            dto = new ContactoDTO(
-            	    existente.getIdContacto(),//mantener el ID original
-            	    dto.direccion(),
-            	    dto.email(),
-            	    dto.telefono()
-            	);
-            
-            Contacto contacto = modelMapper.map(dto, Contacto.class);
-            contacto = contactoRepositorio.save(contacto);
-            return modelMapper.map(contacto, ContactoDTO.class);
+            // Actualizamos solo los campos modificables
+            existente.setDireccion(dto.direccion());
+            existente.setEmail(dto.email());
+            existente.setTelefono(dto.telefono());
+
+            Contacto actualizado = contactoRepositorio.save(existente);
+
+            return new ContactoDTO(
+                    actualizado.getIdContacto(),
+                    actualizado.getDireccion(),
+                    actualizado.getEmail(),
+                    actualizado.getTelefono()
+            );
         } catch (Exception e) {
             throw new MiExcepcionPersonalizada("No se pudo modificar el contacto: " + e.getMessage());
         }
@@ -104,5 +126,4 @@ public class ContactoServicio implements IContactoServicio {
             throw new MiExcepcionPersonalizada("No se pudo eliminar el contacto: " + e.getMessage());
         }
     }
-
 }

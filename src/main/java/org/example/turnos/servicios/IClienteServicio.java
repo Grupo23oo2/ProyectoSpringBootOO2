@@ -4,6 +4,8 @@ import org.example.turnos.dtos.ClienteCreateDTO;
 import org.example.turnos.dtos.ClienteDTO;
 import org.example.turnos.dtos.ContactoCreateDTO;
 import org.example.turnos.dtos.ContactoDTO;
+import org.example.turnos.modelo.Cliente;
+import org.example.turnos.modelo.Contacto;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +29,8 @@ public interface IClienteServicio {
     public ClienteDTO findByCuit(String cuit);
 
     public ContactoDTO buscarContactoPorCuit(String cuit);
+    
+    public Cliente guardarClienteConContacto(Cliente cliente, Contacto contacto);
     
     //MÉTODOS API (nuevos)
     ClienteDTO agregarClienteAPI(ClienteCreateDTO dto);

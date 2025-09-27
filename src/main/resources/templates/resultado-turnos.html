@@ -13,7 +13,6 @@
         <tr>
             <th>ID</th>
             <th>Fecha y Hora Inicio</th>
-            <th>Fecha y Hora Fin</th>
             <th>Cliente</th>
             <th>Empleado</th>
             <th>Lugar</th>
@@ -21,15 +20,14 @@
         </tr>
     </thead>
     <tbody>
-        <tr th:each="turno : ${turnos}">
-            <td th:text="${turno.idTurno}"></td>
-            <td th:text="${turno.fechaHoraInicio}"></td>
-            <td th:text="${turno.fechaHoraFin}"></td>
-            <td th:text="${turno.idCliente}"></td>
-            <td th:text="${turno.idEmpleado}"></td>
-            <td th:text="${turno.idLugarTurno}"></td>
-            <td th:text="${turno.presencial} ? 'Sí' : 'No'"></td>
-        </tr>
+		<tr th:each="turno : ${turnos}">
+		    <td th:text="${turno.idTurno}"></td>
+			<td th:text="${#temporals.format(turno.fechaHoraInicio, 'dd/MM/yyyy HH:mm')}"></td>
+		    <td th:text="${turno.cuitCliente}"></td>
+		    <td th:text="${turno.dniEmpleado}"></td>
+		    <td th:text="${turno.direccionLugar}"></td>
+		    <td th:text="${turno.presencial} ? 'Sí' : 'No'"></td>
+		</tr>
     </tbody>
 </table>
 

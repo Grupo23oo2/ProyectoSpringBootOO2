@@ -15,6 +15,7 @@ import org.example.turnos.modelo.Usuario;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.example.turnos.repositorios.IClienteRepositorio;
 import org.example.turnos.repositorios.IContactoRepositorio;
 import org.example.turnos.repositorios.IUsuarioRepositorio;
@@ -42,6 +43,17 @@ public class ClienteServicio implements IClienteServicio {
     // -------------------------------
     // MÉTODOS PARA HTML
     // -------------------------------
+    @Override
+    @Transactional
+    public Cliente guardarClienteConContacto(Cliente cliente, Contacto contacto) {
+        //Asignar relación bidireccional
+        contacto.setCliente(cliente);
+        cliente.setContacto(contacto);
+
+        //Guardar Cliente; por cascada también se guarda Contacto
+        return clienteRepositorio.save(cliente);
+    }
+    
     public ClienteDTO agregarCliente(ClienteDTO dto) {
         if (clienteRepositorio.existsByCuit(dto.cuit())) {
             throw new CuitClienteDuplicadoException("Ya existe un cliente con el CUIT: " + dto.cuit());
@@ -185,12 +197,22 @@ public class ClienteServicio implements IClienteServicio {
     
     @Override
     public ContactoDTO buscarContactoPorCuit(String cuit) {
-    	try {
-        Contacto contacto = clienteRepositorio.findContactoByCuit(cuit);
-        return modelMapper.map(contacto, ContactoDTO.class);
-    	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo traer el contacto por cuit" + e.getMessage());
+        Cliente cliente = clienteRepositorio.findByCuit(cuit)
+            .orElseThrow(() -> new MiExcepcionPersonalizada("Cliente no encontrado con cuit: " + cuit));
+
+        Contacto contacto = cliente.getContacto();
+
+        if (contacto == null) {
+            throw new MiExcepcionPersonalizada("No se encontró contacto para cuit: " + cuit);
         }
+
+        //Mapear manualmente al record
+        return new ContactoDTO(
+            contacto.getIdContacto(),
+            contacto.getDireccion(),
+            contacto.getEmail(),
+            contacto.getTelefono()
+        );
     }
     
     // -------------------------------

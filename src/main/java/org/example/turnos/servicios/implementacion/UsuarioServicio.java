@@ -143,8 +143,8 @@ public class UsuarioServicio implements IUsuarioServicio {
             usuarioExistente.setContraseniaUsuario(dto.contraseniaUsuario());
             usuarioExistente.setEstado(dto.estado());
             usuarioExistente.setEmail(dto.email());
-            usuarioExistente.setRol(dto.rol());
-            usuarioExistente.setFechaCreacion(dto.fechaCreacion());
+            //usuarioExistente.setRol(dto.rol()); //al modificar NO queremos que pueda modificar el rol del usuario
+            //usuarioExistente.setFechaCreacion(dto.fechaCreacion()); //al modificar NO queremos que pueda modificar el fecha de creacion del usuario
 
             Usuario usuarioModificado = usuarioRepositorio.save(usuarioExistente);
             return toDTO(usuarioModificado);

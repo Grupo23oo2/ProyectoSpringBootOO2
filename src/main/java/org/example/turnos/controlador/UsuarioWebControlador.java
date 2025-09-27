@@ -1,6 +1,7 @@
 package org.example.turnos.controlador;
 
 import org.example.turnos.dtos.UsuarioDTO;
+import org.example.turnos.excepciones.MiExcepcionPersonalizada;
 import org.example.turnos.servicios.IUsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -62,9 +63,25 @@ public class UsuarioWebControlador {
     }
 
     @PostMapping("/modificar")
-    public String modificarUsuario(@RequestParam String email, @ModelAttribute UsuarioDTO usuarioDTO, Model model) {
-        UsuarioDTO actualizado = usuarioServicio.modificarUsuario(email, usuarioDTO);
-        model.addAttribute("usuario", actualizado);
+    public String modificarUsuario(@RequestParam String emailActual, @RequestParam String emailNuevo, @ModelAttribute UsuarioDTO usuarioDTO, Model model) {
+        try {
+            //Creamos un DTO con el email actualizado y mantenemos rol y fechaCreacion
+            UsuarioDTO dtoActualizado = new UsuarioDTO(
+                usuarioDTO.idUsuario(),
+                usuarioDTO.nombreUsuario(),
+                usuarioDTO.contraseniaUsuario(),
+                usuarioDTO.estado(),
+                usuarioDTO.idPersona(),
+                emailNuevo, //reemplazamos email por el nuevo
+                usuarioDTO.rol(), //rol se mantiene
+                usuarioDTO.fechaCreacion() //fecha de creación se mantiene
+            );
+
+            UsuarioDTO actualizado = usuarioServicio.modificarUsuario(emailActual, dtoActualizado);
+            model.addAttribute("usuario", actualizado);
+        } catch (MiExcepcionPersonalizada e) {
+            model.addAttribute("error", e.getMessage());
+        }
         return "resultado-usuario";
     }
 

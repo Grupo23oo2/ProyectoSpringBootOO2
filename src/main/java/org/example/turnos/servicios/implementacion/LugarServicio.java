@@ -32,38 +32,40 @@ public class LugarServicio implements ILugarServicio {
         if (lugarRepositorio.existsByDireccion(dto.direccion())) {
             throw new DireccionLugarDuplicadaException("Ya existe un lugar con la dirección: " + dto.direccion());
         }
-
         try {
-            Lugar lugar = modelMapper.map(dto, Lugar.class);
+            Lugar lugar = new Lugar();
+            lugar.setDireccion(dto.direccion());
+
             Lugar guardado = lugarRepositorio.save(lugar);
-            return modelMapper.map(guardado, LugarDTO.class);
+            return new LugarDTO(guardado.getIdLugar(), guardado.getDireccion());
+
         } catch (Exception e) {
             throw new MiExcepcionPersonalizada("No se pudo agregar el lugar: " + e.getMessage());
         }
     }
 
     @Override
-
     public LugarDTO traerLugarPorDireccion(String direccion) {
         try {
             Lugar lugar = lugarRepositorio.findByDireccion(direccion)
                     .orElseThrow(() -> new MiExcepcionPersonalizada("Lugar no encontrado con dirección: " + direccion));
-            return modelMapper.map(lugar, LugarDTO.class);
+
+            return new LugarDTO(lugar.getIdLugar(), lugar.getDireccion());
+
         } catch (Exception e) {
             throw new MiExcepcionPersonalizada("No se pudo traer el lugar: " + e.getMessage());
-
         }
     }
 
     @Override
     public List<LugarDTO> traerLugares() {
-    	try {
-        return lugarRepositorio.findAll()
-                .stream()
-                .map(lugar -> modelMapper.map(lugar, LugarDTO.class))
-                .collect(Collectors.toList());
-    	} catch (Exception e){
-            throw new MiExcepcionPersonalizada("No se pudo traer los lugares" + e.getMessage());
+        try {
+            return lugarRepositorio.findAll()
+                    .stream()
+                    .map(lugar -> new LugarDTO(lugar.getIdLugar(), lugar.getDireccion()))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new MiExcepcionPersonalizada("No se pudo traer los lugares: " + e.getMessage());
         }
     }
 
@@ -76,8 +78,9 @@ public class LugarServicio implements ILugarServicio {
             lugarExistente.setDireccion(dto.direccion());
 
             Lugar actualizado = lugarRepositorio.save(lugarExistente);
-            return modelMapper.map(actualizado, LugarDTO.class);
-        } catch (Exception e){
+            return new LugarDTO(actualizado.getIdLugar(), actualizado.getDireccion());
+
+        } catch (Exception e) {
             throw new MiExcepcionPersonalizada("No se pudo modificar el lugar: " + e.getMessage());
         }
     }
@@ -86,9 +89,10 @@ public class LugarServicio implements ILugarServicio {
     public void eliminarLugarPorDireccion(String direccion) {
         try {
             Lugar lugar = lugarRepositorio.findByDireccion(direccion)
-                .orElseThrow(() -> new MiExcepcionPersonalizada("No se encontró lugar con dirección: " + direccion));
+                    .orElseThrow(() -> new MiExcepcionPersonalizada("No se encontró lugar con dirección: " + direccion));
 
             lugarRepositorio.delete(lugar);
+
         } catch (Exception e) {
             throw new MiExcepcionPersonalizada("No se pudo eliminar el lugar: " + e.getMessage());
         }

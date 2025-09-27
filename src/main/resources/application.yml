@@ -1,4 +1,3 @@
-
 #server: 
   #port: 8081  # o 8081 si el 8080 sigue en uso
 
@@ -6,7 +5,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/servicios?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
-	password: 
+    password: 
 
   jpa:
     hibernate:
@@ -49,6 +48,3 @@ logging:
     root: INFO                         # Nivel global de logs
     org.springframework.web: DEBUG     # Nivel para los controladores web de Spring
     org.hibernate: ERROR               # Hibernate produce mucho log, se recomienda ERROR o WARN
-
-
-

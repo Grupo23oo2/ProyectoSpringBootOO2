@@ -3,6 +3,9 @@ package org.example.turnos.modelo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Contacto {
@@ -13,6 +16,11 @@ public class Contacto {
     @Column (unique = true)
     private String email; 
     private String telefono;
+    
+    @OneToOne
+    @MapsId // el idContacto se asigna automáticamente desde cliente.idPersona
+    @JoinColumn(name = "idContacto")
+    private Cliente cliente;
     
     public Contacto() {
     	
@@ -55,5 +63,12 @@ public class Contacto {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
-   
+	
+	public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 }

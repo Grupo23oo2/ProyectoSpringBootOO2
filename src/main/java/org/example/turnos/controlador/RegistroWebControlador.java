@@ -7,6 +7,8 @@ import org.example.turnos.dtos.ClienteDTO;
 import org.example.turnos.dtos.ContactoDTO;
 import org.example.turnos.dtos.EmpleadoDTO;
 import org.example.turnos.dtos.UsuarioDTO;
+import org.example.turnos.modelo.Cliente;
+import org.example.turnos.modelo.Contacto;
 import org.example.turnos.servicios.IClienteServicio;
 import org.example.turnos.servicios.IContactoServicio;
 import org.example.turnos.servicios.IEmpleadoServicio;
@@ -135,69 +137,40 @@ public class RegistroWebControlador {
             Model model,
             RedirectAttributes redirectAttributes) {
 
-    	ClienteDTO cliente = new ClienteDTO(//constructor con RecordClass
-    		    null,           // idPersona, todavía no existe
-    		    nombre,
-    		    apellido,
-    		    null,           // dni
-    		    null,           // idUsuario
-    		    cuit,
-    		    null            // idContacto
-    		);
+        try {
+            Cliente cliente = new Cliente();
+            cliente.setNombre(nombre);
+            cliente.setApellido(apellido);
+            cliente.setDni(dni);
+            cliente.setCuit(cuit);
 
-    		ClienteDTO nuevoCliente = clienteServicio.agregarCliente(cliente);
-    	
-    	
-    /*    ClienteDTO cliente = new ClienteDTO();
-        cliente.setNombre(nombre);
-        cliente.setApellido(apellido);
-        cliente.setDni(dni);
-        cliente.setCuit(cuit);
+            Contacto contacto = new Contacto();
+            contacto.setDireccion(direccion);
+            contacto.setEmail(emailContacto);
+            contacto.setTelefono(telefono);
 
-        ClienteDTO nuevoCliente = clienteServicio.agregarCliente(cliente);*/
+            // Guardar en cascada
+            Cliente nuevoCliente = clienteServicio.guardarClienteConContacto(cliente, contacto);
 
-    		if (nuevoCliente != null && nuevoCliente.idPersona() != null) {
-    		    // Crear contacto directamente con todos los campos
-    		    ContactoDTO contacto = new ContactoDTO(
-    		        nuevoCliente.idPersona(), // idContacto
-    		        direccion,                // dirección
-    		        emailContacto,            // email
-    		        telefono                  // teléfono
-    		    );
-
-    		    contactoServicio.agregarContacto(contacto);
-    		
-
-            // Crear usuario asociado al cliente
- /*           UsuarioDTO usuario = new UsuarioDTO();
-            usuario.setIdPersona(nuevoCliente.idPersona());
-            usuario.setNombreUsuario(nombreUsuario);
-            usuario.setEmail(emailUsuario);
-            usuario.setContraseniaUsuario(passwordEncoder.encode(contraseniaUsuario));
-            usuario.setEstado(true); //ponemos directamente que va a estar activo, antes se podia cambiar en el formulario de registro
-            usuario.setRol("ROLE_CLIENTE"); //como esta en la pagina de empleado, no hace falta que lo reciba del formulario, lo ponemos directamente
-*/
+            // Crear Usuario
             UsuarioDTO usuario = new UsuarioDTO(
-            	    null,                                 // idUsuario
-            	    nombreUsuario,
-            	    passwordEncoder.encode(contraseniaUsuario),
-            	    true,                                 // estado
-            	    nuevoCliente.idPersona(),
-            	    emailUsuario,
-            	    "ROLE_CLIENTE",                        // rol
-            	    LocalDateTime.now()                    // fechaCreacion
-            	);
-            
+                    null,
+                    nombreUsuario,
+                    passwordEncoder.encode(contraseniaUsuario),
+                    estado,
+                    nuevoCliente.getIdPersona(),
+                    emailUsuario,
+                    "ROLE_CLIENTE",
+                    LocalDateTime.now()
+            );
             usuarioServicio.agregarUsuario(usuario);
 
-            redirectAttributes.addFlashAttribute("mensaje", "Registro exitoso. Ahora puede iniciar sesión."); //login si se grabo todo
-            
-            return "redirect:/login"; // Redirige a login si todo fue bien
+            redirectAttributes.addFlashAttribute("mensaje", "Registro exitoso. Ahora puede iniciar sesión.");
+            return "redirect:/login";
+
+        } catch (Exception e) {
+            model.addAttribute("error", "No se pudo registrar el cliente: " + e.getMessage());
+            return "registrarClienteUsuario";
         }
-
-        model.addAttribute("error", "No se pudo registrar el cliente y usuario. Verificá los datos e intentá de nuevo."); //se queda en la misma pagina en caso de error
-        
-        return "registrarClienteUsuario";
     }
-
 }

@@ -2,13 +2,13 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Error - Cuit duplicado</title>
+    <title>Error - Servicio relacionado</title>
     <link rel="stylesheet" th:href="@{/css/error.css}" />
 </head>
 <body>
     <div class="error-container">
-        <h1>Recurso no encontrado</h1>
-        <p th:text="${mensajeError}">Error: el cuit ingresado ya existe en el sistema</p>
+        <h1>No se puede eliminar el servicio</h1>
+        <p th:text="${mensajeError}">Error: el servicio que intentas eliminar está asociado a turnos existentes.</p>
         <a href="/" class="btn-volver">← Volver al inicio</a>
     </div>
 </body>

@@ -88,7 +88,7 @@ public class SecurityConfig {
             )
 
             //HTTP Basic solo para API (/api/**)
-            .securityMatcher("/api/**") // Aplica httpBasic solo a /api
+            //.securityMatcher("/api/**") // Aplica httpBasic solo a /api
             .httpBasic(httpBasic -> httpBasic.realmName("API REST"))
 
             //Logout

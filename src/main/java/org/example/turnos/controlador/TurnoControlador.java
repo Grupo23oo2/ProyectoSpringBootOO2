@@ -139,7 +139,18 @@ public class TurnoControlador {
         return "resultado-turnos";
     }
 
-  
+    @GetMapping("/buscar-por-rol-empleado")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
+    public String buscarPorRolEmpleado(
+            @RequestParam("rol") String rol,
+            @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
+            @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta,
+            Model model) {
+
+        List<TurnoDTO> turnos = turnoServicio.traerTurnosPorRolEmpleadoYFechas(rol, desde, hasta);
+        model.addAttribute("turnos", turnos);
+        return "resultado-turnos";
+    }
 
     @GetMapping("/buscar-por-direccion-lugar")
     @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
@@ -159,7 +170,7 @@ public class TurnoControlador {
         model.addAttribute("turnos", turnos);
         return "resultado-turnos";
     }
-
+    
     @GetMapping("/buscar-por-apellido-empleado")
     @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLEADO')")
     public String buscarTurnosPorApellidoEmpleado(@RequestParam("apellido") String apellido, Model model) {

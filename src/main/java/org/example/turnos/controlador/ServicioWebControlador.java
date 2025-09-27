@@ -52,11 +52,13 @@ public class ServicioWebControlador {
 
     // Agregar nuevo servicio
     @PostMapping("/agregar")
-    public String agregarServicio(@ModelAttribute ServicioDTO servicioDTO, Model model) {
+    public String agregarServicio(@RequestParam String descripcion, @RequestParam Long duracion, Model model) {
+        ServicioDTO servicioDTO = new ServicioDTO(null, descripcion, duracion, true); //siempre activo = true
         ServicioDTO agregado = servicioServicio.agregarServicio(servicioDTO);
         model.addAttribute("servicio", agregado);
-        return "resultado-servicio";  
+        return "resultado-servicio";
     }
+
 
     @PostMapping("/modificar")
     public String modificarServicio(@RequestParam("descripcionOriginal") String descripcionOriginal, @ModelAttribute ServicioDTO servicioDTO, Model model) {

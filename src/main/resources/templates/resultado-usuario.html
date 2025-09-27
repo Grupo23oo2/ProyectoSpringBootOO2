@@ -10,8 +10,9 @@
     <h1>Detalle de Usuario</h1>
     <hr/>
 
-    <!-- Mensaje informativo -->
-    <p class="mensaje" th:if="${mensaje}" th:text="${mensaje}"></p>
+	<!-- Mensaje informativo -->
+	<p class="mensaje" th:if="${mensaje}" th:text="${mensaje}"></p>
+	<p class="error" th:if="${error}" th:text="${error}"></p>
 
     <!-- Detalle de usuario -->
     <section th:if="${usuario != null}">

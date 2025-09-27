@@ -38,6 +38,11 @@ public class GlobalExceptionHandler {
         return "error/errorDireccionLugarDuplicada";
     }
     
+    @ExceptionHandler(ServicioRelacionadoException.class)
+    public String manejarServicioRelacionado(ServicioRelacionadoException ex, Model model) {
+        model.addAttribute("mensajeError", ex.getMessage());
+        return "error/errorServicioRelacionado";
+    }
     
     // Manejo general de otras excepciones no controladas
     @ExceptionHandler(Exception.class)
