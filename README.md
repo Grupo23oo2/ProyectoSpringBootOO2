@@ -1,5 +1,3 @@
-Grupo 23 Proyecto Spring Boot Nivel 1
-
 Pasos a seguir para levantar el proyecto
 
 Tener instalada:
@@ -22,27 +20,10 @@ EMAIL_USERNAME = magosh90@gmail.com
 
 EMAIL_PASSWORD = rzby vjkg svls xnen
 
-Se debe crear en la base de datos el administrador :
-
-1_
-
-INSERT INTO persona (idPersona, apellido, dni, nombre) VALUES (1, 'admin', '12345678', 'admin');
-
-2_
-
-INSERT INTO empleado (fechaInicio, idPersona) VALUES ('2025-06-21', 1);
-
-3_
-
-INSERT INTO usuario (idUsuario, contraseniaUsuario, estado, nombreUsuario, email) VALUES (1, '{noop}admin', true, 'admin', 'magosh90@gmail.com');
-
-4_
-
-INSERT INTO rolusuario (idRolUsuario, fechaCreacion, role, id_Usuario) VALUES (1, '2025-06-21', 'ADMIN', 1);
 
 
 Ya se puede ejecutar el proyecto.
 
-Ahora pueden ir al navegador con la siguiente url: localhost:8080/login
+Ahora pueden ir al navegador con la siguiente url: localhost:8080/login y crear su primer usuario 
 
-Con las credenciales, se puede iniciar el Login con Usuario : admin y Contraseña : admin
+Dentro de la url: http://localhost:8080/swagger-ui/index.html Tambien pueden ejecutar los métodos
