@@ -14,11 +14,11 @@ DB_USERNAME → Tu usuario de la base de datos.
 
 DB_PASSWORD → Tu contraseña de la base de datos.
 
-Es necesario tener las siguientes variables de entorno:
+Se utilizaron las siguientes variables de entorno para el envío y la corroboración con el email:
 
-EMAIL_USERNAME = magosh90@gmail.com
+EMAIL_USERNAME 
 
-EMAIL_PASSWORD = rzby vjkg svls xnen
+EMAIL_PASSWORD 
 
 
 
